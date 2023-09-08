@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "465894346719",
+    "project_id": "emo-project-b201d",
+    "storage_bucket": "emo-project-b201d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465894346719:android:d3f8a2acfa0039073dfe6a",
+        "android_client_info": {
+          "package_name": "com.example.emo_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465894346719-i42k8c4k6j5qjmsl6o8fdd7ip0sm47f6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpkYRT56xUlPC7WS1GPQcjumG9_thn6Po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465894346719-i42k8c4k6j5qjmsl6o8fdd7ip0sm47f6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "465894346719-r95p4mpju0kj2n04aqprt8g8g2c6ecv2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.emoProject"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
