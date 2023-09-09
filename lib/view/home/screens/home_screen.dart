@@ -28,7 +28,7 @@ class HomeScreen extends ConsumerWidget {
     PostsScreen(),
     AlbumsScreen(),
     ProfileScreen(),
-    GroupProfileScreen()
+    GroupProfileScreen(groupName: "グループ名",)
   ];
 
   @override
