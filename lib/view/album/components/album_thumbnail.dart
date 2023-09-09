@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emo_project/model/picture/album_picture.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class AlbumThumbnail extends StatelessWidget {
   const AlbumThumbnail({
@@ -20,8 +21,12 @@ class AlbumThumbnail extends StatelessWidget {
         width: width,
         height: width,
         decoration: BoxDecoration(
-          color: Colors.orange,
           borderRadius: BorderRadius.circular(8),
+        ),
+        child: LottieBuilder.asset(
+          'assets/lottie/empty_album.json',
+          width: 100,
+          height: 100,
         ),
       );
     }
