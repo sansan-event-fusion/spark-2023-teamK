@@ -18,15 +18,15 @@ class PostsScreen extends StatelessWidget {
             PostView(
                 imageUrl:
                     "https://images.unsplash.com/photo-1631276893368-554b60393efb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-                mentionUserList: ["Yuki", "Koichi"]),
+                mentionUserList: ["Yuki", "Koichi"], description: '北海道旅行の記録です',),
             PostView(
                 imageUrl:
                     "https://images.unsplash.com/photo-1605050825077-289f85b6cf43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-                mentionUserList: ["Taro"]),
+                mentionUserList: ["Taro"], description: '沖縄旅行の記録をまとめました！',),
             PostView(
                 imageUrl:
                     "https://images.unsplash.com/photo-1600403477955-2b8c2cfab221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-                mentionUserList: ["Jiro", "Saburou", "Ryo"])
+                mentionUserList: ["Jiro", "Saburou", "Ryo"], description: '京都旅行の写真をまとめました！',)
           ],
         ),
       ),
