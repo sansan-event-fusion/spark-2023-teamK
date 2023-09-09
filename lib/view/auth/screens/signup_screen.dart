@@ -2,6 +2,7 @@ import 'package:emo_project/view/auth/components/apple_signin_button.dart';
 import 'package:emo_project/view/auth/components/custom_textfield.dart';
 import 'package:emo_project/view/auth/components/google_signin_button.dart';
 import 'package:emo_project/view/auth/screens/login_screen.dart';
+import 'package:emo_project/view/initial/screens/initial_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -46,10 +47,16 @@ class SignupScreen extends ConsumerWidget {
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),
                 SizedBox(
-                  // height: 40,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const InitialScreen(),
+                        ),
+                      );
+                    },
                     child: const Text("新規登録"),
                   ),
                 ),
