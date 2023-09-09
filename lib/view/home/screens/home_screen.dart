@@ -28,7 +28,12 @@ class HomeScreen extends ConsumerWidget {
     PostsScreen(),
     AlbumsScreen(),
     ProfileScreen(),
-    GroupProfileScreen(groupName: "グループ名",)
+    GroupProfileScreen(
+      groupName: "グループ名",
+      groupImage:
+          'https://cdn.pixabay.com/photo/2018/06/11/21/50/road-bike-3469503_1280.jpg',
+      groupDescription: 'グループの説明文',
+    )
   ];
 
   @override

@@ -14,14 +14,25 @@ final List<String> groupImageList = [
 ];
 
 final List<String> groupNameList = [
-  "Group A",
-  "Group B",
-  "Group C",
-  "Group D",
-  "Group E",
-  "Group F",
-  "Group G",
-  "Group H",
+  "アドベンチャーシーカーズ",
+  "ペダルパラダイス:",
+  "サイクルコネクト",
+  "ツアーデキャンパス",
+  "ペダルパワーアカデミー",
+  "ビロンガク部",
+  "サイクルサイエンスクラブ",
+  "無限のペダルクルー",
+];
+
+final List<String> groupDescriptionList = [
+  "「アドベンチャーシーカーズ」は、自転車を通じて新しい場所を発見し、自分自身の限界を挑戦することを愛する学生たちのグループです。週末のロングライドから、初心者向けの講習まで、一緒に自転車の世界を楽しみましょう！",
+  "当サークルは、都市の中心から山の頂上まで、ペダルを踏むことの楽しさを共有するための場所です。経験豊富なライダーから初心者まで、全員が歓迎されます。",
+  "学内で最もフレンドリーな自転車愛好者のコミュニティを作ることを目指しています。友情、健康、そして冒険を求めるすべての学生を歓迎します！",
+  "このキャンパスをベースに、我々は周辺の風景や道を探索します。学業と健康をバランス良く維持したい学生のための、究極のサークル活動です。",
+  "自転車の技術からメンテナンス、そしてレース戦略まで、ここでは自転車に関するすべてを学べます。一緒に次のレベルへと進みましょう！",
+  "サイクリングはただの運動ではありません、それは生き方です。私たちはそれを全力で楽しむためのグループです。",
+  "ここでは、自転車の力学や科学を深く探求します。サイクリングが好きで、その背後にある科学に興味がある学生に最適です。",
+  "当サークルは、自転車と共に限界を超える喜びを追求する仲間たちのコミュニティです。毎週のグループライドやイベントで、自転車の楽しさを共有しましょう！",
 ];
 
 final onSearchProvider = StateProvider((ref) => false);
@@ -109,8 +120,11 @@ class JoinGroupScreen extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        GroupProfileScreen(groupName: groupNameList[index]),
+                    builder: (context) => GroupProfileScreen(
+                      groupName: groupNameList[index],
+                      groupImage: groupImageList[index],
+                      groupDescription: groupDescriptionList[index],
+                    ),
                   ),
                 );
               },
@@ -137,8 +151,11 @@ class JoinGroupScreen extends ConsumerWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      GroupProfileScreen(groupName: groupNameList[index]),
+                  builder: (context) => GroupProfileScreen(
+                    groupName: groupNameList[index],
+                    groupImage: groupImageList[index],
+                    groupDescription: groupDescriptionList[index],
+                  ),
                 ),
               );
             },
