@@ -21,6 +21,7 @@ class SignupScreen extends ConsumerWidget {
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
@@ -33,7 +34,7 @@ class SignupScreen extends ConsumerWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
+                  height: MediaQuery.of(context).size.height * 0.04,
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
@@ -45,7 +46,7 @@ class SignupScreen extends ConsumerWidget {
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),
                 SizedBox(
-                  height: 40,
+                  // height: 40,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
                     onPressed: () {},
@@ -53,7 +54,7 @@ class SignupScreen extends ConsumerWidget {
                   ),
                 ),
                 Divider(
-                  height: MediaQuery.of(context).size.height * 0.05,
+                  height: MediaQuery.of(context).size.height * 0.08,
                   thickness: 0.5,
                   indent: MediaQuery.of(context).size.width * 0.05,
                   endIndent: MediaQuery.of(context).size.width * 0.05,
