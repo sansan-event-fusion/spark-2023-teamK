@@ -22,6 +22,7 @@ class InitialScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
@@ -56,6 +57,7 @@ class InitialScreen extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.04,)
           ],
         ),
       ),
