@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class GroupProfileScreen extends StatelessWidget {
-  const GroupProfileScreen({super.key});
+  const GroupProfileScreen({super.key, required this.groupName});
+
+  final String groupName;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("グループ名"),
+        title: Text(groupName),
       ),
     );
   }
