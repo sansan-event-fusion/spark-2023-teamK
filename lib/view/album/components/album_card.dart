@@ -28,22 +28,23 @@ class AlbumCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          album.title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              '${albumPictures.length}枚',
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            Expanded(
+              child: Text(
+                album.title * 8,
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis),
+                maxLines: 1,
+              ),
             ),
-            const Text(
-              '2021/09/01',
-              style: TextStyle(fontSize: 12, color: Colors.grey),
+            const SizedBox(width: 8),
+            Text(
+              '${albumPictures.length}枚・2021/09/01',
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
             ),
           ],
         ),
@@ -53,7 +54,17 @@ class AlbumCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AlbumDetailsScreen(),
+                builder: (context) => AlbumDetailsScreen(
+                  album: album,
+                  albumPictures: [
+                    ...albumPictures,
+                    ...albumPictures,
+                    ...albumPictures,
+                    ...albumPictures,
+                    ...albumPictures,
+                    ...albumPictures,
+                  ],
+                ),
               ),
             );
           },
