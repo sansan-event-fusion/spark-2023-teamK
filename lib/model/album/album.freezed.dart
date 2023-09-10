@@ -22,6 +22,7 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
 mixin _$Album {
   String get albumId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,7 @@ abstract class $AlbumCopyWith<$Res> {
   factory $AlbumCopyWith(Album value, $Res Function(Album) then) =
       _$AlbumCopyWithImpl<$Res, Album>;
   @useResult
-  $Res call({String albumId, String title});
+  $Res call({String albumId, String title, String description});
 }
 
 /// @nodoc
@@ -51,6 +52,7 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
   $Res call({
     Object? albumId = null,
     Object? title = null,
+    Object? description = null,
   }) {
     return _then(_value.copyWith(
       albumId: null == albumId
@@ -60,6 +62,10 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -71,7 +77,7 @@ abstract class _$$_AlbumCopyWith<$Res> implements $AlbumCopyWith<$Res> {
       __$$_AlbumCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String albumId, String title});
+  $Res call({String albumId, String title, String description});
 }
 
 /// @nodoc
@@ -85,6 +91,7 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
   $Res call({
     Object? albumId = null,
     Object? title = null,
+    Object? description = null,
   }) {
     return _then(_$_Album(
       albumId: null == albumId
@@ -95,6 +102,10 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -102,7 +113,8 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
 /// @nodoc
 @JsonSerializable()
 class _$_Album implements _Album {
-  _$_Album({required this.albumId, required this.title});
+  _$_Album(
+      {required this.albumId, required this.title, required this.description});
 
   factory _$_Album.fromJson(Map<String, dynamic> json) =>
       _$$_AlbumFromJson(json);
@@ -111,10 +123,12 @@ class _$_Album implements _Album {
   final String albumId;
   @override
   final String title;
+  @override
+  final String description;
 
   @override
   String toString() {
-    return 'Album(albumId: $albumId, title: $title)';
+    return 'Album(albumId: $albumId, title: $title, description: $description)';
   }
 
   @override
@@ -123,12 +137,14 @@ class _$_Album implements _Album {
         (other.runtimeType == runtimeType &&
             other is _$_Album &&
             (identical(other.albumId, albumId) || other.albumId == albumId) &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, albumId, title);
+  int get hashCode => Object.hash(runtimeType, albumId, title, description);
 
   @JsonKey(ignore: true)
   @override
@@ -145,8 +161,10 @@ class _$_Album implements _Album {
 }
 
 abstract class _Album implements Album {
-  factory _Album({required final String albumId, required final String title}) =
-      _$_Album;
+  factory _Album(
+      {required final String albumId,
+      required final String title,
+      required final String description}) = _$_Album;
 
   factory _Album.fromJson(Map<String, dynamic> json) = _$_Album.fromJson;
 
@@ -154,6 +172,8 @@ abstract class _Album implements Album {
   String get albumId;
   @override
   String get title;
+  @override
+  String get description;
   @override
   @JsonKey(ignore: true)
   _$$_AlbumCopyWith<_$_Album> get copyWith =>
