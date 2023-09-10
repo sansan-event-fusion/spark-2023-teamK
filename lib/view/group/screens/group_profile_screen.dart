@@ -19,55 +19,59 @@ class GroupProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(groupName),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: NetworkImage(
-                    groupImage,
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+              delegate: SliverChildListDelegate([
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(
+                      groupImage,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(groupName),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(groupDescription),
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text("投稿一覧"),
-            ),
-          ),
-          Flexible(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(groupName),
+                  ),
+                ],
               ),
-              itemCount: albumImageUrlList.length,
-              itemBuilder: (context, index) {
-                return SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.32,
-                    height: MediaQuery.of(context).size.width * 0.32,
-                    child: Image.network(
-                      albumImageUrlList[index],
-                      fit: BoxFit.cover,
-                    ));
-              },
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(groupDescription),
+            ),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text("投稿一覧"),
+              ),
+            ),
+            Flexible(
+              child: GridView.builder(
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
+                itemCount: albumImageUrlList.length,
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.32,
+                      height: MediaQuery.of(context).size.width * 0.32,
+                      child: Image.network(
+                        albumImageUrlList[index],
+                        fit: BoxFit.cover,
+                      ));
+                },
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+              ),
+            ),
+          ]))
         ],
       ),
     );
