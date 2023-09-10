@@ -20,59 +20,47 @@ class MembersScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text("参加リクエスト"),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount:
-                    requestedMemberList == null ? 0 : requestedMemberList!.length,
-                itemBuilder: (context, index) {
-                  return MemberListItem(
-                    memberImageUrl: requestedMemberList![index].values.first,
-                    memberName: requestedMemberList![index].keys.first,
-                  );
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text("招待中"),
-              ),              
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount:
-                    invitedMemberList == null ? 0 : invitedMemberList!.length,
-                itemBuilder: (context, index) {
-                  return MemberListItem(
-                    memberImageUrl: invitedMemberList![index].values.first,
-                    memberName: invitedMemberList![index].keys.first,
-                  );
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text("参加中"),
-              ),              
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: memberList.length,
-                itemBuilder: (context, index) {
-                  return MemberListItem(
-                    memberImageUrl: memberList[index].values.first,
-                    memberName: memberList[index].keys.first,
-                  );
-                },
-              ),
-            ],
-          ),
+        child: ListView(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Text("参加リクエスト"),
+            ),
+            for (int i = 0;
+                requestedMemberList == null
+                    ? i < 0
+                    : i < requestedMemberList!.length;
+                i++) ...{
+              MemberListItem(
+                memberImageUrl: requestedMemberList![i].values.first,
+                memberName: requestedMemberList![i].keys.first,
+              )
+            },
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Text("招待中"),
+            ),
+            for (int i = 0;
+                invitedMemberList == null
+                    ? i < 0
+                    : i < invitedMemberList!.length;
+                i++) ...{
+              MemberListItem(
+                memberImageUrl: invitedMemberList![i].values.first,
+                memberName: invitedMemberList![i].keys.first,
+              )
+            },
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Text("参加中"),
+            ),
+            for (int i = 0; i < memberList.length; i++) ...{
+              MemberListItem(
+                memberImageUrl: memberList[i].values.first,
+                memberName: memberList[i].keys.first,
+              )
+            },
+          ],
         ),
       ),
     );
