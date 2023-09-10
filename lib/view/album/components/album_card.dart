@@ -1,6 +1,7 @@
 import 'package:emo_project/model/album/album.dart';
 import 'package:emo_project/model/picture/album_picture.dart';
 import 'package:emo_project/view/album/components/album_thumbnail.dart';
+import 'package:emo_project/view/album/screens/album_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class AlbumCard extends StatelessWidget {
@@ -52,7 +53,7 @@ class AlbumCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Placeholder(),
+                builder: (context) => AlbumDetailsScreen(),
               ),
             );
           },
