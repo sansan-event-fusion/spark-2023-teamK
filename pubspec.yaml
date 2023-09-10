@@ -21,6 +21,7 @@ dependencies:
   riverpod_generator: ^2.3.2
   build_runner: ^2.4.6
   json_serializable: ^6.7.1
+  url_launcher: ^6.1.14
   cached_network_image: ^3.2.3
   lottie: ^2.6.0
 
@@ -33,4 +34,5 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/
     - assets/lottie/
