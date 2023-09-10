@@ -1,39 +1,30 @@
+import 'package:emo_project/model/album/album.dart';
+import 'package:emo_project/view/album/components/album_card.dart';
 import 'package:emo_project/view/album/screens/add_album_screen.dart';
-import 'package:emo_project/view/album/screens/pictures_screen.dart';
 import 'package:flutter/material.dart';
-
-final albumTitleList = [
-  "沖縄旅行",
-  "北海道旅行",
-];
-
-final thmbnailImgList = [];
 
 class AlbumsScreen extends StatelessWidget {
   const AlbumsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<Album> albums = [
+      Album(albumId: '1', title: 'アルバム1'),
+      Album(albumId: '2', title: '文化祭2025'),
+      Album(albumId: '3', title: 'アルバム3'),
+      Album(albumId: '4', title: 'アルバム4'),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("アルバム一覧"),
         automaticallyImplyLeading: false,
       ),
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PicturesScreen()),
-              );
-            },
-            child: Container(
-              color: Colors.red,
-            ),
-          );
-        },
+      body: ListView.separated(
+        padding: const EdgeInsets.all(16).copyWith(bottom: 80),
+        itemCount: albums.length,
+        itemBuilder: (context, index) => AlbumCard(album: albums[index]),
+        separatorBuilder: (context, index) => const SizedBox(height: 16),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
