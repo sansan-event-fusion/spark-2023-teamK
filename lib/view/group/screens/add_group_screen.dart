@@ -1,4 +1,4 @@
-import 'package:emo_project/view/group/components/custom_image_picker.dart';
+import 'package:emo_project/view/common/components/custom_image_picker.dart';
 import 'package:emo_project/view/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +7,8 @@ class AddGroupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text("グループ作成"),
@@ -16,7 +18,7 @@ class AddGroupScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.04,
+              height: deviceHeight * 0.04,
             ),
             const Padding(
               padding: EdgeInsets.all(16.0),
@@ -27,7 +29,7 @@ class AddGroupScreen extends StatelessWidget {
               child: CustomImagePicker(),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.04,
+              height: deviceHeight * 0.04,
             ),
             const Padding(
               padding: EdgeInsets.all(16.0),
@@ -35,7 +37,7 @@ class AddGroupScreen extends StatelessWidget {
             ),
             Center(
               child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: deviceWidth * 0.9,
                 child: const TextField(
                   decoration: InputDecoration(
                       hintText: "グループ名",
@@ -45,7 +47,7 @@ class AddGroupScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.04,
+              height: deviceHeight * 0.04,
             ),
             const Padding(
               padding: EdgeInsets.all(16.0),
@@ -53,7 +55,7 @@ class AddGroupScreen extends StatelessWidget {
             ),
             Center(
               child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: deviceWidth * 0.9,
                 child: const TextField(
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
@@ -67,11 +69,11 @@ class AddGroupScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.06,
+              height: deviceHeight * 0.06,
             ),
             Center(
               child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: deviceWidth * 0.9,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
