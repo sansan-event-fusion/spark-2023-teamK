@@ -33,7 +33,7 @@ class AlbumCard extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                album.title * 8,
+                album.name * 8,
                 style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
