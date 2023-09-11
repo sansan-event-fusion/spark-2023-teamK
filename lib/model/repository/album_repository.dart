@@ -11,7 +11,8 @@ abstract class BaseAlbumRepository {
   Future<void> deleteAlbum({required String albumId, required String groupId});
 }
 
-final albumRepository = Provider<AlbumRepository>((ref) => AlbumRepository(ref));
+final albumRepository =
+    Provider<AlbumRepository>((ref) => AlbumRepository(ref));
 
 class AlbumRepository implements BaseAlbumRepository {
   final Ref _ref;
@@ -37,12 +38,13 @@ class AlbumRepository implements BaseAlbumRepository {
   Future<String> createAlbum(
       {required Album album, required String groupId}) async {
     try {
-      final docRef = await _ref
+      final docRef = _ref
           .watch(firebaseFirestoreProvider)
           .collection("groups")
           .doc(groupId)
           .collection("albums")
-          .add(album.toDocument());
+          .doc();
+      await docRef.set(album.copyWith(albumId: docRef.id).toDocument());
       return docRef.id;
     } on FirebaseException catch (e) {
       throw Exception(e);
@@ -50,7 +52,8 @@ class AlbumRepository implements BaseAlbumRepository {
   }
 
   @override
-  Future<void> updateAlbum({required Album album, required String groupId}) async {
+  Future<void> updateAlbum(
+      {required Album album, required String groupId}) async {
     try {
       await _ref
           .watch(firebaseFirestoreProvider)
