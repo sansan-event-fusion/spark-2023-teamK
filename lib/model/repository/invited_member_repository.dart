@@ -47,10 +47,10 @@ class InvitedMemberRepository implements BaseInvitedMemberRepository {
           .collection("groups")
           .doc(groupId)
           .collection("invited_members")
-          .doc();
+          .doc(invitedMember.invitedMemberId);
 
       await docRef
-          .set(invitedMember.copyWith(invitedMemberId: docRef.id).toDocument());
+          .set(invitedMember.copyWith(invitedMemberId: docRef.id).toJson());
       return docRef.id;
     } on FirebaseException catch (e) {
       throw Exception(e);
@@ -67,7 +67,7 @@ class InvitedMemberRepository implements BaseInvitedMemberRepository {
           .doc(groupId)
           .collection("invited_members")
           .doc(invitedMember.invitedMemberId)
-          .update(invitedMember.toDocument());
+          .update(invitedMember.toJson());
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
