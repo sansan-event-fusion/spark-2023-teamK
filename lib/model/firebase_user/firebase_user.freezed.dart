@@ -20,11 +20,11 @@ FirebaseUser _$FirebaseUserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FirebaseUser {
-  String get id => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get icon => throw _privateConstructorUsedError;
+  String get accountId => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  String get userProfile => throw _privateConstructorUsedError;
-  String get userInvitationID => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $FirebaseUserCopyWith<$Res> {
       _$FirebaseUserCopyWithImpl<$Res, FirebaseUser>;
   @useResult
   $Res call(
-      {String id,
-      DateTime createdAt,
-      String email,
-      String userProfile,
-      String userInvitationID});
+      {String userId,
+      String name,
+      String icon,
+      String accountId,
+      String email});
 }
 
 /// @nodoc
@@ -59,32 +59,32 @@ class _$FirebaseUserCopyWithImpl<$Res, $Val extends FirebaseUser>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
+    Object? userId = null,
+    Object? name = null,
+    Object? icon = null,
+    Object? accountId = null,
     Object? email = null,
-    Object? userProfile = null,
-    Object? userInvitationID = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      accountId: null == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      userProfile: null == userProfile
-          ? _value.userProfile
-          : userProfile // ignore: cast_nullable_to_non_nullable
-              as String,
-      userInvitationID: null == userInvitationID
-          ? _value.userInvitationID
-          : userInvitationID // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -99,11 +99,11 @@ abstract class _$$_FirebaseUserCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      DateTime createdAt,
-      String email,
-      String userProfile,
-      String userInvitationID});
+      {String userId,
+      String name,
+      String icon,
+      String accountId,
+      String email});
 }
 
 /// @nodoc
@@ -117,32 +117,32 @@ class __$$_FirebaseUserCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
+    Object? userId = null,
+    Object? name = null,
+    Object? icon = null,
+    Object? accountId = null,
     Object? email = null,
-    Object? userProfile = null,
-    Object? userInvitationID = null,
   }) {
     return _then(_$_FirebaseUser(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      accountId: null == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      userProfile: null == userProfile
-          ? _value.userProfile
-          : userProfile // ignore: cast_nullable_to_non_nullable
-              as String,
-      userInvitationID: null == userInvitationID
-          ? _value.userInvitationID
-          : userInvitationID // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -152,29 +152,29 @@ class __$$_FirebaseUserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_FirebaseUser implements _FirebaseUser {
   _$_FirebaseUser(
-      {required this.id,
-      required this.createdAt,
-      required this.email,
-      required this.userProfile,
-      required this.userInvitationID});
+      {required this.userId,
+      required this.name,
+      required this.icon,
+      required this.accountId,
+      required this.email});
 
   factory _$_FirebaseUser.fromJson(Map<String, dynamic> json) =>
       _$$_FirebaseUserFromJson(json);
 
   @override
-  final String id;
+  final String userId;
   @override
-  final DateTime createdAt;
+  final String name;
+  @override
+  final String icon;
+  @override
+  final String accountId;
   @override
   final String email;
-  @override
-  final String userProfile;
-  @override
-  final String userInvitationID;
 
   @override
   String toString() {
-    return 'FirebaseUser(id: $id, createdAt: $createdAt, email: $email, userProfile: $userProfile, userInvitationID: $userInvitationID)';
+    return 'FirebaseUser(userId: $userId, name: $name, icon: $icon, accountId: $accountId, email: $email)';
   }
 
   @override
@@ -182,20 +182,18 @@ class _$_FirebaseUser implements _FirebaseUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_FirebaseUser &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.userProfile, userProfile) ||
-                other.userProfile == userProfile) &&
-            (identical(other.userInvitationID, userInvitationID) ||
-                other.userInvitationID == userInvitationID));
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.accountId, accountId) ||
+                other.accountId == accountId) &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, createdAt, email, userProfile, userInvitationID);
+  int get hashCode =>
+      Object.hash(runtimeType, userId, name, icon, accountId, email);
 
   @JsonKey(ignore: true)
   @override
@@ -213,25 +211,25 @@ class _$_FirebaseUser implements _FirebaseUser {
 
 abstract class _FirebaseUser implements FirebaseUser {
   factory _FirebaseUser(
-      {required final String id,
-      required final DateTime createdAt,
-      required final String email,
-      required final String userProfile,
-      required final String userInvitationID}) = _$_FirebaseUser;
+      {required final String userId,
+      required final String name,
+      required final String icon,
+      required final String accountId,
+      required final String email}) = _$_FirebaseUser;
 
   factory _FirebaseUser.fromJson(Map<String, dynamic> json) =
       _$_FirebaseUser.fromJson;
 
   @override
-  String get id;
+  String get userId;
   @override
-  DateTime get createdAt;
+  String get name;
+  @override
+  String get icon;
+  @override
+  String get accountId;
   @override
   String get email;
-  @override
-  String get userProfile;
-  @override
-  String get userInvitationID;
   @override
   @JsonKey(ignore: true)
   _$$_FirebaseUserCopyWith<_$_FirebaseUser> get copyWith =>

@@ -7,11 +7,11 @@ part 'firebase_user.g.dart';
 @freezed
 class FirebaseUser with _$FirebaseUser {
   factory FirebaseUser({
-    required String id,
-    required DateTime createdAt,
+    required String userId,
+    required String name,
+    required String icon,
+    required String accountId,
     required String email,
-    required String userProfile,
-    required String userInvitationID,
   }) = _FirebaseUser;
 
   factory FirebaseUser.fromJson(Map<String, dynamic> json) =>
@@ -19,7 +19,7 @@ class FirebaseUser with _$FirebaseUser {
 
   factory FirebaseUser.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data()!;
-    return FirebaseUser.fromJson(data).copyWith(id: doc.id);
+    return FirebaseUser.fromJson(data).copyWith(userId: doc.id);
   }
 }
 
