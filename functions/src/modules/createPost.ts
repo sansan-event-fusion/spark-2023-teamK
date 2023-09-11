@@ -1,13 +1,25 @@
-import { onRequest } from "firebase-functions/v2/https";
 import * as admin from 'firebase-admin';
+import { HttpHandler } from "../types";
 
-export const createPostsToFirestore = onRequest(async (req, res) => {
-    const groupId = req.body.groupId;
-    const memberId = req.body.memberId;
-    const postId = req.body.postId;
-    const createdAt = req.body.createdAt;
+type RequestData = {
+    groupId: string;
+    memberId: string;
+    postId: string;
+    createdAt: string;
+};
 
-    const data = {
+type ResponseData = {
+    success: boolean;
+    id: string;
+};
+
+export const createPost: HttpHandler<RequestData, ResponseData> =async (
+    data,
+    _
+) => {
+    const { groupId, memberId, postId, createdAt } = data;
+
+    const postData = {
         postId,
         createdAt,
     };
@@ -19,9 +31,11 @@ export const createPostsToFirestore = onRequest(async (req, res) => {
             .collection('members')
             .doc(memberId)
             .collection('posts')
-            .add(data);
-        res.json({ success: true, id: docRef.id });
+            .add(postData);
+
+        return { success: true, id: docRef.id };
     } catch (error) {
-        res.json({ success: false, error: error.message });
+        return { success: false, id:"aa"};
+        //error追加したい
     }
-});
+};
