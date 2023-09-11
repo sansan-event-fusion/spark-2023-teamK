@@ -34,10 +34,12 @@ class FirebaseUserRepository implements BaseFirebaseUserRepository {
   Future<String> createFirebaseUser(
       {required FirebaseUser firebaseUser}) async {
     try {
-      final docRef =
-          _ref.watch(firebaseFirestoreProvider).collection("users").doc();
+      final docRef = _ref
+          .watch(firebaseFirestoreProvider)
+          .collection("users")
+          .doc(firebaseUser.userId);
 
-      await docRef.set(firebaseUser.copyWith(userId: docRef.id).toDocument());
+      await docRef.set(firebaseUser.copyWith(userId: docRef.id).toJson());
       return docRef.id;
     } on FirebaseException catch (e) {
       throw Exception(e);
@@ -51,7 +53,7 @@ class FirebaseUserRepository implements BaseFirebaseUserRepository {
           .watch(firebaseFirestoreProvider)
           .collection("users")
           .doc(firebaseUser.userId)
-          .update(firebaseUser.toDocument());
+          .update(firebaseUser.toJson());
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
