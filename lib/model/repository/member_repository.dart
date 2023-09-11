@@ -40,12 +40,15 @@ class MemberRepository implements BaseMemberRepository {
   Future<String> createMember(
       {required Member member, required String groupId}) async {
     try {
-      final docRef = await _ref
+      final docRef = _ref
           .watch(firebaseFirestoreProvider)
           .collection("groups")
           .doc(groupId)
           .collection("members")
-          .add(member.toDocument());
+          .doc();
+
+      await docRef.set(member.copyWith(memberId: docRef.id).toDocument());
+
       return docRef.id;
     } on FirebaseException catch (e) {
       throw Exception(e);
