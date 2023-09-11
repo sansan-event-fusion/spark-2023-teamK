@@ -6,15 +6,24 @@ part 'member.g.dart';
 
 @freezed
 class Member with _$Member {
-  factory Member({
-    required String memberId,
-    required String name,
-    required String role,
-    required String icon,
-    required String description,
-    required DateTime createdAt,
-    required DateTime updatedAt
-  }) = _Member;
+  factory Member(
+      {required String memberId,
+      required String name,
+      required String role,
+      required String icon,
+      required String description,
+      required DateTime createdAt,
+      DateTime? updatedAt}) = _Member;
+
+  factory Member.empty() => Member(
+        name: '',
+        icon: '',
+        createdAt: DateTime.now(),
+        description: '',
+        memberId: '',
+        role: '',
+        updatedAt: null,
+      );
 
   factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
 

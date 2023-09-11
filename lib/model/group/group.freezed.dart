@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'member.dart';
+part of 'group.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,44 +14,44 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Member _$MemberFromJson(Map<String, dynamic> json) {
-  return _Member.fromJson(json);
+Group _$GroupFromJson(Map<String, dynamic> json) {
+  return _Group.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Member {
-  String get memberId => throw _privateConstructorUsedError;
+mixin _$Group {
+  String get groupId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get role => throw _privateConstructorUsedError;
-  String get icon => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String get icon => throw _privateConstructorUsedError;
+  int get memberCount => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MemberCopyWith<Member> get copyWith => throw _privateConstructorUsedError;
+  $GroupCopyWith<Group> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MemberCopyWith<$Res> {
-  factory $MemberCopyWith(Member value, $Res Function(Member) then) =
-      _$MemberCopyWithImpl<$Res, Member>;
+abstract class $GroupCopyWith<$Res> {
+  factory $GroupCopyWith(Group value, $Res Function(Group) then) =
+      _$GroupCopyWithImpl<$Res, Group>;
   @useResult
   $Res call(
-      {String memberId,
+      {String groupId,
       String name,
-      String role,
-      String icon,
       String description,
+      String icon,
+      int memberCount,
       DateTime createdAt,
       DateTime? updatedAt});
 }
 
 /// @nodoc
-class _$MemberCopyWithImpl<$Res, $Val extends Member>
-    implements $MemberCopyWith<$Res> {
-  _$MemberCopyWithImpl(this._value, this._then);
+class _$GroupCopyWithImpl<$Res, $Val extends Group>
+    implements $GroupCopyWith<$Res> {
+  _$GroupCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -61,35 +61,35 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? memberId = null,
+    Object? groupId = null,
     Object? name = null,
-    Object? role = null,
-    Object? icon = null,
     Object? description = null,
+    Object? icon = null,
+    Object? memberCount = null,
     Object? createdAt = null,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      memberId: null == memberId
-          ? _value.memberId
-          : memberId // ignore: cast_nullable_to_non_nullable
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       icon: null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
+      memberCount: null == memberCount
+          ? _value.memberCount
+          : memberCount // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -103,60 +103,59 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
 }
 
 /// @nodoc
-abstract class _$$_MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
-  factory _$$_MemberCopyWith(_$_Member value, $Res Function(_$_Member) then) =
-      __$$_MemberCopyWithImpl<$Res>;
+abstract class _$$_GroupCopyWith<$Res> implements $GroupCopyWith<$Res> {
+  factory _$$_GroupCopyWith(_$_Group value, $Res Function(_$_Group) then) =
+      __$$_GroupCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String memberId,
+      {String groupId,
       String name,
-      String role,
-      String icon,
       String description,
+      String icon,
+      int memberCount,
       DateTime createdAt,
       DateTime? updatedAt});
 }
 
 /// @nodoc
-class __$$_MemberCopyWithImpl<$Res>
-    extends _$MemberCopyWithImpl<$Res, _$_Member>
-    implements _$$_MemberCopyWith<$Res> {
-  __$$_MemberCopyWithImpl(_$_Member _value, $Res Function(_$_Member) _then)
+class __$$_GroupCopyWithImpl<$Res> extends _$GroupCopyWithImpl<$Res, _$_Group>
+    implements _$$_GroupCopyWith<$Res> {
+  __$$_GroupCopyWithImpl(_$_Group _value, $Res Function(_$_Group) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? memberId = null,
+    Object? groupId = null,
     Object? name = null,
-    Object? role = null,
-    Object? icon = null,
     Object? description = null,
+    Object? icon = null,
+    Object? memberCount = null,
     Object? createdAt = null,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$_Member(
-      memberId: null == memberId
-          ? _value.memberId
-          : memberId // ignore: cast_nullable_to_non_nullable
+    return _then(_$_Group(
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       icon: null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
+      memberCount: null == memberCount
+          ? _value.memberCount
+          : memberCount // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -171,29 +170,29 @@ class __$$_MemberCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Member implements _Member {
-  _$_Member(
-      {required this.memberId,
+class _$_Group implements _Group {
+  _$_Group(
+      {required this.groupId,
       required this.name,
-      required this.role,
-      required this.icon,
       required this.description,
+      required this.icon,
+      required this.memberCount,
       required this.createdAt,
       this.updatedAt});
 
-  factory _$_Member.fromJson(Map<String, dynamic> json) =>
-      _$$_MemberFromJson(json);
+  factory _$_Group.fromJson(Map<String, dynamic> json) =>
+      _$$_GroupFromJson(json);
 
   @override
-  final String memberId;
+  final String groupId;
   @override
   final String name;
   @override
-  final String role;
+  final String description;
   @override
   final String icon;
   @override
-  final String description;
+  final int memberCount;
   @override
   final DateTime createdAt;
   @override
@@ -201,21 +200,21 @@ class _$_Member implements _Member {
 
   @override
   String toString() {
-    return 'Member(memberId: $memberId, name: $name, role: $role, icon: $icon, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Group(groupId: $groupId, name: $name, description: $description, icon: $icon, memberCount: $memberCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Member &&
-            (identical(other.memberId, memberId) ||
-                other.memberId == memberId) &&
+            other is _$_Group &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.icon, icon) || other.icon == icon) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.memberCount, memberCount) ||
+                other.memberCount == memberCount) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -224,51 +223,51 @@ class _$_Member implements _Member {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, memberId, name, role, icon,
-      description, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, groupId, name, description, icon,
+      memberCount, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MemberCopyWith<_$_Member> get copyWith =>
-      __$$_MemberCopyWithImpl<_$_Member>(this, _$identity);
+  _$$_GroupCopyWith<_$_Group> get copyWith =>
+      __$$_GroupCopyWithImpl<_$_Group>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MemberToJson(
+    return _$$_GroupToJson(
       this,
     );
   }
 }
 
-abstract class _Member implements Member {
-  factory _Member(
-      {required final String memberId,
+abstract class _Group implements Group {
+  factory _Group(
+      {required final String groupId,
       required final String name,
-      required final String role,
-      required final String icon,
       required final String description,
+      required final String icon,
+      required final int memberCount,
       required final DateTime createdAt,
-      final DateTime? updatedAt}) = _$_Member;
+      final DateTime? updatedAt}) = _$_Group;
 
-  factory _Member.fromJson(Map<String, dynamic> json) = _$_Member.fromJson;
+  factory _Group.fromJson(Map<String, dynamic> json) = _$_Group.fromJson;
 
   @override
-  String get memberId;
+  String get groupId;
   @override
   String get name;
   @override
-  String get role;
+  String get description;
   @override
   String get icon;
   @override
-  String get description;
+  int get memberCount;
   @override
   DateTime get createdAt;
   @override
   DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_MemberCopyWith<_$_Member> get copyWith =>
+  _$$_GroupCopyWith<_$_Group> get copyWith =>
       throw _privateConstructorUsedError;
 }
