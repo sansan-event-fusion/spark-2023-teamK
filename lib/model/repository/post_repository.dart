@@ -57,7 +57,7 @@ class PostRepository implements BasePostRepository {
           .collection("groups")
           .doc(groupId)
           .collection("posts")
-          .doc(post.id)
+          .doc(post.postId)
           .update(post.toDocument());
     } on FirebaseException catch (e) {
       throw Exception(e);

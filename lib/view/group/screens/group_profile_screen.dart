@@ -1,9 +1,8 @@
-import 'package:emo_project/view/album/screens/pictures_screen.dart';
 import 'package:emo_project/view/member/screens/members_screen.dart';
 import 'package:flutter/material.dart';
 
 class GroupProfileScreen extends StatelessWidget {
-  const GroupProfileScreen({
+   GroupProfileScreen({
     super.key,
     required this.groupName,
     required this.groupImage,
@@ -13,6 +12,16 @@ class GroupProfileScreen extends StatelessWidget {
   final String groupName;
   final String groupImage;
   final String groupDescription;
+    final List<String> groupImageUrlList = [
+    "https://cdn.pixabay.com/photo/2016/11/10/14/00/cycling-1814362_1280.jpg",
+    "https://cdn.pixabay.com/photo/2016/08/02/10/00/road-bikes-1562929_1280.jpg",
+    "https://cdn.pixabay.com/photo/2016/11/18/10/36/road-1833925_1280.jpg",
+    "https://cdn.pixabay.com/photo/2020/08/09/16/23/cyclists-5475979_1280.jpg",
+    "https://cdn.pixabay.com/photo/2016/10/06/07/56/girl-1718430_1280.jpg",
+    "https://cdn.pixabay.com/photo/2013/03/19/18/23/mountain-biking-95032_1280.jpg",
+    "https://cdn.pixabay.com/photo/2017/04/26/17/58/road-bike-2263202_1280.jpg",
+    "https://cdn.pixabay.com/photo/2018/06/11/21/50/road-bike-3469503_1280.jpg",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +93,13 @@ class GroupProfileScreen extends StatelessWidget {
                     const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                 ),
-                itemCount: albumImageUrlList.length,
+                itemCount: groupImageUrlList.length,
                 itemBuilder: (context, index) {
                   return SizedBox(
                       width: MediaQuery.of(context).size.width * 0.32,
                       height: MediaQuery.of(context).size.width * 0.32,
                       child: Image.network(
-                        albumImageUrlList[index],
+                        groupImageUrlList[index],
                         fit: BoxFit.cover,
                       ));
                 },
