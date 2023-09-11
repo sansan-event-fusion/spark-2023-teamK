@@ -47,10 +47,10 @@ class PendingMemberRepository implements BasePendingMemberRepository {
           .collection("groups")
           .doc(groupId)
           .collection("pending_members")
-          .doc();
+          .doc(pendingMember.pendingMemberId);
 
       await docRef
-          .set(pendingMember.copyWith(pendingMemberId: docRef.id).toDocument());
+          .set(pendingMember.copyWith(pendingMemberId: docRef.id).toJson());
       return docRef.id;
     } on FirebaseException catch (e) {
       throw Exception(e);
@@ -67,7 +67,7 @@ class PendingMemberRepository implements BasePendingMemberRepository {
           .doc(groupId)
           .collection("pending_members")
           .doc(pendingMember.pendingMemberId)
-          .update(pendingMember.toDocument());
+          .update(pendingMember.toJson());
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
