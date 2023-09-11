@@ -46,8 +46,7 @@ class MemberRepository implements BaseMemberRepository {
           .doc(groupId)
           .collection("members")
           .doc();
-
-      await docRef.set(member.copyWith(memberId: docRef.id).toDocument());
+      await docRef.set(member.copyWith(memberId: docRef.id).toJson());
 
       return docRef.id;
     } on FirebaseException catch (e) {
@@ -65,7 +64,7 @@ class MemberRepository implements BaseMemberRepository {
           .doc(groupId)
           .collection("members")
           .doc(member.memberId)
-          .update(member.toDocument());
+          .update(member.toJson());
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
