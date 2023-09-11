@@ -20,11 +20,13 @@ Member _$MemberFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Member {
-  String get id => throw _privateConstructorUsedError;
-  DateTime get joinedAt => throw _privateConstructorUsedError;
+  String get memberId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get userProfile => throw _privateConstructorUsedError;
-  String get userInvitationID => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
+  String get icon => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,11 +39,13 @@ abstract class $MemberCopyWith<$Res> {
       _$MemberCopyWithImpl<$Res, Member>;
   @useResult
   $Res call(
-      {String id,
-      DateTime joinedAt,
+      {String memberId,
       String name,
-      String userProfile,
-      String userInvitationID});
+      String role,
+      String icon,
+      String description,
+      DateTime createdAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -57,33 +61,43 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? joinedAt = null,
+    Object? memberId = null,
     Object? name = null,
-    Object? userProfile = null,
-    Object? userInvitationID = null,
+    Object? role = null,
+    Object? icon = null,
+    Object? description = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      memberId: null == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as String,
-      joinedAt: null == joinedAt
-          ? _value.joinedAt
-          : joinedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      userProfile: null == userProfile
-          ? _value.userProfile
-          : userProfile // ignore: cast_nullable_to_non_nullable
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
-      userInvitationID: null == userInvitationID
-          ? _value.userInvitationID
-          : userInvitationID // ignore: cast_nullable_to_non_nullable
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -95,11 +109,13 @@ abstract class _$$_MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      DateTime joinedAt,
+      {String memberId,
       String name,
-      String userProfile,
-      String userInvitationID});
+      String role,
+      String icon,
+      String description,
+      DateTime createdAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -112,33 +128,43 @@ class __$$_MemberCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? joinedAt = null,
+    Object? memberId = null,
     Object? name = null,
-    Object? userProfile = null,
-    Object? userInvitationID = null,
+    Object? role = null,
+    Object? icon = null,
+    Object? description = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_$_Member(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      memberId: null == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as String,
-      joinedAt: null == joinedAt
-          ? _value.joinedAt
-          : joinedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      userProfile: null == userProfile
-          ? _value.userProfile
-          : userProfile // ignore: cast_nullable_to_non_nullable
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
-      userInvitationID: null == userInvitationID
-          ? _value.userInvitationID
-          : userInvitationID // ignore: cast_nullable_to_non_nullable
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -147,29 +173,35 @@ class __$$_MemberCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Member implements _Member {
   _$_Member(
-      {required this.id,
-      required this.joinedAt,
+      {required this.memberId,
       required this.name,
-      required this.userProfile,
-      required this.userInvitationID});
+      required this.role,
+      required this.icon,
+      required this.description,
+      required this.createdAt,
+      required this.updatedAt});
 
   factory _$_Member.fromJson(Map<String, dynamic> json) =>
       _$$_MemberFromJson(json);
 
   @override
-  final String id;
-  @override
-  final DateTime joinedAt;
+  final String memberId;
   @override
   final String name;
   @override
-  final String userProfile;
+  final String role;
   @override
-  final String userInvitationID;
+  final String icon;
+  @override
+  final String description;
+  @override
+  final DateTime createdAt;
+  @override
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Member(id: $id, joinedAt: $joinedAt, name: $name, userProfile: $userProfile, userInvitationID: $userInvitationID)';
+    return 'Member(memberId: $memberId, name: $name, role: $role, icon: $icon, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -177,20 +209,23 @@ class _$_Member implements _Member {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Member &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.joinedAt, joinedAt) ||
-                other.joinedAt == joinedAt) &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.userProfile, userProfile) ||
-                other.userProfile == userProfile) &&
-            (identical(other.userInvitationID, userInvitationID) ||
-                other.userInvitationID == userInvitationID));
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, joinedAt, name, userProfile, userInvitationID);
+  int get hashCode => Object.hash(runtimeType, memberId, name, role, icon,
+      description, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -208,24 +243,30 @@ class _$_Member implements _Member {
 
 abstract class _Member implements Member {
   factory _Member(
-      {required final String id,
-      required final DateTime joinedAt,
+      {required final String memberId,
       required final String name,
-      required final String userProfile,
-      required final String userInvitationID}) = _$_Member;
+      required final String role,
+      required final String icon,
+      required final String description,
+      required final DateTime createdAt,
+      required final DateTime updatedAt}) = _$_Member;
 
   factory _Member.fromJson(Map<String, dynamic> json) = _$_Member.fromJson;
 
   @override
-  String get id;
-  @override
-  DateTime get joinedAt;
+  String get memberId;
   @override
   String get name;
   @override
-  String get userProfile;
+  String get role;
   @override
-  String get userInvitationID;
+  String get icon;
+  @override
+  String get description;
+  @override
+  DateTime get createdAt;
+  @override
+  DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_MemberCopyWith<_$_Member> get copyWith =>

@@ -7,17 +7,21 @@ part of 'member.dart';
 // **************************************************************************
 
 _$_Member _$$_MemberFromJson(Map<String, dynamic> json) => _$_Member(
-      id: json['id'] as String,
-      joinedAt: DateTime.parse(json['joinedAt'] as String),
+      memberId: json['memberId'] as String,
       name: json['name'] as String,
-      userProfile: json['userProfile'] as String,
-      userInvitationID: json['userInvitationID'] as String,
+      role: json['role'] as String,
+      icon: json['icon'] as String,
+      description: json['description'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$$_MemberToJson(_$_Member instance) => <String, dynamic>{
-      'id': instance.id,
-      'joinedAt': instance.joinedAt.toIso8601String(),
+      'memberId': instance.memberId,
       'name': instance.name,
-      'userProfile': instance.userProfile,
-      'userInvitationID': instance.userInvitationID,
+      'role': instance.role,
+      'icon': instance.icon,
+      'description': instance.description,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
     };

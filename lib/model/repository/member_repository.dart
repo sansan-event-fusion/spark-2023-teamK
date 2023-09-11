@@ -61,7 +61,7 @@ class MemberRepository implements BaseMemberRepository {
           .collection("groups")
           .doc(groupId)
           .collection("members")
-          .doc(member.id)
+          .doc(member.memberId)
           .update(member.toDocument());
     } on FirebaseException catch (e) {
       throw Exception(e);

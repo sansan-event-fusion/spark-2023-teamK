@@ -7,22 +7,23 @@ part 'member.g.dart';
 @freezed
 class Member with _$Member {
   factory Member({
-    required String id,
-    required DateTime joinedAt,
+    required String memberId,
     required String name,
-    required String userProfile,
-    required String userInvitationID,
+    required String role,
+    required String icon,
+    required String description,
+    required DateTime createdAt,
+    required DateTime updatedAt
   }) = _Member;
 
-  factory Member.fromJson(Map<String, dynamic> json) =>
-      _$MemberFromJson(json);
+  factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
 
   factory Member.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data()!;
-    return Member.fromJson(data).copyWith(id: doc.id);
+    return Member.fromJson(data).copyWith(memberId: doc.id);
   }
 }
 
 extension MemberX on Member {
-  Map<String, dynamic> toDocument() => toJson()..remove('id');
+  Map<String, dynamic> toDocument() => toJson()..remove('memberId');
 }
