@@ -19,7 +19,7 @@ class AlbumDetailsScreen extends StatelessWidget {
     final scrollController = ScrollController();
     return Scaffold(
       appBar: AppBar(
-        title: Text(album.title),
+        title: Text(album.name),
       ),
       body: albumPictures.isEmpty
           ? const Center(

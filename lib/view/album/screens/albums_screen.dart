@@ -9,10 +9,9 @@ class AlbumsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Album> albums = [
-      Album(albumId: '1', title: 'アルバム1', description: 'アルバムの説明'),
-      Album(albumId: '2', title: '文化祭2025', description: ''),
-      Album(albumId: '3', title: 'アルバム3', description: ''),
-      Album(albumId: '4', title: 'アルバム4', description: ''),
+      Album.empty(),
+      Album.empty(),
+      Album.empty(),
     ];
 
     return Scaffold(
