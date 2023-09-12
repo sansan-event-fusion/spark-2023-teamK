@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'invited_member_controller.g.dart';
 
 @riverpod
-class MemberController extends _$MemberController {
+class InvitedMemberController extends _$InvitedMemberController {
   @override
   Future<List<InvitedMember>> build({required String groupId}) async {
     final repository = ref.read(invitedMemberRepository);

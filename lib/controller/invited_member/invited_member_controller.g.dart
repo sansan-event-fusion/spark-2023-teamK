@@ -6,7 +6,8 @@ part of 'invited_member_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$memberControllerHash() => r'ad3670e5ea9515060a1ba970f87b7b51eb85d854';
+String _$invitedMemberControllerHash() =>
+    r'3bbfcc1bb66bef7fae5de6a8ae822701ec7354a2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,7 +30,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$MemberController
+abstract class _$InvitedMemberController
     extends BuildlessAutoDisposeAsyncNotifier<List<InvitedMember>> {
   late final String groupId;
 
@@ -38,27 +39,28 @@ abstract class _$MemberController
   });
 }
 
-/// See also [MemberController].
-@ProviderFor(MemberController)
-const memberControllerProvider = MemberControllerFamily();
+/// See also [InvitedMemberController].
+@ProviderFor(InvitedMemberController)
+const invitedMemberControllerProvider = InvitedMemberControllerFamily();
 
-/// See also [MemberController].
-class MemberControllerFamily extends Family<AsyncValue<List<InvitedMember>>> {
-  /// See also [MemberController].
-  const MemberControllerFamily();
+/// See also [InvitedMemberController].
+class InvitedMemberControllerFamily
+    extends Family<AsyncValue<List<InvitedMember>>> {
+  /// See also [InvitedMemberController].
+  const InvitedMemberControllerFamily();
 
-  /// See also [MemberController].
-  MemberControllerProvider call({
+  /// See also [InvitedMemberController].
+  InvitedMemberControllerProvider call({
     required String groupId,
   }) {
-    return MemberControllerProvider(
+    return InvitedMemberControllerProvider(
       groupId: groupId,
     );
   }
 
   @override
-  MemberControllerProvider getProviderOverride(
-    covariant MemberControllerProvider provider,
+  InvitedMemberControllerProvider getProviderOverride(
+    covariant InvitedMemberControllerProvider provider,
   ) {
     return call(
       groupId: provider.groupId,
@@ -77,30 +79,31 @@ class MemberControllerFamily extends Family<AsyncValue<List<InvitedMember>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'memberControllerProvider';
+  String? get name => r'invitedMemberControllerProvider';
 }
 
-/// See also [MemberController].
-class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    MemberController, List<InvitedMember>> {
-  /// See also [MemberController].
-  MemberControllerProvider({
+/// See also [InvitedMemberController].
+class InvitedMemberControllerProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<InvitedMemberController,
+        List<InvitedMember>> {
+  /// See also [InvitedMemberController].
+  InvitedMemberControllerProvider({
     required String groupId,
   }) : this._internal(
-          () => MemberController()..groupId = groupId,
-          from: memberControllerProvider,
-          name: r'memberControllerProvider',
+          () => InvitedMemberController()..groupId = groupId,
+          from: invitedMemberControllerProvider,
+          name: r'invitedMemberControllerProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$memberControllerHash,
-          dependencies: MemberControllerFamily._dependencies,
+                  : _$invitedMemberControllerHash,
+          dependencies: InvitedMemberControllerFamily._dependencies,
           allTransitiveDependencies:
-              MemberControllerFamily._allTransitiveDependencies,
+              InvitedMemberControllerFamily._allTransitiveDependencies,
           groupId: groupId,
         );
 
-  MemberControllerProvider._internal(
+  InvitedMemberControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -114,7 +117,7 @@ class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
   @override
   Future<List<InvitedMember>> runNotifierBuild(
-    covariant MemberController notifier,
+    covariant InvitedMemberController notifier,
   ) {
     return notifier.build(
       groupId: groupId,
@@ -122,10 +125,10 @@ class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(MemberController Function() create) {
+  Override overrideWith(InvitedMemberController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: MemberControllerProvider._internal(
+      override: InvitedMemberControllerProvider._internal(
         () => create()..groupId = groupId,
         from: from,
         name: null,
@@ -138,14 +141,14 @@ class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<MemberController, List<InvitedMember>>
-      createElement() {
-    return _MemberControllerProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<InvitedMemberController,
+      List<InvitedMember>> createElement() {
+    return _InvitedMemberControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is MemberControllerProvider && other.groupId == groupId;
+    return other is InvitedMemberControllerProvider && other.groupId == groupId;
   }
 
   @override
@@ -157,19 +160,19 @@ class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
-mixin MemberControllerRef
+mixin InvitedMemberControllerRef
     on AutoDisposeAsyncNotifierProviderRef<List<InvitedMember>> {
   /// The parameter `groupId` of this provider.
   String get groupId;
 }
 
-class _MemberControllerProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<MemberController,
-        List<InvitedMember>> with MemberControllerRef {
-  _MemberControllerProviderElement(super.provider);
+class _InvitedMemberControllerProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<InvitedMemberController,
+        List<InvitedMember>> with InvitedMemberControllerRef {
+  _InvitedMemberControllerProviderElement(super.provider);
 
   @override
-  String get groupId => (origin as MemberControllerProvider).groupId;
+  String get groupId => (origin as InvitedMemberControllerProvider).groupId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
