@@ -1,5 +1,4 @@
 import 'package:emo_project/controller/member/member_controller.dart';
-import 'package:emo_project/model/member/member.dart';
 import 'package:emo_project/view/auth/components/apple_signin_button.dart';
 import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:emo_project/view/auth/components/google_signin_button.dart';
@@ -110,31 +109,6 @@ class SignupScreen extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            print(data.length);
-                          },
-                          child: Text("member list test"),
-                        ),
-                        Text(data.length.toString()),
-                        ElevatedButton(
-                            onPressed: () {
-                              ref
-                                  .read(
-                                      memberControllerProvider(groupId: "test")
-                                          .notifier)
-                                  .createMember(
-                                      member: Member(
-                                          memberId: "memberId2",
-                                          name:
-                                              "${DateTime.now().microsecond % 100}",
-                                          role: "",
-                                          icon: "icon2",
-                                          description: "description2",
-                                          createdAt: DateTime.now(),
-                                          updatedAt: DateTime.now()));
-                            },
-                            child: const Text("add member"))
                       ],
                     ),
                   ),

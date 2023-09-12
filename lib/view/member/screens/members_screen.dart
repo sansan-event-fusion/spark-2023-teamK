@@ -1,19 +1,19 @@
+import 'package:emo_project/controller/member/member_controller.dart';
 import 'package:emo_project/view/member/components/member_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MembersScreen extends StatelessWidget {
+class MembersScreen extends ConsumerWidget {
   const MembersScreen(
-      {super.key,
-      required this.memberList,
-      this.requestedMemberList,
-      this.invitedMemberList});
+      {super.key, this.requestedMemberList, this.invitedMemberList});
 
   final List<Map<String, String>>? requestedMemberList;
   final List<Map<String, String>>? invitedMemberList;
-  final List<Map<String, String>> memberList;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(memberControllerProvider(groupId: "test"));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("メンバー一覧"),
@@ -54,12 +54,28 @@ class MembersScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 8.0),
               child: Text("参加中"),
             ),
-            for (int i = 0; i < memberList.length; i++) ...{
-              MemberListItem(
-                memberImageUrl: memberList[i].values.first,
-                memberName: memberList[i].keys.first,
-              )
-            },
+            state.when(
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+              error: (error, stackTrace) {
+                return Text(error.toString());
+              },
+              data: (data) {
+                return Column(
+                  children: [
+                    for (int i = 0; i < data.length; i++) ...{
+                      MemberListItem(
+                        memberImageUrl: data[i].icon,
+                        memberName: data[i].name,
+                      )
+                    }
+                  ],
+                );
+              },
+            )
           ],
         ),
       ),
