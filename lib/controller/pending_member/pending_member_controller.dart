@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'pending_member_controller.g.dart';
 
 @riverpod
-class MemberController extends _$MemberController {
+class PendingMemberController extends _$PendingMemberController {
   @override
   Future<List<PendingMember>> build({required String groupId}) async {
     final repository = ref.read(pendingMemberRepository);
@@ -42,7 +42,7 @@ class MemberController extends _$MemberController {
   }
 
   Future<String> createPendingMember(
-      {required PendingMember pendingMember, required String groupId}) async {
+      {required PendingMember pendingMember}) async {
     try {
       final docRef = await ref
           .read(pendingMemberRepository)
@@ -55,7 +55,7 @@ class MemberController extends _$MemberController {
   }
 
   Future<void> updatePendingMember(
-      {required PendingMember pendingMember, required String groupId}) async {
+      {required PendingMember pendingMember}) async {
     try {
       await ref
           .read(pendingMemberRepository)
@@ -66,7 +66,7 @@ class MemberController extends _$MemberController {
   }
 
   Future<void> deletePendingMember(
-      {required String pendingMemberId, required String groupId}) async {
+      {required String pendingMemberId}) async {
     try {
       await ref.read(pendingMemberRepository).deletePendingMember(
           pendingMemberId: pendingMemberId, groupId: groupId);

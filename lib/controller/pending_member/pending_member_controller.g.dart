@@ -6,7 +6,8 @@ part of 'pending_member_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$memberControllerHash() => r'834ca44e1c2f0b1b5206929623407b2842b77e75';
+String _$pendingMemberControllerHash() =>
+    r'34eaa12a260a5bf6a447f4c81e76f8329408c86d';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,7 +30,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$MemberController
+abstract class _$PendingMemberController
     extends BuildlessAutoDisposeAsyncNotifier<List<PendingMember>> {
   late final String groupId;
 
@@ -38,27 +39,28 @@ abstract class _$MemberController
   });
 }
 
-/// See also [MemberController].
-@ProviderFor(MemberController)
-const memberControllerProvider = MemberControllerFamily();
+/// See also [PendingMemberController].
+@ProviderFor(PendingMemberController)
+const pendingMemberControllerProvider = PendingMemberControllerFamily();
 
-/// See also [MemberController].
-class MemberControllerFamily extends Family<AsyncValue<List<PendingMember>>> {
-  /// See also [MemberController].
-  const MemberControllerFamily();
+/// See also [PendingMemberController].
+class PendingMemberControllerFamily
+    extends Family<AsyncValue<List<PendingMember>>> {
+  /// See also [PendingMemberController].
+  const PendingMemberControllerFamily();
 
-  /// See also [MemberController].
-  MemberControllerProvider call({
+  /// See also [PendingMemberController].
+  PendingMemberControllerProvider call({
     required String groupId,
   }) {
-    return MemberControllerProvider(
+    return PendingMemberControllerProvider(
       groupId: groupId,
     );
   }
 
   @override
-  MemberControllerProvider getProviderOverride(
-    covariant MemberControllerProvider provider,
+  PendingMemberControllerProvider getProviderOverride(
+    covariant PendingMemberControllerProvider provider,
   ) {
     return call(
       groupId: provider.groupId,
@@ -77,30 +79,31 @@ class MemberControllerFamily extends Family<AsyncValue<List<PendingMember>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'memberControllerProvider';
+  String? get name => r'pendingMemberControllerProvider';
 }
 
-/// See also [MemberController].
-class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    MemberController, List<PendingMember>> {
-  /// See also [MemberController].
-  MemberControllerProvider({
+/// See also [PendingMemberController].
+class PendingMemberControllerProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<PendingMemberController,
+        List<PendingMember>> {
+  /// See also [PendingMemberController].
+  PendingMemberControllerProvider({
     required String groupId,
   }) : this._internal(
-          () => MemberController()..groupId = groupId,
-          from: memberControllerProvider,
-          name: r'memberControllerProvider',
+          () => PendingMemberController()..groupId = groupId,
+          from: pendingMemberControllerProvider,
+          name: r'pendingMemberControllerProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$memberControllerHash,
-          dependencies: MemberControllerFamily._dependencies,
+                  : _$pendingMemberControllerHash,
+          dependencies: PendingMemberControllerFamily._dependencies,
           allTransitiveDependencies:
-              MemberControllerFamily._allTransitiveDependencies,
+              PendingMemberControllerFamily._allTransitiveDependencies,
           groupId: groupId,
         );
 
-  MemberControllerProvider._internal(
+  PendingMemberControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -114,7 +117,7 @@ class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
   @override
   Future<List<PendingMember>> runNotifierBuild(
-    covariant MemberController notifier,
+    covariant PendingMemberController notifier,
   ) {
     return notifier.build(
       groupId: groupId,
@@ -122,10 +125,10 @@ class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(MemberController Function() create) {
+  Override overrideWith(PendingMemberController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: MemberControllerProvider._internal(
+      override: PendingMemberControllerProvider._internal(
         () => create()..groupId = groupId,
         from: from,
         name: null,
@@ -138,14 +141,14 @@ class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<MemberController, List<PendingMember>>
-      createElement() {
-    return _MemberControllerProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<PendingMemberController,
+      List<PendingMember>> createElement() {
+    return _PendingMemberControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is MemberControllerProvider && other.groupId == groupId;
+    return other is PendingMemberControllerProvider && other.groupId == groupId;
   }
 
   @override
@@ -157,19 +160,19 @@ class MemberControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
-mixin MemberControllerRef
+mixin PendingMemberControllerRef
     on AutoDisposeAsyncNotifierProviderRef<List<PendingMember>> {
   /// The parameter `groupId` of this provider.
   String get groupId;
 }
 
-class _MemberControllerProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<MemberController,
-        List<PendingMember>> with MemberControllerRef {
-  _MemberControllerProviderElement(super.provider);
+class _PendingMemberControllerProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<PendingMemberController,
+        List<PendingMember>> with PendingMemberControllerRef {
+  _PendingMemberControllerProviderElement(super.provider);
 
   @override
-  String get groupId => (origin as MemberControllerProvider).groupId;
+  String get groupId => (origin as PendingMemberControllerProvider).groupId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
