@@ -20,7 +20,7 @@ export const deleteUser: HttpHandler<RequestData, ResponseData> = async (
     collectionPath: string,
     batchSize: number
   ): Promise<number> {
-    const collectionRef = firestore.collection(collectionPath);
+    const collectionRef = firestore().collection(collectionPath);
     const query = collectionRef.limit(batchSize);
 
     const deletedDocs = await deleteQueryBatch(query);
@@ -42,7 +42,7 @@ export const deleteUser: HttpHandler<RequestData, ResponseData> = async (
       return 0;
     }
 
-    const batch = firestore.batch();
+    const batch = firestore().batch();
     snapshot.docs.forEach((doc) => {
       batch.delete(doc.ref);
     });
@@ -54,7 +54,7 @@ export const deleteUser: HttpHandler<RequestData, ResponseData> = async (
 
   try {
     // Delete user's posts in each group
-    const groupsSnapshot = await firestore.collection("groups").get();
+    const groupsSnapshot = await firestore().collection("groups").get();
 
     for (const groupDoc of groupsSnapshot.docs) {
       const groupId = groupDoc.id;

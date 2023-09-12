@@ -8,8 +8,6 @@ type RequestData = {
 type ResponseData = {
   success: boolean;
   id: string;
-  success: boolean;
-  id: string;
 };
 
 export const createGroup: HttpHandler<RequestData, ResponseData> = async (
