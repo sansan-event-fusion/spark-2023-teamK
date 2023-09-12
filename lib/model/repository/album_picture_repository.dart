@@ -128,7 +128,7 @@ class AlbumPictureRepository implements BaseAlbumPictureRepository {
           .doc(groupId)
           .collection("albums")
           .doc(albumId)
-          .collection("albumPictures")
+          .collection("album_pictures")
           .doc();
       await docRef
           .set(albumPicture.copyWith(albumPictureId: docRef.id).toJson());
@@ -151,7 +151,7 @@ class AlbumPictureRepository implements BaseAlbumPictureRepository {
           .doc(groupId)
           .collection("albums")
           .doc(albumId)
-          .collection("albumPictures")
+          .collection("album_pictures")
           .doc(albumPicture.albumPictureId)
           .update(albumPicture.toJson());
     } on FirebaseException catch (e) {
@@ -172,7 +172,7 @@ class AlbumPictureRepository implements BaseAlbumPictureRepository {
           .doc(groupId)
           .collection("albums")
           .doc(albumId)
-          .collection("albumPictures")
+          .collection("album_pictures")
           .doc(albumPictureId)
           .delete();
     } on FirebaseException catch (e) {

@@ -1,7 +1,3 @@
-import 'package:emo_project/model/album/album.dart';
-import 'package:emo_project/model/album_picture/album_picture.dart';
-import 'package:emo_project/model/repository/album_picture_repository.dart';
-import 'package:emo_project/model/repository/album_repository.dart';
 import 'package:emo_project/view/auth/components/apple_signin_button.dart';
 import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:emo_project/view/auth/components/google_signin_button.dart';
@@ -101,28 +97,6 @@ class SignupScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await ref.read(albumPictureRepository).createAlbumPicture(
-                          albumPicture: AlbumPicture.empty(),
-                          albumId: 'albumPictureTestId',
-                          groupId: "groupIdOf",
-                        );
-                  },
-                  child: Text("album picture test"),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    final pictures = await ref
-                        .read(albumPictureRepository)
-                        .retrieveAlbumPictures(
-                          albumId: 'albumPictureTestId',
-                          groupId: "groupIdOf",
-                        );
-                    print(pictures);
-                  },
-                  child: Text("read"),
                 ),
               ],
             ),
