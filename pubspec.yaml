@@ -26,6 +26,10 @@ dependencies:
   cached_network_image: ^3.2.3
   lottie: ^2.6.0
   cloud_firestore: ^4.9.1
+  google_sign_in: ^6.1.5
+  sign_in_with_apple: ^5.0.0
+  hooks_riverpod: ^2.4.0
+  flutter_hooks: ^0.20.1
 
 dev_dependencies:
   flutter_test:
