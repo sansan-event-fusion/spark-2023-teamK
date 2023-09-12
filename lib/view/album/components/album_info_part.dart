@@ -16,19 +16,9 @@ class AlbumInfoPart extends StatelessWidget {
     return SliverPadding(
       padding: const EdgeInsets.all(16.0).copyWith(bottom: 8),
       sliver: SliverToBoxAdapter(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (album.description.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(album.description * 18),
-              ),
-            Text(
-              '$albumPicturesCount枚・2021/09/01',
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-            ),
-          ],
+        child: Text(
+          '$albumPicturesCount枚・2021/09/01',
+          style: const TextStyle(fontSize: 12, color: Colors.grey),
         ),
       ),
     );
