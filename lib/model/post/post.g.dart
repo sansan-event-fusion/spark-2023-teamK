@@ -9,6 +9,9 @@ part of 'post.dart';
 _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
       postId: json['postId'] as String,
       memberId: json['memberId'] as String,
+      mentionedMemberList: (json['mentionedMemberList'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       description: json['description'] as String,
       imageUrlList: (json['imageUrlList'] as List<dynamic>)
           .map((e) => e as String)
@@ -20,6 +23,7 @@ _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
 Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'postId': instance.postId,
       'memberId': instance.memberId,
+      'mentionedMemberList': instance.mentionedMemberList,
       'description': instance.description,
       'imageUrlList': instance.imageUrlList,
       'likeCount': instance.likeCount,
