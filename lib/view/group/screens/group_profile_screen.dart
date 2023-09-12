@@ -35,12 +35,6 @@ class GroupProfileScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const MembersScreen(
-                      requestedMemberList: [
-                        {
-                          "Hiroshi":
-                              "https://cdn.pixabay.com/photo/2016/11/23/17/25/woman-1853939_1280.jpg"
-                        }
-                      ],
                       invitedMemberList: [
                         {
                           "Aoi":
