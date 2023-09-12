@@ -1,72 +1,99 @@
 import { HttpHandler } from "../types";
 import { firestore } from "../lib/firebase";
-
-import { getStorage, ref, uploadBytes } from "@firebase/storage";
+import { logger } from "firebase-functions";
+import * as admin from "firebase-admin";
 
 type RequestData = {
   groupId: string;
   memberId: string;
   name: string;
   description: string;
-  icon: Blob;
+  icon: string;
 };
 
 type ResponseData = {
   success: boolean;
-  id: string;
-  error: string;
+  message?: string;
 };
 
 export const createGroup: HttpHandler<RequestData, ResponseData> = async (
   data,
   _
 ) => {
-  const { groupId, memberId, name, description, icon } = data;
+  const db = firestore();
+
+  const { groupId, memberId, icon } = data;
+
   const role = "admin";
   const createdAt = new Date().toISOString();
   const updatedAt = createdAt;
 
-  const groupData = { name, description, icon, createdAt, updatedAt };
+  const storage = admin.storage();
 
   try {
-    await firestore().collection("groups").doc(groupId).set(groupData);
+    async function uploadIcon(groupId: string, icon: String) {
+      const base64EncodedData = icon.split(",")[1];
 
-    await firestore()
+      const buffer = Buffer.from(base64EncodedData, "base64");
+      const bucket = storage.bucket("your-bucket-name");
+      const file = bucket.file(`groups/${groupId}/icon`);
+
+      // iconはローカルファイルパスであると仮定します
+      await file.save(buffer);
+
+      // ファイルを公開し、そのURLを取得します
+      await file.makePublic();
+      const url = `https://storage.googleapis.com/${bucket.name}/${file.name}`;
+
+      console.log("Icon URL:", url);
+    }
+    uploadIcon(groupId, icon).catch(console.error);
+
+    const batch = db.batch();
+
+    const userGroupRef = firestore()
       .collection("users")
       .doc(memberId)
       .collection("groups")
-      .doc(groupId)
-      .set({ groupId, createdAt });
-
+      .doc(groupId);
+    batch.set(userGroupRef, { groupId: groupId, createdAt: createdAt });
     const userSnapshot = await firestore()
       .collection("users")
       .doc(memberId)
       .get();
     if (!userSnapshot.exists) {
-      throw new Error("Member does not exist");
+      throw new Error("Member does not exist 1");
     }
     const userData = userSnapshot.data();
     if (!userData) {
-      throw new Error("Member does not exist");
+      throw new Error("Member does not exist 2");
     }
     const userName = userData.name;
 
-    await firestore()
+    const groupMemberRef = firestore()
       .collection("groups")
       .doc(groupId)
       .collection("members")
-      .doc(memberId)
-      //memberIdの保存は明記すべき？docで指定できてる？
-      .set({ name: userName, role, memberId, createdAt, updatedAt });
+      .doc(memberId);
+    batch.set(groupMemberRef, {
+      name: userName,
+      role,
+      memberId,
+      createdAt,
+      updatedAt,
+    });
 
-    const storage = getStorage();
-    const iconRef = ref(storage, `groups/${groupId}/icon`);
-
-    // icon は File オブジェクトまたは Blob オブジェクトであると仮定します
-    await uploadBytes(iconRef, icon);
+    batch.commit();
 
     return { success: true, id: groupId, error: "" };
   } catch (error) {
-    return { success: false, id: "", error: "" };
+    if (error instanceof Error) {
+      logger.error(error.message);
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+    return { success: false, message: "unknown error" };
   }
 };
