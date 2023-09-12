@@ -5,25 +5,18 @@ import 'package:emo_project/view/auth/components/google_signin_button.dart';
 import 'package:emo_project/view/auth/screens/login_screen.dart';
 import 'package:emo_project/view/initial/screens/initial_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final signupEmailControllerStateProvider = StateProvider.autoDispose((ref) {
-  return TextEditingController(text: '');
-});
-
-final signupPasswordControllerStateProvider = StateProvider.autoDispose((ref) {
-  return TextEditingController(text: '');
-});
-
-class SignupScreen extends ConsumerWidget {
+class SignupScreen extends HookConsumerWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final double deviceHeight = MediaQuery.of(context).size.height;
     final double deviceWidth = MediaQuery.of(context).size.width;
-    final emailController = ref.watch(signupEmailControllerStateProvider);
-    final passwordController = ref.watch(signupPasswordControllerStateProvider);
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
