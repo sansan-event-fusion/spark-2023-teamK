@@ -1,17 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emo_project/model/pending_member/pending_member.dart';
 import 'package:emo_project/providers.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BasePendingMemberRepository {
-  Future<List<PendingMember>> retrievePendingMembers({required String groupId});
-  Future<String> createPendingMember(
-      {required PendingMember pendingMember, required String groupId});
-  Future<void> updatePendingMember(
-      {required PendingMember pendingMember, required String groupId});
-  Future<void> deletePendingMember(
-      {required String pendingMemberId, required String groupId});
+  Future<String> createPendingMember({
+    required PendingMember pendingMember,
+    required String groupId,
+  });
+  Future<void> updatePendingMember({
+    required PendingMember pendingMember,
+    required String groupId,
+  });
+  Future<void> deletePendingMember({
+    required String pendingMemberId,
+    required String groupId,
+  });
+  Future<List<PendingMember>> getAllPendingMemberList({
+    required String groupId,
+  });
+  Future<List<PendingMember>> getLocalPendingMemberList({
+    required String groupId,
+  });
+  Future<Stream<QuerySnapshot<PendingMember>>> streamPendingMemberList({
+    required String groupId,
+  });
 }
 
 final pendingMemberRepository =
@@ -23,19 +36,60 @@ class PendingMemberRepository implements BasePendingMemberRepository {
   const PendingMemberRepository(this._ref);
 
   @override
-  Future<List<PendingMember>> retrievePendingMembers(
+  Future<List<PendingMember>> getAllPendingMemberList(
       {required String groupId}) async {
-    try {
-      final snap = await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("pending_members")
-          .get();
-      return snap.docs.map((doc) => PendingMember.fromDocument(doc)).toList();
-    } on FirebaseException catch (e) {
-      throw Exception(e);
+    return await getQuery(groupId: groupId).then((ref) async => await ref
+        .get()
+        .then((value) async =>
+            await getLocalPendingMemberList(groupId: groupId)));
+  }
+
+  @override
+  Future<List<PendingMember>> getLocalPendingMemberList(
+      {required String groupId}) async {
+    final snap = await _ref
+        .read(firebaseFirestoreProvider)
+        .collection("groups")
+        .doc(groupId)
+        .collection("pending_members")
+        .get(const GetOptions(source: Source.cache));
+    return snap.docs.map((doc) => PendingMember.fromDocument(doc)).toList();
+  }
+
+  Future<Query<PendingMember>> getQuery({required String groupId}) async {
+    DocumentSnapshot? lastDocRef;
+    await _ref
+        .read(firebaseFirestoreProvider)
+        .collection("groups")
+        .doc(groupId)
+        .collection("pending_members")
+        .get(const GetOptions(source: Source.cache))
+        .then((value) {
+      if (value.docs.isNotEmpty) lastDocRef = value.docs.last;
+    });
+
+    Query<PendingMember> ref = _ref
+        .read(firebaseFirestoreProvider)
+        .collection("groups")
+        .doc(groupId)
+        .collection("pending_members")
+        .withConverter(
+          fromFirestore: (snapshot, _) =>
+              PendingMember.fromJson(snapshot.data()!),
+          toFirestore: (data, _) => data.toJson(),
+        );
+    if (lastDocRef != null) {
+      ref = ref.orderBy("createdAt").startAtDocument(lastDocRef!);
     }
+
+    return ref;
+  }
+
+  @override
+  Future<Stream<QuerySnapshot<PendingMember>>> streamPendingMemberList(
+      {required String groupId}) async {
+    final ref = await getQuery(groupId: groupId);
+    return ref.snapshots();
   }
 
   @override
@@ -43,7 +97,7 @@ class PendingMemberRepository implements BasePendingMemberRepository {
       {required PendingMember pendingMember, required String groupId}) async {
     try {
       final docRef = _ref
-          .watch(firebaseFirestoreProvider)
+          .read(firebaseFirestoreProvider)
           .collection("groups")
           .doc(groupId)
           .collection("pending_members")
@@ -62,7 +116,7 @@ class PendingMemberRepository implements BasePendingMemberRepository {
       {required PendingMember pendingMember, required String groupId}) async {
     try {
       await _ref
-          .watch(firebaseFirestoreProvider)
+          .read(firebaseFirestoreProvider)
           .collection("groups")
           .doc(groupId)
           .collection("pending_members")
@@ -78,7 +132,7 @@ class PendingMemberRepository implements BasePendingMemberRepository {
       {required String pendingMemberId, required String groupId}) async {
     try {
       await _ref
-          .watch(firebaseFirestoreProvider)
+          .read(firebaseFirestoreProvider)
           .collection("groups")
           .doc(groupId)
           .collection("pending_members")
