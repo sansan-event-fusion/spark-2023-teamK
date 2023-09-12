@@ -7,4 +7,4 @@ export type HttpHandler<
 > = (
   data: RequestData,
   context: functions.https.CallableContext
-) => ResponseData;
+) => Promise<ResponseData>;
