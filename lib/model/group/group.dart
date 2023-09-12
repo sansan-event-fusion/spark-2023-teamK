@@ -34,6 +34,3 @@ class Group with _$Group {
   }
 }
 
-extension GroupX on Group {
-  Map<String, dynamic> toDocument() => toJson()..remove('id');
-}
