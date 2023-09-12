@@ -8,9 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class MembersScreen extends ConsumerWidget {
   const MembersScreen(
       {super.key});
-  const MembersScreen({
-    super.key
-  });
   
   @override
   Widget build(BuildContext context, WidgetRef ref) {
