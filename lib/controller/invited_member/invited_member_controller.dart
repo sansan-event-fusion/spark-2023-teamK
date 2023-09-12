@@ -41,10 +41,8 @@ class InvitedMemberController extends _$InvitedMemberController {
     });
   }
 
-  Future<String> createInvitedMember({
-    required InvitedMember invitedMember,
-    required String groupId,
-  }) async {
+  Future<String> createInvitedMember(
+      {required InvitedMember invitedMember}) async {
     try {
       final docRef = await ref
           .read(invitedMemberRepository)
@@ -56,10 +54,8 @@ class InvitedMemberController extends _$InvitedMemberController {
     }
   }
 
-  Future<void> updateInvitedMember({
-    required InvitedMember invitedMember,
-    required String groupId,
-  }) async {
+  Future<void> updateInvitedMember(
+      {required InvitedMember invitedMember}) async {
     try {
       await ref
           .read(invitedMemberRepository)
@@ -69,10 +65,7 @@ class InvitedMemberController extends _$InvitedMemberController {
     }
   }
 
-  Future<void> deleteInvitedMember({
-    required String invitedMemberId,
-    required String groupId,
-  }) async {
+  Future<void> deleteInvitedMember({required String invitedMemberId}) async {
     try {
       await ref.read(invitedMemberRepository).deleteInvitedMember(
           invitedMemberId: invitedMemberId, groupId: groupId);
