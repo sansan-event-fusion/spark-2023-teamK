@@ -1,6 +1,8 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emo_project/model/member/member.dart';
 import 'package:emo_project/model/repository/member_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'member_controller.g.dart';
@@ -9,23 +11,33 @@ part 'member_controller.g.dart';
 class MemberController extends _$MemberController {
   @override
   Future<List<Member>> build({required String groupId}) async {
-    final members = await retrieveMembers();
+    final repository = ref.read(memberRepository);
+    final members = await repository.getAllMemberList(groupId: groupId);
+
+    Future(() async {
+      await Future.delayed(const Duration(milliseconds: 100));
+      streamMemberList();
+    });
+
     return members;
   }
 
-  Future<List<Member>> retrieveMembers() async {
-    try {
-      final members =
-          await ref.watch(memberRepository).retrieveMembers(groupId: groupId);
-      state = AsyncValue.data(members);
-      return members;
-    } on FirebaseException catch (e) {
-      throw Exception(e.message);
-    }
+  /// Member 監視
+  void streamMemberList() {
+    ref.read(memberRepository).streamMemberList(groupId: groupId).then((value) {
+      StreamSubscription<QuerySnapshot> streamSub = value.listen((event) async {
+        List<Member> latestMemberList = await ref
+            .read(memberRepository)
+            .getLocalMemberList(groupId: groupId);
+        state = AsyncData(latestMemberList);
+      });
+
+      /// Snapshot キャンセル
+      ref.onDispose(() => streamSub.cancel());
+    });
   }
 
-  Future<String> createMember(
-      {required Member member}) async {
+  Future<String> createMember({required Member member}) async {
     try {
       final docRef = await ref
           .watch(memberRepository)
@@ -36,8 +48,7 @@ class MemberController extends _$MemberController {
     }
   }
 
-  Future<void> updateMember(
-      {required Member member}) async {
+  Future<void> updateMember({required Member member}) async {
     try {
       await ref
           .watch(memberRepository)
@@ -47,8 +58,7 @@ class MemberController extends _$MemberController {
     }
   }
 
-  Future<void> deleteMember(
-      {required String memberId}) async {
+  Future<void> deleteMember({required String memberId}) async {
     try {
       await ref
           .watch(memberRepository)

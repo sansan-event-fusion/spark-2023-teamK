@@ -112,10 +112,11 @@ class SignupScreen extends ConsumerWidget {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            print(data);
+                            print(data.length);
                           },
                           child: Text("member list test"),
                         ),
+                        Text(data.length.toString()),
                         ElevatedButton(
                             onPressed: () {
                               ref
@@ -125,8 +126,9 @@ class SignupScreen extends ConsumerWidget {
                                   .createMember(
                                       member: Member(
                                           memberId: "memberId2",
-                                          name: "name2",
-                                          role: "role2",
+                                          name:
+                                              "${DateTime.now().microsecond % 100}",
+                                          role: "",
                                           icon: "icon2",
                                           description: "description2",
                                           createdAt: DateTime.now(),
