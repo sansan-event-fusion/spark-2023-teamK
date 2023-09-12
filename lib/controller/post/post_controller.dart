@@ -44,6 +44,17 @@ class PostController extends _$PostController {
     return postList.where((post) => post.memberId == memberId).toList();
   }
 
+  List<Post> retrievePostByMentionedMemberId(
+      {required String mentionedMemberId}) {
+    final postList = state.value;
+    if (postList == null) {
+      return [];
+    }
+    return postList
+        .where((post) => post.mentionedMemberList.contains(mentionedMemberId))
+        .toList();
+  }
+
   Future<String> createPost({required Post post}) async {
     try {
       final docRef = await ref
