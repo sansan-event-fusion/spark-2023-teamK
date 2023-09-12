@@ -37,7 +37,7 @@ class AlbumController extends _$AlbumController {
   }
 
   Future<String> createAlbum(
-      {required Album album, required String groupId}) async {
+      {required Album album}) async {
     try {
       final docRef = await ref
           .read(albumRepository)
@@ -50,7 +50,7 @@ class AlbumController extends _$AlbumController {
   }
 
   Future<void> updateAlbum(
-      {required Album album, required String groupId}) async {
+      {required Album album}) async {
     try {
       await ref
           .read(albumRepository)
@@ -61,7 +61,7 @@ class AlbumController extends _$AlbumController {
   }
 
   Future<void> deleteAlbum(
-      {required String albumId, required String groupId}) async {
+      {required String albumId}) async {
     try {
       await ref
           .read(albumRepository)
