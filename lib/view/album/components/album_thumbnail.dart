@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:emo_project/model/picture/album_picture.dart';
+import 'package:emo_project/model/album_picture/album_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -39,7 +39,7 @@ class AlbumThumbnail extends StatelessWidget {
           color: Colors.orange,
           borderRadius: BorderRadius.circular(8),
           image: DecorationImage(
-            image: CachedNetworkImageProvider(albumPictures[0].pictureUrl),
+            image: CachedNetworkImageProvider(albumPictures[0].imageUrl),
             fit: BoxFit.cover,
           ),
         ),
@@ -56,7 +56,7 @@ class AlbumThumbnail extends StatelessWidget {
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(8)),
               image: DecorationImage(
-                image: CachedNetworkImageProvider(albumPictures[0].pictureUrl),
+                image: CachedNetworkImageProvider(albumPictures[0].imageUrl),
                 fit: BoxFit.cover,
               ),
             ),
@@ -69,7 +69,7 @@ class AlbumThumbnail extends StatelessWidget {
               borderRadius:
                   const BorderRadius.vertical(bottom: Radius.circular(8)),
               image: DecorationImage(
-                image: CachedNetworkImageProvider(albumPictures[1].pictureUrl),
+                image: CachedNetworkImageProvider(albumPictures[1].imageUrl),
                 fit: BoxFit.cover,
               ),
             ),
@@ -86,7 +86,7 @@ class AlbumThumbnail extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
             image: DecorationImage(
-              image: CachedNetworkImageProvider(albumPictures[0].pictureUrl),
+              image: CachedNetworkImageProvider(albumPictures[0].imageUrl),
               fit: BoxFit.cover,
             ),
           ),
@@ -102,8 +102,7 @@ class AlbumThumbnail extends StatelessWidget {
                   bottomLeft: Radius.circular(8),
                 ),
                 image: DecorationImage(
-                  image:
-                      CachedNetworkImageProvider(albumPictures[1].pictureUrl),
+                  image: CachedNetworkImageProvider(albumPictures[1].imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -117,8 +116,7 @@ class AlbumThumbnail extends StatelessWidget {
                   bottomRight: Radius.circular(8),
                 ),
                 image: DecorationImage(
-                  image:
-                      CachedNetworkImageProvider(albumPictures[2].pictureUrl),
+                  image: CachedNetworkImageProvider(albumPictures[2].imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),

@@ -9,9 +9,9 @@ class AlbumsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Album> albums = [
-      Album.empty(),
-      Album.empty(),
-      Album.empty(),
+      Album.mock(),
+      Album.mock(),
+      Album.mock(),
     ];
 
     return Scaffold(
