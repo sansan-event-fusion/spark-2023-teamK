@@ -1,3 +1,8 @@
+import 'package:emo_project/controller/auth/auth_controller.dart';
+import 'package:emo_project/controller/auth/validator/signup_validator.dart';
+import 'package:emo_project/controller/firebase_user/firebase_user_controller.dart';
+import 'package:emo_project/model/firebase_user/firebase_user.dart';
+import 'package:emo_project/model/repository/auth_repository.dart';
 import 'package:emo_project/view/auth/components/apple_signin_button.dart';
 import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:emo_project/view/auth/components/google_signin_button.dart';
@@ -14,6 +19,7 @@ class SignupScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final double deviceHeight = MediaQuery.of(context).size.height;
     final double deviceWidth = MediaQuery.of(context).size.width;
+    final nameController = useTextEditingController();
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     return Scaffold(
@@ -36,6 +42,16 @@ class SignupScreen extends HookConsumerWidget {
                 SizedBox(
                   width: deviceWidth * 0.9,
                   child: CustomTextField(
+                    title: "ニックネーム",
+                    controller: nameController,
+                  ),
+                ),
+                SizedBox(
+                  height: deviceHeight * 0.04,
+                ),
+                SizedBox(
+                  width: deviceWidth * 0.9,
+                  child: CustomTextField(
                     title: "メールアドレス",
                     controller: emailController,
                   ),
@@ -54,16 +70,42 @@ class SignupScreen extends HookConsumerWidget {
                   height: deviceHeight * 0.04,
                 ),
                 SizedBox(
-                  // height: 40,
                   width: deviceWidth * 0.9,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const InitialScreen(),
-                        ),
-                      );
+                    onPressed: () async {
+                      final isAllValid = ref
+                          .read(signupValidatorProvider.notifier)
+                          .isAllValid(
+                              name: nameController.text,
+                              email: emailController.text,
+                              password: passwordController.text);
+                      if (isAllValid) {
+                        await ref
+                            .watch(authControllerProvider.notifier)
+                            .createUserWithEmailAndPassword(
+                                emailController.text, passwordController.text);
+                        final currentUser =
+                            ref.watch(authRepositoryProvider).getCurrentUser();
+                        if (currentUser != null) {
+                          ref
+                              .watch(firebaseUserControllerProvider.notifier)
+                              .createFirebaseUser(
+                                firebaseUser: FirebaseUser(
+                                  userId: currentUser.uid,
+                                  name: nameController.text,
+                                  icon: "https://placehold.jp/150x150.png",
+                                  accountId: "accountId",
+                                  email: emailController.text,
+                                ),
+                              );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const InitialScreen(),
+                            ),
+                          );
+                        }
+                      }
                     },
                     child: const Text("新規登録"),
                   ),
