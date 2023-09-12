@@ -2,72 +2,54 @@ import { HttpHandler } from "../types";
 import { firestore } from "../lib/firebase";
 
 type RequestData = {
-  userId: string;
+  groupId: string;
+  memberId: string;
+  postId: string;
 };
 
 type ResponseData = {
   success: boolean;
   message?: string;
 };
-
+const db = firestore();
 export const deleteUser: HttpHandler<RequestData, ResponseData> = async (
   data,
   _
 ) => {
-  const { userId } = data;
+  const { groupId, memberId, postId } = data;
 
-  async function deleteCollection(
-    collectionPath: string,
-    batchSize: number
-  ): Promise<number> {
-    const collectionRef = firestore().collection(collectionPath);
-    const query = collectionRef.limit(batchSize);
-
-    const deletedDocs = await deleteQueryBatch(query);
-
-    if (deletedDocs >= batchSize) {
-      return deleteCollection(collectionPath, batchSize);
+  try {
+    const batch = db.batch();
+    const groupMemberDocRef = db
+      .collection("groups")
+      .doc(groupId)
+      .collection("members")
+      .doc(memberId);
+    if (!(await groupMemberDocRef.get()).exists) {
+      throw new Error("posts not found");
     }
+    batch.delete(groupMemberDocRef);
 
-    return deletedDocs;
-  }
-
-  async function deleteQueryBatch(
-    query: FirebaseFirestore.Query
-  ): Promise<number> {
-    const snapshot = await query.get();
-
-    const batchSize = snapshot.size;
-    if (batchSize === 0) {
-      return 0;
-    }
-
-    const batch = firestore().batch();
-    snapshot.docs.forEach((doc) => {
-      batch.delete(doc.ref);
+    const groupPosts = await db
+      .collection("groups")
+      .doc(groupId)
+      .collection("posts")
+      .where("memberId", "==", memberId)
+      .get();
+    groupPosts.forEach((post) => {
+      batch.delete(post.ref); // TODO: サブコレクションも削除するようにする
     });
 
     await batch.commit();
 
-    return batchSize;
-  }
-
-  try {
-    // Delete user's posts in each group
-    const groupsSnapshot = await firestore().collection("groups").get();
-
-    for (const groupDoc of groupsSnapshot.docs) {
-      const groupId = groupDoc.id;
-      const postsPath = `groups/${groupId}/members/${userId}/posts`;
-      await deleteCollection(postsPath, 10);
-    }
-
-    // Delete user's posts
-    const postsPath = `users/${userId}/posts`;
-    await deleteCollection(postsPath, 10);
-
-    return { success: true };
+    return { success: true, message: "" };
   } catch (error) {
-    return { success: false, message: "" };
+    if (error instanceof Error) {
+      return { success: false, message: error.message };
+    }
+    return {
+      success: false,
+      message: "unknown error",
+    };
   }
 };
