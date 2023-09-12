@@ -22,6 +22,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
 mixin _$Post {
   String get postId => throw _privateConstructorUsedError;
   String get memberId => throw _privateConstructorUsedError;
+  List<String> get mentionedMemberList => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   List<String> get imageUrlList => throw _privateConstructorUsedError;
   int get likeCount => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $PostCopyWith<$Res> {
   $Res call(
       {String postId,
       String memberId,
+      List<String> mentionedMemberList,
       String description,
       List<String> imageUrlList,
       int likeCount,
@@ -61,6 +63,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
   $Res call({
     Object? postId = null,
     Object? memberId = null,
+    Object? mentionedMemberList = null,
     Object? description = null,
     Object? imageUrlList = null,
     Object? likeCount = null,
@@ -75,6 +78,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
               as String,
+      mentionedMemberList: null == mentionedMemberList
+          ? _value.mentionedMemberList
+          : mentionedMemberList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -104,6 +111,7 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   $Res call(
       {String postId,
       String memberId,
+      List<String> mentionedMemberList,
       String description,
       List<String> imageUrlList,
       int likeCount,
@@ -121,6 +129,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
   $Res call({
     Object? postId = null,
     Object? memberId = null,
+    Object? mentionedMemberList = null,
     Object? description = null,
     Object? imageUrlList = null,
     Object? likeCount = null,
@@ -135,6 +144,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
               as String,
+      mentionedMemberList: null == mentionedMemberList
+          ? _value._mentionedMemberList
+          : mentionedMemberList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -161,11 +174,13 @@ class _$_Post implements _Post {
   _$_Post(
       {required this.postId,
       required this.memberId,
+      required final List<String> mentionedMemberList,
       required this.description,
       required final List<String> imageUrlList,
       required this.likeCount,
       required this.createdAt})
-      : _imageUrlList = imageUrlList;
+      : _mentionedMemberList = mentionedMemberList,
+        _imageUrlList = imageUrlList;
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
@@ -173,6 +188,15 @@ class _$_Post implements _Post {
   final String postId;
   @override
   final String memberId;
+  final List<String> _mentionedMemberList;
+  @override
+  List<String> get mentionedMemberList {
+    if (_mentionedMemberList is EqualUnmodifiableListView)
+      return _mentionedMemberList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_mentionedMemberList);
+  }
+
   @override
   final String description;
   final List<String> _imageUrlList;
@@ -190,7 +214,7 @@ class _$_Post implements _Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, memberId: $memberId, description: $description, imageUrlList: $imageUrlList, likeCount: $likeCount, createdAt: $createdAt)';
+    return 'Post(postId: $postId, memberId: $memberId, mentionedMemberList: $mentionedMemberList, description: $description, imageUrlList: $imageUrlList, likeCount: $likeCount, createdAt: $createdAt)';
   }
 
   @override
@@ -201,6 +225,8 @@ class _$_Post implements _Post {
             (identical(other.postId, postId) || other.postId == postId) &&
             (identical(other.memberId, memberId) ||
                 other.memberId == memberId) &&
+            const DeepCollectionEquality()
+                .equals(other._mentionedMemberList, _mentionedMemberList) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality()
@@ -213,8 +239,15 @@ class _$_Post implements _Post {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, postId, memberId, description,
-      const DeepCollectionEquality().hash(_imageUrlList), likeCount, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      postId,
+      memberId,
+      const DeepCollectionEquality().hash(_mentionedMemberList),
+      description,
+      const DeepCollectionEquality().hash(_imageUrlList),
+      likeCount,
+      createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -234,6 +267,7 @@ abstract class _Post implements Post {
   factory _Post(
       {required final String postId,
       required final String memberId,
+      required final List<String> mentionedMemberList,
       required final String description,
       required final List<String> imageUrlList,
       required final int likeCount,
@@ -245,6 +279,8 @@ abstract class _Post implements Post {
   String get postId;
   @override
   String get memberId;
+  @override
+  List<String> get mentionedMemberList;
   @override
   String get description;
   @override
