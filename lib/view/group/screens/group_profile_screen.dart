@@ -1,7 +1,9 @@
+import 'package:emo_project/controller/post/post_controller.dart';
 import 'package:emo_project/view/member/screens/members_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GroupProfileScreen extends StatelessWidget {
+class GroupProfileScreen extends ConsumerWidget {
   GroupProfileScreen({
     super.key,
     required this.groupName,
@@ -24,7 +26,8 @@ class GroupProfileScreen extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(postControllerProvider(groupId: "test"));
     return Scaffold(
       appBar: AppBar(
         title: Text(groupName),
@@ -44,55 +47,73 @@ class GroupProfileScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverList(
-              delegate: SliverChildListDelegate([
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(
-                      groupImage,
-                    ),
+            delegate: SliverChildListDelegate(
+              [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(
+                          groupImage,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(groupName),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(groupName),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(groupDescription),
-            ),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text("投稿一覧"),
-              ),
-            ),
-            Flexible(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
                 ),
-                itemCount: groupImageUrlList.length,
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.32,
-                      height: MediaQuery.of(context).size.width * 0.32,
-                      child: Image.network(
-                        groupImageUrlList[index],
-                        fit: BoxFit.cover,
-                      ));
-                },
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(groupDescription),
+                ),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text("投稿一覧"),
+                  ),
+                ),
+                state.when(
+                  loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  error: (error, stackTrace) {
+                    return Text(error.toString());
+                  },
+                  data: (data) {
+                    return Flexible(
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.32,
+                            height: MediaQuery.of(context).size.width * 0.32,
+                            child: Image.network(
+                              // 投稿の一番最初の画像のURLをサムネとして表示
+                              data[index].imageUrlList.first,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        },
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                      ),
+                    );
+                  },
+                )
+              ],
             ),
-          ]))
+          ),
         ],
       ),
     );
