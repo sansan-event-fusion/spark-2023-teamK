@@ -96,7 +96,7 @@ class PostRepository implements BasePostRepository {
           .collection("groups")
           .doc(groupId)
           .collection("posts")
-          .add(post.toDocument());
+          .add(post.toJson());
       return docRef.id;
     } on FirebaseException catch (e) {
       throw Exception(e);
@@ -112,7 +112,7 @@ class PostRepository implements BasePostRepository {
           .doc(groupId)
           .collection("posts")
           .doc(post.postId)
-          .update(post.toDocument());
+          .update(post.toJson());
     } on FirebaseException catch (e) {
       throw Exception(e);
     }

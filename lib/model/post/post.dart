@@ -31,8 +31,3 @@ class Post with _$Post {
     return Post.fromJson(data).copyWith(postId: doc.id);
   }
 }
-
-// postId or id
-extension PostX on Post {
-  Map<String, dynamic> toDocument() => toJson()..remove('postId');
-}
