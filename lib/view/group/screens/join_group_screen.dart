@@ -15,13 +15,24 @@ final List<String> groupImageList = [
 
 final List<String> groupNameList = [
   "アドベンチャーシーカーズ",
-  "ペダルパラダイス:",
+  "ペダルパラダイス",
   "サイクルコネクト",
   "ツアーデキャンパス",
   "ペダルパワーアカデミー",
   "ビロンガク部",
   "サイクルサイエンスクラブ",
   "無限のペダルクルー",
+];
+
+final List<String> groupIdList = [
+  "12345A",
+  "12345B",
+  "12345C",
+  "12345D",
+  "12345E",
+  "12345F",
+  "12345G",
+  "12345H",
 ];
 
 final List<String> groupDescriptionList = [
@@ -64,7 +75,7 @@ class JoinGroupScreen extends ConsumerWidget {
                         onSearchNotifier.state = true;
                         searchIndexListNotifier.state = [];
                       },
-                      child: const Text("グループ検索"),
+                      child: const Text("グループIDで参加するグループを検索"),
                     ),
                   ),
             onSearch
@@ -96,7 +107,7 @@ class JoinGroupScreen extends ConsumerWidget {
         onChanged: (String text) {
           searchIndexListNotifier.state = [];
           for (int i = 0; i < groupNameList.length; i++) {
-            if (groupNameList[i].contains(text)) {
+            if (groupIdList[i] == text) {
               searchIndexListNotifier.state.add(i);
             }
           }
@@ -108,12 +119,47 @@ class JoinGroupScreen extends ConsumerWidget {
   Widget _searchListView(WidgetRef ref) {
     final searchIndexListNotifier = ref.watch(searchIndexListProvider.notifier);
     final searchIndexList = ref.watch(searchIndexListProvider);
-    return ListView.builder(
-        itemCount: searchIndexList.length,
+    return Flexible(
+      child: ListView.builder(
+          itemCount: searchIndexList.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, int index) {
+            index = searchIndexListNotifier.state[index];
+            return Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GroupProfileScreen(
+                        groupName: groupNameList[index],
+                        groupImage: groupImageList[index],
+                        groupDescription: groupDescriptionList[index],
+                      ),
+                    ),
+                  );
+                },
+                leading: Image.network(
+                  groupImageList[index],
+                  width: 50,
+                  height: 50,
+                ),
+                title: Text(groupNameList[index]),
+                subtitle: Text("ID: ${groupIdList[index]}", style: const TextStyle(color: Colors.grey),),
+              ),
+            );
+          }),
+    );
+  }
+
+  Widget _defaultListView() {
+    return Flexible(
+      child: ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, int index) {
-          index = searchIndexListNotifier.state[index];
+        itemCount: groupNameList.length,
+        itemBuilder: (context, index) {
           return Card(
             child: ListTile(
               onTap: () {
@@ -136,38 +182,8 @@ class JoinGroupScreen extends ConsumerWidget {
               title: Text(groupNameList[index]),
             ),
           );
-        });
-  }
-
-  Widget _defaultListView() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: groupNameList.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GroupProfileScreen(
-                    groupName: groupNameList[index],
-                    groupImage: groupImageList[index],
-                    groupDescription: groupDescriptionList[index],
-                  ),
-                ),
-              );
-            },
-            leading: Image.network(
-              groupImageList[index],
-              width: 50,
-              height: 50,
-            ),
-            title: Text(groupNameList[index]),
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 }

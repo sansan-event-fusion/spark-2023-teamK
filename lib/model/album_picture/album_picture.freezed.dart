@@ -21,7 +21,9 @@ AlbumPicture _$AlbumPictureFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AlbumPicture {
   String get albumPictureId => throw _privateConstructorUsedError;
-  String get pictureUrl => throw _privateConstructorUsedError;
+  String get memberId => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,11 @@ abstract class $AlbumPictureCopyWith<$Res> {
           AlbumPicture value, $Res Function(AlbumPicture) then) =
       _$AlbumPictureCopyWithImpl<$Res, AlbumPicture>;
   @useResult
-  $Res call({String albumPictureId, String pictureUrl});
+  $Res call(
+      {String albumPictureId,
+      String memberId,
+      String imageUrl,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -52,17 +58,27 @@ class _$AlbumPictureCopyWithImpl<$Res, $Val extends AlbumPicture>
   @override
   $Res call({
     Object? albumPictureId = null,
-    Object? pictureUrl = null,
+    Object? memberId = null,
+    Object? imageUrl = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       albumPictureId: null == albumPictureId
           ? _value.albumPictureId
           : albumPictureId // ignore: cast_nullable_to_non_nullable
               as String,
-      pictureUrl: null == pictureUrl
-          ? _value.pictureUrl
-          : pictureUrl // ignore: cast_nullable_to_non_nullable
+      memberId: null == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -75,7 +91,11 @@ abstract class _$$_AlbumPictureCopyWith<$Res>
       __$$_AlbumPictureCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String albumPictureId, String pictureUrl});
+  $Res call(
+      {String albumPictureId,
+      String memberId,
+      String imageUrl,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -90,17 +110,27 @@ class __$$_AlbumPictureCopyWithImpl<$Res>
   @override
   $Res call({
     Object? albumPictureId = null,
-    Object? pictureUrl = null,
+    Object? memberId = null,
+    Object? imageUrl = null,
+    Object? createdAt = null,
   }) {
     return _then(_$_AlbumPicture(
       albumPictureId: null == albumPictureId
           ? _value.albumPictureId
           : albumPictureId // ignore: cast_nullable_to_non_nullable
               as String,
-      pictureUrl: null == pictureUrl
-          ? _value.pictureUrl
-          : pictureUrl // ignore: cast_nullable_to_non_nullable
+      memberId: null == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -108,7 +138,11 @@ class __$$_AlbumPictureCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AlbumPicture implements _AlbumPicture {
-  _$_AlbumPicture({required this.albumPictureId, required this.pictureUrl});
+  _$_AlbumPicture(
+      {required this.albumPictureId,
+      required this.memberId,
+      required this.imageUrl,
+      required this.createdAt});
 
   factory _$_AlbumPicture.fromJson(Map<String, dynamic> json) =>
       _$$_AlbumPictureFromJson(json);
@@ -116,11 +150,15 @@ class _$_AlbumPicture implements _AlbumPicture {
   @override
   final String albumPictureId;
   @override
-  final String pictureUrl;
+  final String memberId;
+  @override
+  final String imageUrl;
+  @override
+  final DateTime createdAt;
 
   @override
   String toString() {
-    return 'AlbumPicture(albumPictureId: $albumPictureId, pictureUrl: $pictureUrl)';
+    return 'AlbumPicture(albumPictureId: $albumPictureId, memberId: $memberId, imageUrl: $imageUrl, createdAt: $createdAt)';
   }
 
   @override
@@ -130,13 +168,18 @@ class _$_AlbumPicture implements _AlbumPicture {
             other is _$_AlbumPicture &&
             (identical(other.albumPictureId, albumPictureId) ||
                 other.albumPictureId == albumPictureId) &&
-            (identical(other.pictureUrl, pictureUrl) ||
-                other.pictureUrl == pictureUrl));
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, albumPictureId, pictureUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, albumPictureId, memberId, imageUrl, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -155,7 +198,9 @@ class _$_AlbumPicture implements _AlbumPicture {
 abstract class _AlbumPicture implements AlbumPicture {
   factory _AlbumPicture(
       {required final String albumPictureId,
-      required final String pictureUrl}) = _$_AlbumPicture;
+      required final String memberId,
+      required final String imageUrl,
+      required final DateTime createdAt}) = _$_AlbumPicture;
 
   factory _AlbumPicture.fromJson(Map<String, dynamic> json) =
       _$_AlbumPicture.fromJson;
@@ -163,7 +208,11 @@ abstract class _AlbumPicture implements AlbumPicture {
   @override
   String get albumPictureId;
   @override
-  String get pictureUrl;
+  String get memberId;
+  @override
+  String get imageUrl;
+  @override
+  DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$_AlbumPictureCopyWith<_$_AlbumPicture> get copyWith =>
