@@ -9,7 +9,6 @@ class Album with _$Album {
   factory Album({
     required String albumId,
     required String name,
-    required String description,
     required int pictureCount,
     required int deletedPictureCount,
     required DateTime createdAt,
@@ -19,7 +18,15 @@ class Album with _$Album {
   factory Album.empty() => Album(
         albumId: '',
         name: '',
-        description: '',
+        pictureCount: 0,
+        deletedPictureCount: 0,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+
+  factory Album.mock() => Album(
+        albumId: 'albumMockId',
+        name: 'albumMockName',
         pictureCount: 0,
         deletedPictureCount: 0,
         createdAt: DateTime.now(),
