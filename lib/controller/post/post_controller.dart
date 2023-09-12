@@ -1,57 +1,63 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emo_project/model/post/post.dart';
 import 'package:emo_project/model/repository/post_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final postControllerProvider = StateNotifierProvider((ref) {
-  return PostController(ref);
-});
+part 'post_controller.g.dart';
 
-class PostController extends StateNotifier {
-  final Ref _ref;
-  PostController(this._ref) : super(null);
+@riverpod
+class PostController extends _$PostController {
+  @override
+  Future<List<Post>> build({required String groupId}) async {
+    final repository = ref.read(postRepository);
+    final posts = await repository.getAllPostList(groupId: groupId);
 
-  Future<List<Post>> retrievePosts({required String groupId}) async {
-    try {
-      final posts =
-          await _ref.watch(postRepository).retrievePosts(groupId: groupId);
-      if (mounted) {
-        state = AsyncValue.data(posts);
-      }
-      return posts;
-    } on FirebaseException catch (e) {
-      throw Exception(e.message);
-    }
+    Future(() async {
+      await Future.delayed(const Duration(milliseconds: 100));
+      streamPostList();
+    });
+
+    return posts;
   }
 
-  Future<String> createPost(
-      {required Post post, required String groupId}) async {
+  /// Post 監視
+  void streamPostList() {
+    ref.read(postRepository).streamPostList(groupId: groupId).then((value) {
+      StreamSubscription<QuerySnapshot> streamSub = value.listen((event) async {
+        List<Post> latestPostList =
+            await ref.read(postRepository).getLocalPostList(groupId: groupId);
+        state = AsyncData(latestPostList);
+      });
+
+      /// Snapshot キャンセル
+      ref.onDispose(() => streamSub.cancel());
+    });
+  }
+
+  Future<String> createPost({required Post post}) async {
     try {
-      final docRef = await _ref
+      final docRef = await ref
           .watch(postRepository)
           .createPost(post: post, groupId: groupId);
-      if (mounted) {
-        state = AsyncValue.data(docRef);
-      }
       return docRef;
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
   }
 
-  Future<void> updatePost({required Post post, required String groupId}) async {
+  Future<void> updatePost({required Post post}) async {
     try {
-      await _ref
-          .watch(postRepository)
-          .updatePost(post: post, groupId: groupId);
+      await ref.watch(postRepository).updatePost(post: post, groupId: groupId);
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
   }
 
-  Future<void> deletePost({required String postId, required String groupId}) async {
+  Future<void> deletePost({required String postId}) async {
     try {
-      await _ref
+      await ref
           .watch(postRepository)
           .deletePost(postId: postId, groupId: groupId);
     } on FirebaseException catch (e) {
