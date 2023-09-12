@@ -22,7 +22,6 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
 mixin _$Album {
   String get albumId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
   int get pictureCount => throw _privateConstructorUsedError;
   int get deletedPictureCount => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -41,7 +40,6 @@ abstract class $AlbumCopyWith<$Res> {
   $Res call(
       {String albumId,
       String name,
-      String description,
       int pictureCount,
       int deletedPictureCount,
       DateTime createdAt,
@@ -63,7 +61,6 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
   $Res call({
     Object? albumId = null,
     Object? name = null,
-    Object? description = null,
     Object? pictureCount = null,
     Object? deletedPictureCount = null,
     Object? createdAt = null,
@@ -77,10 +74,6 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
               as String,
       pictureCount: null == pictureCount
           ? _value.pictureCount
@@ -111,7 +104,6 @@ abstract class _$$_AlbumCopyWith<$Res> implements $AlbumCopyWith<$Res> {
   $Res call(
       {String albumId,
       String name,
-      String description,
       int pictureCount,
       int deletedPictureCount,
       DateTime createdAt,
@@ -129,7 +121,6 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
   $Res call({
     Object? albumId = null,
     Object? name = null,
-    Object? description = null,
     Object? pictureCount = null,
     Object? deletedPictureCount = null,
     Object? createdAt = null,
@@ -143,10 +134,6 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
               as String,
       pictureCount: null == pictureCount
           ? _value.pictureCount
@@ -174,7 +161,6 @@ class _$_Album implements _Album {
   _$_Album(
       {required this.albumId,
       required this.name,
-      required this.description,
       required this.pictureCount,
       required this.deletedPictureCount,
       required this.createdAt,
@@ -188,8 +174,6 @@ class _$_Album implements _Album {
   @override
   final String name;
   @override
-  final String description;
-  @override
   final int pictureCount;
   @override
   final int deletedPictureCount;
@@ -200,7 +184,7 @@ class _$_Album implements _Album {
 
   @override
   String toString() {
-    return 'Album(albumId: $albumId, name: $name, description: $description, pictureCount: $pictureCount, deletedPictureCount: $deletedPictureCount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Album(albumId: $albumId, name: $name, pictureCount: $pictureCount, deletedPictureCount: $deletedPictureCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -210,8 +194,6 @@ class _$_Album implements _Album {
             other is _$_Album &&
             (identical(other.albumId, albumId) || other.albumId == albumId) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
             (identical(other.pictureCount, pictureCount) ||
                 other.pictureCount == pictureCount) &&
             (identical(other.deletedPictureCount, deletedPictureCount) ||
@@ -224,8 +206,8 @@ class _$_Album implements _Album {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, albumId, name, description,
-      pictureCount, deletedPictureCount, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, albumId, name, pictureCount,
+      deletedPictureCount, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -245,7 +227,6 @@ abstract class _Album implements Album {
   factory _Album(
       {required final String albumId,
       required final String name,
-      required final String description,
       required final int pictureCount,
       required final int deletedPictureCount,
       required final DateTime createdAt,
@@ -257,8 +238,6 @@ abstract class _Album implements Album {
   String get albumId;
   @override
   String get name;
-  @override
-  String get description;
   @override
   int get pictureCount;
   @override

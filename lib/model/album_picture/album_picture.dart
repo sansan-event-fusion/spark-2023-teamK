@@ -20,6 +20,13 @@ class AlbumPicture with _$AlbumPicture {
         createdAt: DateTime.now(),
       );
 
+  factory AlbumPicture.mock() => AlbumPicture(
+        albumPictureId: 'albumPictureMockId',
+        memberId: 'memberMockId',
+        imageUrl: 'https://picsum.photos/200/300',
+        createdAt: DateTime.now(),
+      );
+
   factory AlbumPicture.fromJson(Map<String, dynamic> json) =>
       _$AlbumPictureFromJson(json);
 

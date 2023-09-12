@@ -15,9 +15,9 @@ class AlbumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<AlbumPicture> albumPictures = [
-      AlbumPicture.empty(),
-      AlbumPicture.empty(),
-      AlbumPicture.empty(),
+      AlbumPicture.mock(),
+      AlbumPicture.mock(),
+      AlbumPicture.mock(),
     ];
 
     return Column(

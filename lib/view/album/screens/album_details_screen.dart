@@ -44,7 +44,9 @@ class AlbumDetailsScreen extends StatelessWidget {
                   itemCount: albumPictures.length,
                   itemBuilder: (context, index) {
                     return CachedNetworkImage(
-                        imageUrl: albumPictures[index].imageUrl);
+                      imageUrl: albumPictures[index].imageUrl,
+                      fit: BoxFit.cover,
+                    );
                   },
                 ),
                 const SliverToBoxAdapter(
