@@ -1,5 +1,6 @@
 import { HttpHandler } from "../types";
-import * as admin from 'firebase-admin';
+import * as admin from "firebase-admin";
+import { firestore } from "../lib/firebase";
 
 type RequestData = {
   userId: string;
@@ -17,24 +18,35 @@ export const deletePost: HttpHandler<RequestData, ResponseData> = async (
 ) => {
   const { userId, groupId, postId } = data;
 
-  const postRef = admin.firestore()
-    .collection('groups')
+  const db = firestore;
+
+  const postRef = db
+    .collection("groups")
     .doc(groupId)
-    .collection('posts')
+    .collection("posts")
     .doc(postId);
 
-  const memberPostRef = admin.firestore()
-    .collection('groups')
+  const memberPostRef = db
+    .collection("groups")
     .doc(groupId)
-    .collection('members')
+    .collection("members")
     .doc(userId)
-    .collection('posts')
+    .collection("posts")
+    .doc(postId);
+
+  const memberMentionRef = db
+    .collection("groups")
+    .doc(groupId)
+    .collection("members")
+    .doc(userId)
+    .collection("mentions")
     .doc(postId);
 
   try {
-    await admin.firestore().runTransaction(async (transaction) => {
+    await db.runTransaction(async (transaction) => {
       transaction.delete(postRef);
       transaction.delete(memberPostRef);
+      transaction.delete(memberMentionRef);
     });
 
     return { success: true };
