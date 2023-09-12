@@ -36,6 +36,14 @@ class PostController extends _$PostController {
     });
   }
 
+  List<Post> retrievePostByMemberId({required String memberId}) {
+    final postList = state.value;
+    if (postList == null) {
+      return [];
+    }
+    return postList.where((post) => post.memberId == memberId).toList();
+  }
+
   Future<String> createPost({required Post post}) async {
     try {
       final docRef = await ref
