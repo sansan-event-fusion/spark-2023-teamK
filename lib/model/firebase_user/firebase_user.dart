@@ -14,6 +14,14 @@ class FirebaseUser with _$FirebaseUser {
     required String email,
   }) = _FirebaseUser;
 
+    factory FirebaseUser.empty() => FirebaseUser(
+        userId: '',
+        name: '',
+        icon: '',
+        accountId: '',
+        email: '',
+      );
+
   factory FirebaseUser.fromJson(Map<String, dynamic> json) =>
       _$FirebaseUserFromJson(json);
 
