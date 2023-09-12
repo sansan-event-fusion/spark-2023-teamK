@@ -1,10 +1,8 @@
 import { HttpHandler } from "../types";
-import * as admin from "firebase-admin";
 import { firestore } from "../lib/firebase";
 
 type RequestData = {
   userId: string;
-  groupId: string;
 };
 
 type ResponseData = {
@@ -13,24 +11,30 @@ type ResponseData = {
 };
 
 export const deleteUser: HttpHandler<RequestData, ResponseData> = async (
-  _,
-  __
+  data,
+  _
 ) => {
-  async function deleteCollection(collectionPath: string, batchSize: number) {
+  const { userId } = data;
+
+  async function deleteCollection(
+    collectionPath: string,
+    batchSize: number
+  ): Promise<number> {
     const collectionRef = firestore.collection(collectionPath);
     const query = collectionRef.limit(batchSize);
 
     const deletedDocs = await deleteQueryBatch(query);
 
     if (deletedDocs >= batchSize) {
-      // There are more documents to delete
       return deleteCollection(collectionPath, batchSize);
     }
 
     return deletedDocs;
   }
 
-  async function deleteQueryBatch(query: FirebaseFirestore.Query) {
+  async function deleteQueryBatch(
+    query: FirebaseFirestore.Query
+  ): Promise<number> {
     const snapshot = await query.get();
 
     const batchSize = snapshot.size;
@@ -49,31 +53,21 @@ export const deleteUser: HttpHandler<RequestData, ResponseData> = async (
   }
 
   try {
+    // Delete user's posts in each group
     const groupsSnapshot = await firestore.collection("groups").get();
 
     for (const groupDoc of groupsSnapshot.docs) {
       const groupId = groupDoc.id;
-      const membersSnapshot = await firestore
-        .collection(`groups/${groupId}/members`)
-        .get();
-
-      for (const memberDoc of membersSnapshot.docs) {
-        const memberId = memberDoc.id;
-        const postsPath = `groups/${groupId}/members/${memberId}/posts`;
-        await deleteCollection(postsPath, 10);
-      }
-    }
-
-    const usersSnapshot = await firestore.collection("users").get();
-
-    for (const userDoc of usersSnapshot.docs) {
-      const userId = userDoc.id;
-      const postsPath = `users/${userId}/posts`;
+      const postsPath = `groups/${groupId}/members/${userId}/posts`;
       await deleteCollection(postsPath, 10);
     }
 
+    // Delete user's posts
+    const postsPath = `users/${userId}/posts`;
+    await deleteCollection(postsPath, 10);
+
     return { success: true };
   } catch (error) {
-    return { success: false };
+    return { success: false, message: "" };
   }
 };
