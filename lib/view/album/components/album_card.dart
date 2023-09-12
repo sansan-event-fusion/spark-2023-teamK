@@ -1,5 +1,5 @@
 import 'package:emo_project/model/album/album.dart';
-import 'package:emo_project/model/picture/album_picture.dart';
+import 'package:emo_project/model/album_picture/album_picture.dart';
 import 'package:emo_project/view/album/components/album_thumbnail.dart';
 import 'package:emo_project/view/album/screens/album_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +15,9 @@ class AlbumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<AlbumPicture> albumPictures = [
-      AlbumPicture(
-          albumPictureId: '1', pictureUrl: 'https://picsum.photos/200'),
-      AlbumPicture(
-          albumPictureId: '2', pictureUrl: 'https://picsum.photos/300'),
-      AlbumPicture(
-          albumPictureId: '3', pictureUrl: 'https://picsum.photos/400'),
-      AlbumPicture(
-          albumPictureId: '4', pictureUrl: 'https://picsum.photos/500'),
+      AlbumPicture.empty(),
+      AlbumPicture.empty(),
+      AlbumPicture.empty(),
     ];
 
     return Column(
