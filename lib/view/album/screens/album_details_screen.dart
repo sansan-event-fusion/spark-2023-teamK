@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emo_project/model/album/album.dart';
-import 'package:emo_project/model/picture/album_picture.dart';
+import 'package:emo_project/model/album_picture/album_picture.dart';
 import 'package:emo_project/view/album/components/album_info_part.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +44,7 @@ class AlbumDetailsScreen extends StatelessWidget {
                   itemCount: albumPictures.length,
                   itemBuilder: (context, index) {
                     return CachedNetworkImage(
-                        imageUrl: albumPictures[index].pictureUrl);
+                        imageUrl: albumPictures[index].imageUrl);
                   },
                 ),
                 const SliverToBoxAdapter(
