@@ -1,12 +1,14 @@
 import { HttpHandler } from "../types";
 import { firestore } from "../lib/firebase";
 
+import { getStorage, ref, uploadBytes } from "@firebase/storage";
+
 type RequestData = {
   groupId: string;
   memberId: string;
   name: string;
   description: string;
-  icon: string;
+  icon: Blob;
 };
 
 type ResponseData = {
@@ -56,6 +58,12 @@ export const createGroup: HttpHandler<RequestData, ResponseData> = async (
       .doc(memberId)
       //memberIdの保存は明記すべき？docで指定できてる？
       .set({ name: userName, role, memberId, createdAt, updatedAt });
+
+    const storage = getStorage();
+    const iconRef = ref(storage, `groups/${groupId}/icon`);
+
+    // icon は File オブジェクトまたは Blob オブジェクトであると仮定します
+    await uploadBytes(iconRef, icon);
 
     return { success: true, id: groupId, error: "" };
   } catch (error) {
