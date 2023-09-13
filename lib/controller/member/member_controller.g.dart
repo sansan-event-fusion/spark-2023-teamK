@@ -6,6 +6,7 @@ part of 'member_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+
 String _$memberControllerHash() => r'1a0e1d145abb62d6aadbe30ad5654e24559a07a3';
 
 /// Copied from Dart SDK

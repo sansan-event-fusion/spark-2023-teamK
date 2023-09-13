@@ -1,3 +1,9 @@
+import 'package:emo_project/common/keys.dart';
+import 'package:emo_project/controller/common/image_picker_controller.dart';
+import 'package:emo_project/view/common/components/custom_image_picker.dart';
+import 'package:emo_project/view/home/screens/home_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:emo_project/controller/group/group_controller.dart';
 import 'package:emo_project/model/firebase_user/firebase_user.dart';
 import 'package:emo_project/model/member/member.dart';
@@ -14,7 +20,8 @@ class AddGroupScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
-
+    final imageState = ref.watch(imagePickerProvider);
+    final imageController = ref.read(imagePickerProvider.notifier);
     final mockUser = FirebaseUser.mock();
     final mockMember = Member.mock();
     final idController = useTextEditingController();
@@ -38,7 +45,10 @@ class AddGroupScreen extends HookConsumerWidget {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: CustomImagePicker(),
+              child: CustomImagePicker(
+                file: imageState.imageFile,
+                imagePickerController: imageController,
+              ),
             ),
           ),
           SizedBox(
@@ -101,6 +111,23 @@ class AddGroupScreen extends HookConsumerWidget {
                     focusedBorder: UnderlineInputBorder()),
               ),
             ),
+            Center(
+              child: SizedBox(
+                width: deviceWidth * 0.9,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final storagePath = Keys()
+                        .getPostStoragePath(groupId: "test", postId: "postId");
+                    imageController.uploadImage(storagePath: storagePath).then((value) => print(value));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text("グループ作成"),
+                ),
           ),
           SizedBox(
             height: deviceHeight * 0.06,

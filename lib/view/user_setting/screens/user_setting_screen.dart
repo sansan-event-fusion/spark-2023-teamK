@@ -1,7 +1,6 @@
 import 'package:emo_project/controller/firebase_user/firebase_user_controller.dart';
 import 'package:emo_project/controller/user_setting/validator/user_setting_validator.dart';
 import 'package:emo_project/model/repository/auth_repository.dart';
-import 'package:emo_project/view/common/components/custom_image_picker.dart';
 import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:emo_project/view/initial/screens/initial_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +34,7 @@ class UserSettingScreen extends HookConsumerWidget {
                 SizedBox(
                   height: deviceHeight * 0.05,
                 ),
+                // CustomImagePicker(),
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
