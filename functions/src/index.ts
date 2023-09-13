@@ -1,5 +1,3 @@
-import { createPost as createPostFn } from "./modules";
-
 import {
   createGroup as createGroupFn,
   createPost as createPostFn,
@@ -21,7 +19,6 @@ export const createGroup = functions
 export const createPost = functions
   .region("us-central1")
   .https.onCall(createPostFn);
-
 
 export const deleteUser = functions
   .region("us-central1")

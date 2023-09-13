@@ -1,8 +1,11 @@
 import { HttpHandler } from "../types";
 import { firestore } from "../lib/firebase";
+import { FieldValue } from "firebase-admin/firestore";
+import { Post } from "../model/groups/posts";
 
 type RequestData = {
   groupId: string;
+  memberId: string;
   description: string;
   imageUrlList: Record<string, string>;
   postId: string;
@@ -17,27 +20,27 @@ export const createPost: HttpHandler<RequestData, ResponseData> = async (
   data,
   _
 ) => {
-  const { groupId, description, imageUrlList, postId } = data;
+  const { groupId, memberId, description, imageUrlList, postId } = data;
   const db = firestore();
 
-  const createdAt = new Date().toISOString();
-
   try {
-    const postData = {
-      postId,
-      description,
-      imageUrlList,
-      createdAt,
-    };
     const batch = db.batch();
-
     const groupPostRef = firestore()
       .collection("groups")
       .doc(groupId)
       .collection("posts")
       .doc(postId);
-    batch.set(groupPostRef, postData);
-
+    const postBody: Post = (() => {
+      return {
+        postId: postId,
+        memberId: memberId,
+        description: description,
+        imageUrlList: imageUrlList,
+        createdAt: FieldValue.serverTimestamp(),
+        updatedAt: FieldValue.serverTimestamp(),
+      };
+    })();
+    batch.set(groupPostRef, postBody);
     batch.commit();
     return { success: true, id: groupId, error: "" };
   } catch (error) {
@@ -50,4 +53,3 @@ export const createPost: HttpHandler<RequestData, ResponseData> = async (
     return { success: false, message: "unknown error" };
   }
 };
-
