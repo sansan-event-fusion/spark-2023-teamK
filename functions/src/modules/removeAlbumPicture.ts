@@ -1,4 +1,5 @@
 import { firestore } from "../lib/firebase";
+import { getNowDate } from "../lib/utils";
 import { HttpHandler } from "../types";
 import { FieldValue } from "firebase-admin/firestore";
 
@@ -72,7 +73,7 @@ export const removeAlbumPicture: HttpHandler<
     // [PATCH]: アルバムの画像枚数更新(groups/albums)
     const updateAlbumBody = {
       pictureCount: FieldValue.increment(-1),
-      updatedAt: FieldValue.serverTimestamp(),
+      updatedAt: getNowDate(),
     };
     batch.update(albumDocRef, updateAlbumBody);
 

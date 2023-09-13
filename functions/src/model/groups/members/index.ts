@@ -1,13 +1,11 @@
-import { FieldValue } from "firebase-admin/firestore";
-
-type Role = "admin" | "member";
+export type MemberRole = "admin" | "member";
 
 export type Member = {
   memberId: string;
   name: string;
-  role: Role;
+  role: MemberRole;
   icon: string;
   description: string;
-  createdAt: Date | FieldValue;
-  updatedAt: Date | FieldValue;
+  createdAt: string; // date
+  updatedAt: string; // date
 };
