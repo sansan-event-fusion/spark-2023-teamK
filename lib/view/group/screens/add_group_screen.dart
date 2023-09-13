@@ -1,14 +1,19 @@
+import 'package:emo_project/common/keys.dart';
+import 'package:emo_project/controller/common/image_picker_controller.dart';
 import 'package:emo_project/view/common/components/custom_image_picker.dart';
 import 'package:emo_project/view/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AddGroupScreen extends StatelessWidget {
+class AddGroupScreen extends ConsumerWidget {
   const AddGroupScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
+    final imageState = ref.watch(imagePickerProvider);
+    final imageController = ref.read(imagePickerProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text("グループ作成"),
@@ -26,7 +31,10 @@ class AddGroupScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: CustomImagePicker(),
+              child: CustomImagePicker(
+                file: imageState.imageFile,
+                imagePickerController: imageController,
+              ),
             ),
             SizedBox(
               height: deviceHeight * 0.04,
@@ -76,6 +84,9 @@ class AddGroupScreen extends StatelessWidget {
                 width: deviceWidth * 0.9,
                 child: ElevatedButton(
                   onPressed: () {
+                    final storagePath = Keys()
+                        .getPostStoragePath(groupId: "test", postId: "postId");
+                    imageController.uploadImage(storagePath: storagePath).then((value) => print(value));
                     Navigator.push(
                       context,
                       MaterialPageRoute(
