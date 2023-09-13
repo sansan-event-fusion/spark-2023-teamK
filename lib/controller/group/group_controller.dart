@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emo_project/model/firebase_user/firebase_user.dart';
 import 'package:emo_project/model/group/group.dart';
 import 'package:emo_project/model/member/member.dart';
+import 'package:emo_project/model/repository/firebase_user_repository.dart';
 import 'package:emo_project/model/repository/group_repository.dart';
+import 'package:emo_project/model/repository/member_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'group_controller.g.dart';
@@ -30,8 +33,21 @@ class GroupController extends _$GroupController {
     required String name,
     required String icon,
     required String description,
-    required Member member,
   }) async {
+    // firebaseUser を取得
+    final FirebaseUser firebaseUser =
+        await ref.read(firebaseUserRepository).readCurrentFirebaseUser();
+
+    final Member member = Member(
+      memberId: firebaseUser.userId,
+      name: name,
+      role: "admin",
+      icon: icon,
+      description: description,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+
     final group = Group(
       groupId: groupId,
       name: name,
@@ -42,11 +58,22 @@ class GroupController extends _$GroupController {
       updatedAt: null,
     );
 
-    return await ref.read(groupRepository).createGroup(
+    return await ref
+        .read(groupRepository)
+        .createGroup(
           member: member,
           group: group,
-        );
-    // TODO: group を作成したユーザーを追加する処理を呼び出すBE
+        )
+        .then((value) async {
+      // グループ作成に成功したら、グループにメンバーを追加
+      if (value) {
+        await ref.read(memberRepository).createMember(
+              member: member,
+              groupId: groupId,
+            );
+      }
+      return value;
+    });
   }
 
   Future<void> updateGroup({required Group group}) async {
