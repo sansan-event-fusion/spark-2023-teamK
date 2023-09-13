@@ -6,11 +6,6 @@ final signupValidatorProvider =
 class SignupValidator extends StateNotifier {
   SignupValidator(super.state);
 
-  bool isNameValid(String name) {
-    final bool isName = name != "";
-    return isName;
-  }
-
   bool isEmailValid(String email) {
     final bool isEmail = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -25,7 +20,7 @@ class SignupValidator extends StateNotifier {
 
   bool isAllValid(
       {required String name, required String email, required String password}) {
-    if (isNameValid(name) && isEmailValid(email) && isPasswordValid(password)) {
+    if (isEmailValid(email) && isPasswordValid(password)) {
       return true;
     } else {
       return false;

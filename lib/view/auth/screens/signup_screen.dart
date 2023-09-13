@@ -8,6 +8,7 @@ import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:emo_project/view/auth/components/google_signin_button.dart';
 import 'package:emo_project/view/auth/screens/login_screen.dart';
 import 'package:emo_project/view/initial/screens/initial_screen.dart';
+import 'package:emo_project/view/user_setting/screens/user_setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -42,16 +43,6 @@ class SignupScreen extends HookConsumerWidget {
                 SizedBox(
                   width: deviceWidth * 0.9,
                   child: CustomTextField(
-                    title: "ニックネーム",
-                    controller: nameController,
-                  ),
-                ),
-                SizedBox(
-                  height: deviceHeight * 0.04,
-                ),
-                SizedBox(
-                  width: deviceWidth * 0.9,
-                  child: CustomTextField(
                     title: "メールアドレス",
                     controller: emailController,
                   ),
@@ -80,6 +71,7 @@ class SignupScreen extends HookConsumerWidget {
                               email: emailController.text,
                               password: passwordController.text);
                       if (isAllValid) {
+                        print("all is valid");
                         await ref
                             .watch(authControllerProvider.notifier)
                             .createUserWithEmailAndPassword(
@@ -92,19 +84,21 @@ class SignupScreen extends HookConsumerWidget {
                               .createFirebaseUser(
                                 firebaseUser: FirebaseUser(
                                   userId: currentUser.uid,
-                                  name: nameController.text,
+                                  name: "",
                                   icon: "https://placehold.jp/150x150.png",
-                                  accountId: "accountId",
+                                  accountId: "",
                                   email: emailController.text,
                                 ),
                               );
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const InitialScreen(),
+                              builder: (context) => const UserSettingScreen(),
                             ),
                           );
                         }
+                      } else {
+                        print("something is not valid");
                       }
                     },
                     child: const Text("新規登録"),

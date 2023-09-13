@@ -24,8 +24,8 @@ class AddGroupScreen extends StatelessWidget {
               padding: EdgeInsets.all(16.0),
               child: Text("グループアイコン"),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: CustomImagePicker(),
             ),
             SizedBox(

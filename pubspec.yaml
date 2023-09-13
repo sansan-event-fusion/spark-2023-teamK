@@ -30,6 +30,8 @@ dependencies:
   sign_in_with_apple: ^5.0.0
   hooks_riverpod: ^2.4.0
   flutter_hooks: ^0.20.1
+  firebase_storage: ^11.2.6
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:
