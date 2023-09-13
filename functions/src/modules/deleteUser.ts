@@ -16,7 +16,7 @@ export const deleteUser: HttpHandler<RequestData, ResponseData> = async (
   data,
   _
 ) => {
-  const { groupId, memberId, postId } = data;
+  const { groupId, memberId } = data;
 
   try {
     const batch = db.batch();
