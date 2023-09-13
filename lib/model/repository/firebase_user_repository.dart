@@ -30,6 +30,7 @@ class FirebaseUserRepository implements BaseFirebaseUserRepository {
     }
   }
 
+  // TODO: email がおかしい
   @override
   Future<String> createFirebaseUser(
       {required FirebaseUser firebaseUser}) async {
@@ -39,7 +40,7 @@ class FirebaseUserRepository implements BaseFirebaseUserRepository {
           .collection("users")
           .doc(firebaseUser.userId);
 
-      await docRef.set(firebaseUser.copyWith(userId: docRef.id).toJson());
+      await docRef.set(firebaseUser.toJson());
       return docRef.id;
     } on FirebaseException catch (e) {
       throw Exception(e);

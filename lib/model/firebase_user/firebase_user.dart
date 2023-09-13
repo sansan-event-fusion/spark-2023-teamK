@@ -14,7 +14,7 @@ class FirebaseUser with _$FirebaseUser {
     required String email,
   }) = _FirebaseUser;
 
-    factory FirebaseUser.empty() => FirebaseUser(
+  factory FirebaseUser.empty() => FirebaseUser(
         userId: '',
         name: '',
         icon: '',
@@ -22,10 +22,19 @@ class FirebaseUser with _$FirebaseUser {
         email: '',
       );
 
+  factory FirebaseUser.mock() => FirebaseUser(
+        userId: 'mockUserId',
+        name: 'mockname',
+        icon: 'https://picsum.photos/200/300',
+        accountId: 'mockAccountId',
+        email: 'mockEmail@gmail.com',
+      );
+
   factory FirebaseUser.fromJson(Map<String, dynamic> json) =>
       _$FirebaseUserFromJson(json);
 
-  factory FirebaseUser.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc) {
+  factory FirebaseUser.fromDocument(
+      DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data()!;
     return FirebaseUser.fromJson(data).copyWith(userId: doc.id);
   }

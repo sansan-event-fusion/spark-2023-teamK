@@ -16,7 +16,7 @@ class Group with _$Group {
     DateTime? updatedAt,
   }) = _Group;
 
-    factory Group.empty() => Group(
+  factory Group.empty() => Group(
         groupId: '',
         name: '',
         description: '',
@@ -26,6 +26,16 @@ class Group with _$Group {
         updatedAt: null,
       );
 
+  factory Group.mock() => Group(
+        groupId: 'groupMockId',
+        name: 'mockName',
+        description: 'mockDescription',
+        icon: 'https://picsum.photos/200/300',
+        memberCount: 0,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
 
   factory Group.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -33,4 +43,3 @@ class Group with _$Group {
     return Group.fromJson(data).copyWith(groupId: doc.id);
   }
 }
-
