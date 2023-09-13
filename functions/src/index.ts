@@ -1,5 +1,5 @@
 import {
-  createGroup as createGroupFn,
+  addMember as addMemberFn,
   createPost as createPostFn,
   deleteUser as deleteUserFn,
   deleteMember as deleteMemberFn,
@@ -13,9 +13,9 @@ import {
 
 import { functions } from "./lib/firebase";
 
-export const createGroup = functions
+export const addMember = functions
   .region("us-central1")
-  .https.onCall(createGroupFn);
+  .https.onCall(addMemberFn);
 
 export const createPost = functions
   .region("us-central1")
