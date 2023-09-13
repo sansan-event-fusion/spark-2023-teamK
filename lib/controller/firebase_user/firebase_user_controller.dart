@@ -24,7 +24,7 @@ class FirebaseUserController extends StateNotifier {
         email: email,
       );
       final docRef = await _ref
-          .watch(firebaseUserRepository)
+          .read(firebaseUserRepository)
           .createFirebaseUser(firebaseUser: firebaseUser);
       if (mounted) {
         state = AsyncValue.data(docRef);
@@ -35,11 +35,17 @@ class FirebaseUserController extends StateNotifier {
     }
   }
 
-  Future<void> updateFirebaseUser({required FirebaseUser firebaseUser}) async {
+  Future<void> updateFirebaseUser({
+    required String accountId,
+    required String name,
+    required String icon,
+  }) async {
     try {
-      await _ref
-          .watch(firebaseUserRepository)
-          .updateFirebaseUser(firebaseUser: firebaseUser.copyWith());
+      await _ref.read(firebaseUserRepository).updateFirebaseUser(
+            accountId: accountId,
+            name: name,
+            icon: icon,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
@@ -48,7 +54,7 @@ class FirebaseUserController extends StateNotifier {
   Future<void> deleteFirebaseUser({required String userId}) async {
     try {
       await _ref
-          .watch(firebaseUserRepository)
+          .read(firebaseUserRepository)
           .deleteFirebaseUser(userId: userId);
     } on FirebaseException catch (e) {
       throw Exception(e.message);
