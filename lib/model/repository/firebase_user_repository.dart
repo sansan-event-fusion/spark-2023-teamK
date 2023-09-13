@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseFirebaseUserRepository {
-  Future<List<FirebaseUser>> retrieveFirebaseUsers();
   Future<String> createFirebaseUser({required FirebaseUser firebaseUser});
   Future<void> updateFirebaseUser({required FirebaseUser firebaseUser});
   Future<void> deleteFirebaseUser({required String userId});
@@ -19,18 +18,6 @@ class FirebaseUserRepository implements BaseFirebaseUserRepository {
 
   const FirebaseUserRepository(this._ref);
 
-  @override
-  Future<List<FirebaseUser>> retrieveFirebaseUsers() async {
-    try {
-      final snap =
-          await _ref.watch(firebaseFirestoreProvider).collection("users").get();
-      return snap.docs.map((doc) => FirebaseUser.fromDocument(doc)).toList();
-    } on FirebaseException catch (e) {
-      throw Exception(e);
-    }
-  }
-
-  // TODO: email がおかしい
   @override
   Future<String> createFirebaseUser(
       {required FirebaseUser firebaseUser}) async {
@@ -60,14 +47,16 @@ class FirebaseUserRepository implements BaseFirebaseUserRepository {
     }
   }
 
+  // アカウント削除した際の処理
+  // TODO: BE api アカウント削除処理
   @override
   Future<void> deleteFirebaseUser({required String userId}) async {
     try {
-      await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("users")
-          .doc(userId)
-          .delete();
+      // user に紐づく post を削除
+
+      // user に紐づく member を削除
+
+      // user を削除
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
