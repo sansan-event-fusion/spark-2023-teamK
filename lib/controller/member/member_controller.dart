@@ -37,22 +37,12 @@ class MemberController extends _$MemberController {
     });
   }
 
-  Future<String> createMember({required Member member}) async {
-    try {
-      final docRef = await ref
-          .watch(memberRepository)
-          .createMember(member: member, groupId: groupId);
-      return docRef;
-    } on FirebaseException catch (e) {
-      throw Exception(e.message);
-    }
-  }
-
   Future<void> updateMember({required Member member}) async {
     try {
-      await ref
-          .watch(memberRepository)
-          .updateMember(member: member, groupId: groupId);
+      await ref.watch(memberRepository).updateMember(
+            member: member,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
@@ -60,9 +50,10 @@ class MemberController extends _$MemberController {
 
   Future<void> deleteMember({required String memberId}) async {
     try {
-      await ref
-          .watch(memberRepository)
-          .deleteMember(memberId: memberId, groupId: groupId);
+      await ref.watch(memberRepository).deleteMember(
+            memberId: memberId,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }

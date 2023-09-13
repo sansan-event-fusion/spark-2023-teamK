@@ -11,21 +11,10 @@ class FirebaseUserController extends StateNotifier {
   final Ref _ref;
   FirebaseUserController(this._ref) : super(null);
 
-  Future<List<FirebaseUser>> retrieveFirebaseUsers() async {
-    try {
-      final firebaseUserList =
-          await _ref.watch(firebaseUserRepository).retrieveFirebaseUsers();
-      if (mounted) {
-        state = AsyncValue.data(firebaseUserList);
-      }
-      return firebaseUserList;
-    } on FirebaseException catch (e) {
-      throw Exception(e.message);
-    }
-  }
-
-  Future<String> createFirebaseUser(
-      {required String userId, required String email}) async {
+  Future<String> createFirebaseUser({
+    required String userId,
+    required String email,
+  }) async {
     try {
       final FirebaseUser firebaseUser = FirebaseUser(
         userId: userId,
@@ -50,7 +39,7 @@ class FirebaseUserController extends StateNotifier {
     try {
       await _ref
           .watch(firebaseUserRepository)
-          .updateFirebaseUser(firebaseUser: firebaseUser);
+          .updateFirebaseUser(firebaseUser: firebaseUser.copyWith());
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }

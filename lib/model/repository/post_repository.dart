@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:emo_project/model/post/post.dart';
 import 'package:emo_project/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BasePostRepository {
-  Future<String> createPost({
+  Future<void> createPost({
     required Post post,
     required String groupId,
   });
@@ -88,23 +89,28 @@ class PostRepository implements BasePostRepository {
   }
 
   @override
-  Future<String> createPost(
-      {required Post post, required String groupId}) async {
+  Future<void> createPost({
+    required Post post,
+    required String groupId,
+  }) async {
     try {
-      final docRef = await _ref
+      final docRef = _ref
           .watch(firebaseFirestoreProvider)
           .collection("groups")
           .doc(groupId)
           .collection("posts")
-          .add(post.toJson());
-      return docRef.id;
+          .doc();
+      await docRef.set(post.copyWith(postId: docRef.id).toJson());
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
   }
 
   @override
-  Future<void> updatePost({required Post post, required String groupId}) async {
+  Future<void> updatePost({
+    required Post post,
+    required String groupId,
+  }) async {
     try {
       await _ref
           .watch(firebaseFirestoreProvider)
@@ -119,16 +125,19 @@ class PostRepository implements BasePostRepository {
   }
 
   @override
-  Future<void> deletePost(
-      {required String postId, required String groupId}) async {
+  Future<void> deletePost({
+    required String postId,
+    required String groupId,
+  }) async {
     try {
-      await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("posts")
-          .doc(postId)
-          .delete();
+      final result =
+          await FirebaseFunctions.instance.httpsCallable('deletePost').call(
+        {
+          "groupId": groupId,
+          "postId": postId,
+        },
+      );
+      print(result.data);
     } on FirebaseException catch (e) {
       throw Exception(e);
     }

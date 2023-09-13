@@ -41,25 +41,24 @@ class InvitedMemberController extends _$InvitedMemberController {
     });
   }
 
-  Future<String> createInvitedMember(
+  Future<void> createInvitedMember(
       {required InvitedMember invitedMember}) async {
     try {
-      final docRef = await ref
-          .read(invitedMemberRepository)
-          .createInvitedMember(invitedMember: invitedMember, groupId: groupId);
-
-      return docRef;
+      await ref.read(invitedMemberRepository).createInvitedMember(
+            invitedMember: invitedMember,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
   }
 
-  Future<void> updateInvitedMember(
-      {required InvitedMember invitedMember}) async {
+  Future<void> acceptInvitation({required String invitedMemberId}) async {
     try {
-      await ref
-          .read(invitedMemberRepository)
-          .updateInvitedMember(invitedMember: invitedMember, groupId: groupId);
+      await ref.read(invitedMemberRepository).acceptInvitation(
+            invitedMemberId: invitedMemberId,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
@@ -68,7 +67,9 @@ class InvitedMemberController extends _$InvitedMemberController {
   Future<void> deleteInvitedMember({required String invitedMemberId}) async {
     try {
       await ref.read(invitedMemberRepository).deleteInvitedMember(
-          invitedMemberId: invitedMemberId, groupId: groupId);
+            invitedMemberId: invitedMemberId,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }

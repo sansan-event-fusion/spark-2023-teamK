@@ -1,23 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:emo_project/model/album_picture/album_picture.dart';
 import 'package:emo_project/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseAlbumPictureRepository {
-  Future<String> createAlbumPicture({
-    required AlbumPicture albumPicture,
+  Future<bool> createAlbumPicture({
     required String albumId,
     required String groupId,
+    required String memberId,
+    required List<String> pictureUrls,
   });
-  Future<void> updateAlbumPicture({
-    required AlbumPicture albumPicture,
-    required String albumId,
-    required String groupId,
-  });
-  Future<void> deleteAlbumPicture({
+  Future<bool> deleteAlbumPicture({
     required String albumPictureId,
     required String albumId,
     required String groupId,
+    required String memberId,
   });
   Future<List<AlbumPicture>> getAllAlbumPictureList({
     required String groupId,
@@ -116,65 +114,50 @@ class AlbumPictureRepository implements BaseAlbumPictureRepository {
   }
 
   @override
-  Future<String> createAlbumPicture({
-    required AlbumPicture albumPicture,
+  Future<bool> createAlbumPicture({
     required String albumId,
     required String groupId,
+    required String memberId,
+    required List<String> pictureUrls,
   }) async {
     try {
-      final docRef = _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("albums")
-          .doc(albumId)
-          .collection("album_pictures")
-          .doc();
-      await docRef
-          .set(albumPicture.copyWith(albumPictureId: docRef.id).toJson());
-      return docRef.id;
+      final result = await FirebaseFunctions.instance
+          .httpsCallable('addAlbumPictures')
+          .call(
+        {
+          "groupId": groupId,
+          "albumId": albumId,
+          "memberId": memberId,
+          "pictureUrls": pictureUrls,
+        },
+      );
+      print(result.data);
+      return result.data["success"] == "true";
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
   }
 
   @override
-  Future<void> updateAlbumPicture({
-    required AlbumPicture albumPicture,
-    required String albumId,
-    required String groupId,
-  }) async {
-    try {
-      await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("albums")
-          .doc(albumId)
-          .collection("album_pictures")
-          .doc(albumPicture.albumPictureId)
-          .update(albumPicture.toJson());
-    } on FirebaseException catch (e) {
-      throw Exception(e);
-    }
-  }
-
-  @override
-  Future<void> deleteAlbumPicture({
+  Future<bool> deleteAlbumPicture({
     required String albumPictureId,
     required String albumId,
     required String groupId,
+    required String memberId,
   }) async {
     try {
-      await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("albums")
-          .doc(albumId)
-          .collection("album_pictures")
-          .doc(albumPictureId)
-          .delete();
+      final result = await FirebaseFunctions.instance
+          .httpsCallable('removeAlbumPicture')
+          .call(
+        {
+          "groupId": groupId,
+          "albumId": albumId,
+          "memberId": memberId,
+          "deletePictureId": albumPictureId,
+        },
+      );
+      print(result.data);
+      return result.data["success"] == "true";
     } on FirebaseException catch (e) {
       throw Exception(e);
     }

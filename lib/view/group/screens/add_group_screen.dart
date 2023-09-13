@@ -1,5 +1,6 @@
 import 'package:emo_project/controller/group/group_controller.dart';
 import 'package:emo_project/model/firebase_user/firebase_user.dart';
+import 'package:emo_project/model/member/member.dart';
 import 'package:emo_project/view/common/components/custom_image_picker.dart';
 import 'package:emo_project/view/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class AddGroupScreen extends HookConsumerWidget {
     final double deviceHeight = MediaQuery.of(context).size.height;
 
     final mockUser = FirebaseUser.mock();
+    final mockMember = Member.mock();
     final idController = useTextEditingController();
     final nameController = useTextEditingController();
     final descriptionController = useTextEditingController();
@@ -108,6 +110,7 @@ class AddGroupScreen extends HookConsumerWidget {
               width: deviceWidth * 0.9,
               child: ElevatedButton(
                 onPressed: () {
+                  // TODO: グループ作成処理
                   ref
                       .read(groupControllerProvider(userId: mockUser.userId)
                           .notifier)
@@ -116,6 +119,7 @@ class AddGroupScreen extends HookConsumerWidget {
                         icon: "https://picsum.photos/200/300",
                         name: nameController.text,
                         description: descriptionController.text,
+                        member: mockMember,
                       )
                       .then((value) {
                     if (value) {

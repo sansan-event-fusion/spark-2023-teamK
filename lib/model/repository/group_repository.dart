@@ -1,14 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:emo_project/model/group/group.dart';
+import 'package:emo_project/model/member/member.dart';
 import 'package:emo_project/providers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseGroupRepository {
   Future<List<Group>> retrieveGroups({required String userId});
-  Future<bool> createGroup({required Group group});
+  Future<bool> createGroup({
+    required Member member,
+    required Group group,
+  });
   Future<void> updateGroup({required Group group});
-  Future<void> deleteGroup({required String groupId});
+  Future<void> deleteGroup({
+    required String groupId,
+    required String userId,
+  });
 }
 
 final groupRepository =
@@ -56,7 +64,10 @@ class GroupRepository implements BaseGroupRepository {
   }
 
   @override
-  Future<bool> createGroup({required Group group}) async {
+  Future<bool> createGroup({
+    required Member member,
+    required Group group,
+  }) async {
     try {
       return _ref
           .read(firebaseFirestoreProvider)
@@ -101,13 +112,20 @@ class GroupRepository implements BaseGroupRepository {
   }
 
   @override
-  Future<void> deleteGroup({required String groupId}) async {
+  Future<bool> deleteGroup({
+    required String groupId,
+    required String userId,
+  }) async {
     try {
-      await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .delete();
+      final result =
+          await FirebaseFunctions.instance.httpsCallable('deleteGroup').call(
+        {
+          "groupId": groupId,
+          "userId": userId,
+        },
+      );
+      print(result.data);
+      return result.data["success"] == "true";
     } on FirebaseException catch (e) {
       throw Exception(e);
     }

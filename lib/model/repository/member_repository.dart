@@ -1,18 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:emo_project/model/member/member.dart';
 import 'package:emo_project/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseMemberRepository {
-  Future<String> createMember(
-      {required Member member, required String groupId});
-  Future<void> updateMember({required Member member, required String groupId});
-  Future<void> deleteMember(
-      {required String memberId, required String groupId});
+  Future<String> createMember({
+    required Member member,
+    required String groupId,
+  });
+  Future<void> updateMember({
+    required Member member,
+    required String groupId,
+  });
+  Future<void> deleteMember({
+    required String memberId,
+    required String groupId,
+  });
   Future<List<Member>> getAllMemberList({required String groupId});
   Future<List<Member>> getLocalMemberList({required String groupId});
-  Future<Stream<QuerySnapshot<Member>>> streamMemberList(
-      {required String groupId});
+  Future<Stream<QuerySnapshot<Member>>> streamMemberList({
+    required String groupId,
+  });
 }
 
 final memberRepository =
@@ -76,27 +85,24 @@ class MemberRepository implements BaseMemberRepository {
     return ref.snapshots();
   }
 
+  // TODO: BE で member 作成
   @override
-  Future<String> createMember(
-      {required Member member, required String groupId}) async {
+  Future<String> createMember({
+    required Member member,
+    required String groupId,
+  }) async {
     try {
-      final docRef = _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("members")
-          .doc();
-      await docRef.set(member.copyWith(memberId: docRef.id).toJson());
-
-      return docRef.id;
+      return "";
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
   }
 
   @override
-  Future<void> updateMember(
-      {required Member member, required String groupId}) async {
+  Future<void> updateMember({
+    required Member member,
+    required String groupId,
+  }) async {
     try {
       await _ref
           .watch(firebaseFirestoreProvider)
@@ -111,16 +117,19 @@ class MemberRepository implements BaseMemberRepository {
   }
 
   @override
-  Future<void> deleteMember(
-      {required String memberId, required String groupId}) async {
+  Future<void> deleteMember({
+    required String memberId,
+    required String groupId,
+  }) async {
     try {
-      await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("members")
-          .doc(memberId)
-          .delete();
+      final result =
+          await FirebaseFunctions.instance.httpsCallable('deleteMember').call(
+        {
+          "groupId": groupId,
+          "memberId": memberId,
+        },
+      );
+      print(result.data);
     } on FirebaseException catch (e) {
       throw Exception(e);
     }

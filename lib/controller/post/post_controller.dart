@@ -55,12 +55,12 @@ class PostController extends _$PostController {
         .toList();
   }
 
-  Future<String> createPost({required Post post}) async {
+  Future<void> createPost({required Post post}) async {
     try {
-      final docRef = await ref
-          .watch(postRepository)
-          .createPost(post: post, groupId: groupId);
-      return docRef;
+      await ref.watch(postRepository).createPost(
+            post: post,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
@@ -68,7 +68,10 @@ class PostController extends _$PostController {
 
   Future<void> updatePost({required Post post}) async {
     try {
-      await ref.watch(postRepository).updatePost(post: post, groupId: groupId);
+      await ref.watch(postRepository).updatePost(
+            post: post,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
