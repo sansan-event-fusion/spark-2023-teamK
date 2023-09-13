@@ -1,6 +1,8 @@
 import { HttpHandler } from "../types";
+
 import { firestore } from "../lib/firebase";
 import { logger } from "firebase-functions";
+
 import * as admin from "firebase-admin";
 
 type RequestData = {
