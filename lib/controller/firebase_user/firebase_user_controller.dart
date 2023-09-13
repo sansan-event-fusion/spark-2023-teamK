@@ -11,6 +11,19 @@ class FirebaseUserController extends StateNotifier {
   final Ref _ref;
   FirebaseUserController(this._ref) : super(null);
 
+  Future<FirebaseUser> readCurrentFirebaseUser() async {
+    try {
+      final firebaseUser =
+          await _ref.read(firebaseUserRepository).readCurrentFirebaseUser();
+      if (mounted) {
+        state = AsyncValue.data(firebaseUser);
+      }
+      return firebaseUser;
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   Future<String> createFirebaseUser({
     required String userId,
     required String email,
