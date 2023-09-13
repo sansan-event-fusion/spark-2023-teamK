@@ -82,20 +82,16 @@ class SignupScreen extends HookConsumerWidget {
                           ref
                               .watch(firebaseUserControllerProvider.notifier)
                               .createFirebaseUser(
-                                firebaseUser: FirebaseUser(
                                   userId: currentUser.uid,
-                                  name: "",
-                                  icon: "https://placehold.jp/150x150.png",
-                                  accountId: "",
-                                  email: emailController.text,
-                                ),
-                              );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const UserSettingScreen(),
-                            ),
-                          );
+                                  email: emailController.text)
+                              .then((value) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const UserSettingScreen(),
+                              ),
+                            );
+                          });
                         }
                       } else {
                         print("something is not valid");
