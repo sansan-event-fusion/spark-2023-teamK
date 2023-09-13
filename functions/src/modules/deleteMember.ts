@@ -1,4 +1,5 @@
 import { firestore } from "../lib/firebase";
+import { FieldValue } from "firebase-admin/firestore";
 
 import { HttpHandler } from "../types";
 import { logger } from "firebase-functions";
@@ -71,13 +72,16 @@ export const deleteMember: HttpHandler<RequestData, ResponseData> = async (
 
     // [PATCH]: メンバー数更新(groups)
     batch.update(groupDocRef, {
-      memberCount: firestore.FieldValue.increment(-1),
+      memberCount: FieldValue.increment(-1),
     });
 
     await batch.commit();
 
+    logger.info("deleteMember: ${data.memberId} deleted");
+
     return {
       success: true,
+      message: `member deleted (id: ${data.memberId})`,
     };
   } catch (error) {
     if (error instanceof Error) {

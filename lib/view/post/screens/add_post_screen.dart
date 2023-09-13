@@ -1,12 +1,17 @@
+import 'package:emo_project/controller/member/member_controller.dart';
+import 'package:emo_project/view/member/components/member_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddPostScreen extends StatelessWidget {
+class AddPostScreen extends ConsumerWidget {
   const AddPostScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
+    final state = ref.watch(memberControllerProvider(groupId: "test"));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("投稿の追加"),
@@ -64,17 +69,31 @@ class AddPostScreen extends StatelessWidget {
                     height: 400,
                     color: Colors.white,
                     child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          for (var i = 0; i < 20; i++)
-                            Card(
-                              child: ListTile(
-                                title: Text('item $i'),
-                              ),
-                            )
-                        ],
-                      ),
-                    ),
+                        child: state.when(
+                      loading: () {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                      error: (error, stackTrace) {
+                        return Text(error.toString());
+                      },
+                      data: (data) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              for (int i = 0; i < data.length; i++) ...{
+                                MemberListItem(
+                                  memberImageUrl: data[i].icon,
+                                  memberName: data[i].name,
+                                )
+                              }
+                            ],
+                          ),
+                        );
+                      },
+                    )),
                   );
                 },
               );

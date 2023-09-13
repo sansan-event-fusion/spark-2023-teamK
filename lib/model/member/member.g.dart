@@ -13,7 +13,9 @@ _$_Member _$$_MemberFromJson(Map<String, dynamic> json) => _$_Member(
       icon: json['icon'] as String,
       description: json['description'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$$_MemberToJson(_$_Member instance) => <String, dynamic>{
@@ -23,5 +25,5 @@ Map<String, dynamic> _$$_MemberToJson(_$_Member instance) => <String, dynamic>{
       'icon': instance.icon,
       'description': instance.description,
       'createdAt': instance.createdAt.toIso8601String(),
-      'updatedAt': instance.updatedAt.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
     };
