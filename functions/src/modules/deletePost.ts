@@ -1,9 +1,8 @@
 import { HttpHandler } from "../types";
-import * as admin from "firebase-admin";
 import { firestore } from "../lib/firebase";
+import * as admin from "firebase-admin";
 
 type RequestData = {
-  userId: string;
   groupId: string;
   postId: string;
 };
@@ -16,42 +15,39 @@ export const deletePost: HttpHandler<RequestData, ResponseData> = async (
   data,
   _
 ) => {
-  const { userId, groupId, postId } = data;
+  const { groupId, postId } = data;
 
-  const db = firestore;
+  const db = firestore();
+  const batch = db.batch();
 
-  const postRef = db
-    .collection("groups")
-    .doc(groupId)
-    .collection("posts")
-    .doc(postId);
-
-  const memberPostRef = db
-    .collection("groups")
-    .doc(groupId)
-    .collection("members")
-    .doc(userId)
-    .collection("posts")
-    .doc(postId);
-
-  const memberMentionRef = db
-    .collection("groups")
-    .doc(groupId)
-    .collection("members")
-    .doc(userId)
-    .collection("mentions")
-    .doc(postId);
+  const bucket = admin.storage().bucket();
 
   try {
-    await db.runTransaction(async (transaction) => {
-      transaction.delete(postRef);
-      transaction.delete(memberPostRef);
-      transaction.delete(memberMentionRef);
-    });
+    const groupPostDocRef = db
+      .collection("groups")
+      .doc(groupId)
+      .collection("posts")
+      .doc(postId);
 
-    return { success: true };
+    batch.delete(groupPostDocRef);
+
+    batch.commit();
+
+    const prefix = `groups/${groupId}/posts/${postId}/`;
+
+    const [files] = await bucket.getFiles({ prefix });
+    const deletePromises = files.map((file) => file.delete());
+
+    await Promise.all(deletePromises);
+
+    return { success: true, id: groupId, error: "" };
   } catch (error) {
-    console.error(error);
-    return { success: false };
+    if (error instanceof Error) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+    return { success: false, message: "unknown error" };
   }
 };
