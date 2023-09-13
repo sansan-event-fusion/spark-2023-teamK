@@ -1,4 +1,3 @@
-import 'package:emo_project/controller/firebase_user/firebase_user_controller.dart';
 import 'package:emo_project/controller/group/group_controller.dart';
 import 'package:emo_project/model/firebase_user/firebase_user.dart';
 import 'package:emo_project/view/common/components/custom_image_picker.dart';
@@ -33,10 +32,10 @@ class AddGroupScreen extends HookConsumerWidget {
             padding: EdgeInsets.all(16.0),
             child: Text("グループアイコン"),
           ),
-          const Align(
+          Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: CustomImagePicker(),
             ),
           ),
