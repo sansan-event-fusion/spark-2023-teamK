@@ -1,41 +1,53 @@
-import * as admin from 'firebase-admin';
 import { HttpHandler } from "../types";
+import { firestore } from "../lib/firebase";
 
 type RequestData = {
-    groupId: string;
-    memberId: string;
-    postId: string;
-    createdAt: string;
+  groupId: string;
+  description: string;
+  imageUrlList: Record<string, string>;
+  postId: string;
 };
 
 type ResponseData = {
-    success: boolean;
-    id: string;
+  success: boolean;
+  message?: string;
 };
 
-export const createPost: HttpHandler<RequestData, ResponseData> =async (
-    data,
-    _
+export const createPost: HttpHandler<RequestData, ResponseData> = async (
+  data,
+  _
 ) => {
-    const { groupId, memberId, postId, createdAt } = data;
+  const { groupId, description, imageUrlList, postId } = data;
+  const db = firestore();
 
+  const createdAt = new Date().toISOString();
+
+  try {
     const postData = {
-        postId,
-        createdAt,
+      postId,
+      description,
+      imageUrlList,
+      createdAt,
     };
+    const batch = db.batch();
 
-    try {
-        const docRef = await admin.firestore()
-            .collection('groups')
-            .doc(groupId)
-            .collection('members')
-            .doc(memberId)
-            .collection('posts')
-            .add(postData);
+    const groupPostRef = firestore()
+      .collection("groups")
+      .doc(groupId)
+      .collection("posts")
+      .doc(postId);
+    batch.set(groupPostRef, postData);
 
-        return { success: true, id: docRef.id };
-    } catch (error) {
-        return { success: false, id:"aa"};
-        //error追加したい
+    batch.commit();
+    return { success: true, id: groupId, error: "" };
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        success: false,
+        message: error.message,
+      };
     }
+    return { success: false, message: "unknown error" };
+  }
 };
+
