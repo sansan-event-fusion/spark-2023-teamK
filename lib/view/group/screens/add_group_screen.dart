@@ -94,11 +94,12 @@ class AddGroupScreen extends HookConsumerWidget {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 decoration: const InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 30, horizontal: 8),
-                    hintText: "グループプロフィール",
-                    filled: true,
-                    focusedBorder: UnderlineInputBorder()),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 30, horizontal: 8),
+                  hintText: "グループプロフィール",
+                  filled: true,
+                  focusedBorder: UnderlineInputBorder(),
+                ),
               ),
             ),
           ),
@@ -110,7 +111,7 @@ class AddGroupScreen extends HookConsumerWidget {
               width: deviceWidth * 0.9,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: グループ作成処理
+                  // TODO: icon
                   ref
                       .read(groupControllerProvider(userId: mockUser.userId)
                           .notifier)
@@ -119,7 +120,6 @@ class AddGroupScreen extends HookConsumerWidget {
                         icon: "https://picsum.photos/200/300",
                         name: nameController.text,
                         description: descriptionController.text,
-                        member: mockMember,
                       )
                       .then((value) {
                     if (value) {
