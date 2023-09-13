@@ -4,8 +4,6 @@ import { FieldValue } from "firebase-admin/firestore";
 
 type RequestData = {
   userId: string;
-  // memberId: string;
-  // postId: string;
 };
 
 type ResponseData = {
