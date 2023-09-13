@@ -1,6 +1,6 @@
 import { HttpHandler } from "../types";
-import * as admin from 'firebase-admin';
 
+import * as admin from "firebase-admin";
 
 type RequestData = {
   userId: string;
@@ -11,25 +11,22 @@ type ResponseData = {
   id: string;
 };
 
-
-export const createGroup: HttpHandler<RequestData, ResponseData> =async (
+export const createGroup: HttpHandler<RequestData, ResponseData> = async (
   data,
   _
 ) => {
   const { userId } = data;
 
   const postData = {
-      userId,
+    userId,
   };
 
   try {
-      const docRef = await admin.firestore()
-          .collection('groups')
-          .add(postData);
+    const docRef = await admin.firestore().collection("groups").add(postData);
 
-      return { success: true, id: docRef.id };
+    return { success: true, id: docRef.id };
   } catch (error) {
-      return { success: false, id:"aa"};
-      //error追加したい
+    return { success: false, id: "aa" };
+    //error追加したい
   }
 };

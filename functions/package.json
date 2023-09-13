@@ -3,7 +3,9 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "npm run build && firebase emulators:start --import=./data --only functions, firestore",
+
+    "serve": "npm run build && firebase emulators:start --import=./data --only functions,firestore,storage",
+    "export": "firebase emulators:export --force ./data/",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",

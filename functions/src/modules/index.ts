@@ -4,4 +4,4 @@ export { createPost } from "./createPost";
 
 export { deletePost } from "./deletePost";
 
-
+export { deleteMember } from "./deleteMember";

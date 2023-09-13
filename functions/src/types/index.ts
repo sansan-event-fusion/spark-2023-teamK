@@ -8,4 +8,3 @@ export type HttpHandler<
   data: RequestData,
   context: functions.https.CallableContext
 ) => Promise<ResponseData>;
-
