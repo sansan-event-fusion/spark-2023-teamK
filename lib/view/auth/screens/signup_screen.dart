@@ -1,13 +1,11 @@
 import 'package:emo_project/controller/auth/auth_controller.dart';
 import 'package:emo_project/controller/auth/validator/signup_validator.dart';
 import 'package:emo_project/controller/firebase_user/firebase_user_controller.dart';
-import 'package:emo_project/model/firebase_user/firebase_user.dart';
 import 'package:emo_project/model/repository/auth_repository.dart';
 import 'package:emo_project/view/auth/components/apple_signin_button.dart';
 import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:emo_project/view/auth/components/google_signin_button.dart';
 import 'package:emo_project/view/auth/screens/login_screen.dart';
-import 'package:emo_project/view/initial/screens/initial_screen.dart';
 import 'package:emo_project/view/user_setting/screens/user_setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,6 +21,7 @@ class SignupScreen extends HookConsumerWidget {
     final nameController = useTextEditingController();
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -72,18 +71,21 @@ class SignupScreen extends HookConsumerWidget {
                               password: passwordController.text);
                       if (isAllValid) {
                         print("all is valid");
+                        // 認証処理
                         await ref
                             .watch(authControllerProvider.notifier)
                             .createUserWithEmailAndPassword(
                                 emailController.text, passwordController.text);
+                        // FirebaseUserを読み取る
                         final currentUser =
                             ref.watch(authRepositoryProvider).getCurrentUser();
                         if (currentUser != null) {
                           ref
                               .watch(firebaseUserControllerProvider.notifier)
                               .createFirebaseUser(
-                                  userId: currentUser.uid,
-                                  email: emailController.text)
+                                userId: currentUser.uid,
+                                email: emailController.text,
+                              )
                               .then((value) {
                             Navigator.push(
                               context,
