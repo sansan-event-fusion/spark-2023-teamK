@@ -50,3 +50,4 @@ export const createPost: HttpHandler<RequestData, ResponseData> = async (
     return { success: false, message: "unknown error" };
   }
 };
+

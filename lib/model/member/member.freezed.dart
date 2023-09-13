@@ -26,7 +26,7 @@ mixin _$Member {
   String get icon => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +45,7 @@ abstract class $MemberCopyWith<$Res> {
       String icon,
       String description,
       DateTime createdAt,
-      DateTime updatedAt});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -67,7 +67,7 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
     Object? icon = null,
     Object? description = null,
     Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       memberId: null == memberId
@@ -94,10 +94,10 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      updatedAt: null == updatedAt
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -115,7 +115,7 @@ abstract class _$$_MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
       String icon,
       String description,
       DateTime createdAt,
-      DateTime updatedAt});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -134,7 +134,7 @@ class __$$_MemberCopyWithImpl<$Res>
     Object? icon = null,
     Object? description = null,
     Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$_Member(
       memberId: null == memberId
@@ -161,10 +161,10 @@ class __$$_MemberCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      updatedAt: null == updatedAt
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -179,7 +179,7 @@ class _$_Member implements _Member {
       required this.icon,
       required this.description,
       required this.createdAt,
-      required this.updatedAt});
+      this.updatedAt});
 
   factory _$_Member.fromJson(Map<String, dynamic> json) =>
       _$$_MemberFromJson(json);
@@ -197,7 +197,7 @@ class _$_Member implements _Member {
   @override
   final DateTime createdAt;
   @override
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   @override
   String toString() {
@@ -249,7 +249,7 @@ abstract class _Member implements Member {
       required final String icon,
       required final String description,
       required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$_Member;
+      final DateTime? updatedAt}) = _$_Member;
 
   factory _Member.fromJson(Map<String, dynamic> json) = _$_Member.fromJson;
 
@@ -266,7 +266,7 @@ abstract class _Member implements Member {
   @override
   DateTime get createdAt;
   @override
-  DateTime get updatedAt;
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_MemberCopyWith<_$_Member> get copyWith =>
