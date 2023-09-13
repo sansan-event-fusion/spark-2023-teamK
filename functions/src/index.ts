@@ -1,6 +1,8 @@
 import {
   createGroup as createGroupFn,
   deleteMember as deleteMemberFn,
+  acceptInvitation as acceptInvitationFn,
+  approveRequest as approveRequestFn,
 } from "./modules";
 import { createPost as createPostFn } from "./modules";
 import { deleteGroup as deleteGroupFn } from "./modules";
@@ -22,3 +24,12 @@ export const createPost = functions
 export const deleteGroup = functions
   .region("us-central1")
   .https.onCall(deleteGroupFn);
+
+export const acceptInvitation = functions
+  .region("us-central1")
+  .https.onCall(acceptInvitationFn);
+
+export const approveRequest = functions
+  .region("us-central1")
+  .https.onCall(approveRequestFn);
+

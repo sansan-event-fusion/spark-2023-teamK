@@ -9,6 +9,7 @@ class Post with _$Post {
   factory Post({
     required String postId,
     required String memberId,
+    required List<String> mentionedMemberList,
     required String description,
     required List<String> imageUrlList,
     required int likeCount,
@@ -18,7 +19,18 @@ class Post with _$Post {
   factory Post.empty() => Post(
         postId: '',
         memberId: '',
+        mentionedMemberList: [],
         description: '',
+        imageUrlList: [],
+        likeCount: 0,
+        createdAt: DateTime.now(),
+      );
+
+  factory Post.mock() => Post(
+        postId: 'mockPostId',
+        memberId: 'mockMemberId',
+        mentionedMemberList: [],
+        description: 'mockDescription',
         imageUrlList: [],
         likeCount: 0,
         createdAt: DateTime.now(),
@@ -30,9 +42,4 @@ class Post with _$Post {
     final data = doc.data()!;
     return Post.fromJson(data).copyWith(postId: doc.id);
   }
-}
-
-// postId or id
-extension PostX on Post {
-  Map<String, dynamic> toDocument() => toJson()..remove('postId');
 }

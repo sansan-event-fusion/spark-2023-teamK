@@ -1,17 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emo_project/model/invited_member/invited_member.dart';
 import 'package:emo_project/providers.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseInvitedMemberRepository {
-  Future<List<InvitedMember>> retrieveInvitedMembers({required String groupId});
-  Future<String> createInvitedMember(
-      {required InvitedMember invitedMember, required String groupId});
-  Future<void> updateInvitedMember(
-      {required InvitedMember invitedMember, required String groupId});
-  Future<void> deleteInvitedMember(
-      {required String invitedMemberId, required String groupId});
+  Future<String> createInvitedMember({
+    required InvitedMember invitedMember,
+    required String groupId,
+  });
+  Future<void> updateInvitedMember({
+    required InvitedMember invitedMember,
+    required String groupId,
+  });
+  Future<void> deleteInvitedMember({
+    required String invitedMemberId,
+    required String groupId,
+  });
+  Future<List<InvitedMember>> getAllInvitedMemberList({
+    required String groupId,
+  });
+  Future<List<InvitedMember>> getLocalInvitedMemberList({
+    required String groupId,
+  });
+  Future<Stream<QuerySnapshot<InvitedMember>>> streamInvitedMemberList({
+    required String groupId,
+  });
 }
 
 final invitedMemberRepository =
@@ -23,19 +36,60 @@ class InvitedMemberRepository implements BaseInvitedMemberRepository {
   const InvitedMemberRepository(this._ref);
 
   @override
-  Future<List<InvitedMember>> retrieveInvitedMembers(
+  Future<List<InvitedMember>> getAllInvitedMemberList(
       {required String groupId}) async {
-    try {
-      final snap = await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("invited_members")
-          .get();
-      return snap.docs.map((doc) => InvitedMember.fromDocument(doc)).toList();
-    } on FirebaseException catch (e) {
-      throw Exception(e);
+    return await getQuery(groupId: groupId).then((ref) async => await ref
+        .get()
+        .then((value) async =>
+            await getLocalInvitedMemberList(groupId: groupId)));
+  }
+
+  @override
+  Future<List<InvitedMember>> getLocalInvitedMemberList(
+      {required String groupId}) async {
+    final snap = await _ref
+        .watch(firebaseFirestoreProvider)
+        .collection("groups")
+        .doc(groupId)
+        .collection("invited_members")
+        .get(const GetOptions(source: Source.cache));
+    return snap.docs.map((doc) => InvitedMember.fromDocument(doc)).toList();
+  }
+
+  Future<Query<InvitedMember>> getQuery({required String groupId}) async {
+    DocumentSnapshot? lastDocRef;
+    await _ref
+        .watch(firebaseFirestoreProvider)
+        .collection("groups")
+        .doc(groupId)
+        .collection("invited_members")
+        .get(const GetOptions(source: Source.cache))
+        .then((value) {
+      if (value.docs.isNotEmpty) lastDocRef = value.docs.last;
+    });
+
+    Query<InvitedMember> ref = _ref
+        .watch(firebaseFirestoreProvider)
+        .collection("groups")
+        .doc(groupId)
+        .collection("invited_members")
+        .withConverter(
+          fromFirestore: (snapshot, _) =>
+              InvitedMember.fromJson(snapshot.data()!),
+          toFirestore: (data, _) => data.toJson(),
+        );
+    if (lastDocRef != null) {
+      ref = ref.orderBy("createdAt").startAtDocument(lastDocRef!);
     }
+
+    return ref;
+  }
+
+  @override
+  Future<Stream<QuerySnapshot<InvitedMember>>> streamInvitedMemberList(
+      {required String groupId}) async {
+    final ref = await getQuery(groupId: groupId);
+    return ref.snapshots();
   }
 
   @override
