@@ -38,12 +38,14 @@ export const addMember: HttpHandler<RequestData, ResponseData> = async (
   const db = firestore();
 
   try {
-    // グループ、ユーザーの存在確認
+    // グループ、ユーザー、メンバーの存在確認
     const groupDocRef = db.collection("groups").doc(data.groupId);
     const userDocRef = db.collection("users").doc(data.memberId);
-    const [groupDoc, userDoc] = await Promise.all([
+    const memberDocRef = groupDocRef.collection("members").doc(data.memberId);
+    const [groupDoc, userDoc, memberDoc] = await Promise.all([
       groupDocRef.get(),
       userDocRef.get(),
+      memberDocRef.get(),
     ]);
 
     if (!groupDoc.exists) {
@@ -51,6 +53,9 @@ export const addMember: HttpHandler<RequestData, ResponseData> = async (
     }
     if (!userDoc.exists) {
       throw new Error("user not found");
+    }
+    if (memberDoc.exists) {
+      throw new Error("member already exists");
     }
 
     const batch = db.batch();
