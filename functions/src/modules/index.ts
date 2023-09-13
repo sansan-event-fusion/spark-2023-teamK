@@ -2,6 +2,8 @@ export { createGroup } from "./createGroup";
 
 export { createPost } from "./createPost";
 
+export { deleteGroup } from "./deleteGroup";
+
 export { deletePost } from "./deletePost";
 
 export { deleteUser } from "./deleteUser";

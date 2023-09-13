@@ -9,6 +9,8 @@ import {
   deleteUser as deleteUserFn,
 } from "./modules";
 
+import { deleteGroup as deleteGroupFn } from "./modules";
+
 import { functions } from "./lib/firebase";
 
 export const createGroup = functions
@@ -27,6 +29,10 @@ export const deleteMember = functions
   .region("us-central1")
   .https.onCall(deleteMemberFn);
 
+export const deleteGroup = functions
+  .region("us-central1")
+  .https.onCall(deleteGroupFn);
+
 export const deleteUser = functions
   .region("us-central1")
   .https.onCall(deleteUserFn);
@@ -42,3 +48,4 @@ export const approveRequest = functions
 export const addAlbumPictures = functions
   .region("us-central1")
   .https.onCall(addAlbumPicturesFn);
+
