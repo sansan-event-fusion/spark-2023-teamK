@@ -4,6 +4,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { HttpHandler } from "../types";
 import { logger } from "firebase-functions";
 import { AlbumPicture } from "../model/groups/albums/album_pictures";
+import { getNowDate } from "../lib/utils";
 
 type RequestData = {
   groupId: string;
@@ -68,7 +69,7 @@ export const addAlbumPictures: HttpHandler<RequestData, ResponseData> = async (
         albumPictureId: pictureDocRef.id,
         memberId: data.memberId,
         imageUrl: pictureUrl,
-        createdAt: FieldValue.serverTimestamp(),
+        createdAt: getNowDate(),
       };
       batch.set(pictureDocRef, albumPictureBody);
     });
@@ -76,7 +77,7 @@ export const addAlbumPictures: HttpHandler<RequestData, ResponseData> = async (
     // [PATCH]: アルバムの画像枚数更新(groups/albums)
     const updateAlbumBody = {
       pictureCount: FieldValue.increment(data.pictureUrls.length),
-      updatedAt: FieldValue.serverTimestamp(),
+      updatedAt: getNowDate(),
     };
     batch.update(albumDocRef, updateAlbumBody);
 
