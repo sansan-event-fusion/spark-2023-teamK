@@ -3,7 +3,7 @@ import {
   deleteMember as deleteMemberFn,
 } from "./modules";
 import { createPost as createPostFn } from "./modules";
-import { deleteSpecificGroup as deleteGroupFn } from "./modules";
+import { deleteGroup as deleteGroupFn } from "./modules";
 
 import { functions } from "./lib/firebase";
 
