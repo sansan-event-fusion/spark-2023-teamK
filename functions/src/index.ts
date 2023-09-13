@@ -3,6 +3,7 @@ import {
   deleteMember as deleteMemberFn,
   acceptInvitation as acceptInvitationFn,
   approveRequest as approveRequestFn,
+  addAlbumPictures as addAlbumPicturesFn,
 } from "./modules";
 import { createPost as createPostFn } from "./modules";
 import { deleteUser as deleteUserFn } from "./modules";
@@ -34,3 +35,6 @@ export const approveRequest = functions
   .region("us-central1")
   .https.onCall(approveRequestFn);
 
+export const addAlbumPictures = functions
+  .region("us-central1")
+  .https.onCall(addAlbumPicturesFn);
