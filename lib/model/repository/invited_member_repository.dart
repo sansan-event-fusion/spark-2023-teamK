@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:emo_project/model/invited_member/invited_member.dart';
 import 'package:emo_project/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseInvitedMemberRepository {
-  Future<String> createInvitedMember({
+  Future<void> createInvitedMember({
     required InvitedMember invitedMember,
     required String groupId,
   });
-  Future<void> updateInvitedMember({
-    required InvitedMember invitedMember,
+  Future<void> acceptInvitation({
+    required String invitedMemberId,
     required String groupId,
   });
   Future<void> deleteInvitedMember({
@@ -93,8 +94,10 @@ class InvitedMemberRepository implements BaseInvitedMemberRepository {
   }
 
   @override
-  Future<String> createInvitedMember(
-      {required InvitedMember invitedMember, required String groupId}) async {
+  Future<void> createInvitedMember({
+    required InvitedMember invitedMember,
+    required String groupId,
+  }) async {
     try {
       final docRef = _ref
           .watch(firebaseFirestoreProvider)
@@ -105,31 +108,37 @@ class InvitedMemberRepository implements BaseInvitedMemberRepository {
 
       await docRef
           .set(invitedMember.copyWith(invitedMemberId: docRef.id).toJson());
-      return docRef.id;
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
   }
 
+  // userId == firebaseUser.uid
   @override
-  Future<void> updateInvitedMember(
-      {required InvitedMember invitedMember, required String groupId}) async {
+  Future<void> acceptInvitation({
+    required String invitedMemberId,
+    required String groupId,
+  }) async {
     try {
-      await _ref
-          .watch(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("invited_members")
-          .doc(invitedMember.invitedMemberId)
-          .update(invitedMember.toJson());
+      final result = await FirebaseFunctions.instance
+          .httpsCallable('acceptInvitation')
+          .call(
+        {
+          "userId": invitedMemberId,
+          "groupId": groupId,
+        },
+      );
+      print(result.data);
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
   }
 
   @override
-  Future<void> deleteInvitedMember(
-      {required String invitedMemberId, required String groupId}) async {
+  Future<void> deleteInvitedMember({
+    required String invitedMemberId,
+    required String groupId,
+  }) async {
     try {
       await _ref
           .watch(firebaseFirestoreProvider)
