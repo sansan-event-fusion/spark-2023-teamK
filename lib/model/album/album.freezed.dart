@@ -21,8 +21,11 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Album {
   String get albumId => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  int get pictureCount => throw _privateConstructorUsedError;
+  int get deletedPictureCount => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +37,13 @@ abstract class $AlbumCopyWith<$Res> {
   factory $AlbumCopyWith(Album value, $Res Function(Album) then) =
       _$AlbumCopyWithImpl<$Res, Album>;
   @useResult
-  $Res call({String albumId, String title, String description});
+  $Res call(
+      {String albumId,
+      String name,
+      int pictureCount,
+      int deletedPictureCount,
+      DateTime createdAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -51,22 +60,37 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
   @override
   $Res call({
     Object? albumId = null,
-    Object? title = null,
-    Object? description = null,
+    Object? name = null,
+    Object? pictureCount = null,
+    Object? deletedPictureCount = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       albumId: null == albumId
           ? _value.albumId
           : albumId // ignore: cast_nullable_to_non_nullable
               as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
+      pictureCount: null == pictureCount
+          ? _value.pictureCount
+          : pictureCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      deletedPictureCount: null == deletedPictureCount
+          ? _value.deletedPictureCount
+          : deletedPictureCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -77,7 +101,13 @@ abstract class _$$_AlbumCopyWith<$Res> implements $AlbumCopyWith<$Res> {
       __$$_AlbumCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String albumId, String title, String description});
+  $Res call(
+      {String albumId,
+      String name,
+      int pictureCount,
+      int deletedPictureCount,
+      DateTime createdAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -90,22 +120,37 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
   @override
   $Res call({
     Object? albumId = null,
-    Object? title = null,
-    Object? description = null,
+    Object? name = null,
+    Object? pictureCount = null,
+    Object? deletedPictureCount = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_$_Album(
       albumId: null == albumId
           ? _value.albumId
           : albumId // ignore: cast_nullable_to_non_nullable
               as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
+      pictureCount: null == pictureCount
+          ? _value.pictureCount
+          : pictureCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      deletedPictureCount: null == deletedPictureCount
+          ? _value.deletedPictureCount
+          : deletedPictureCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -114,7 +159,12 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
 @JsonSerializable()
 class _$_Album implements _Album {
   _$_Album(
-      {required this.albumId, required this.title, required this.description});
+      {required this.albumId,
+      required this.name,
+      required this.pictureCount,
+      required this.deletedPictureCount,
+      required this.createdAt,
+      required this.updatedAt});
 
   factory _$_Album.fromJson(Map<String, dynamic> json) =>
       _$$_AlbumFromJson(json);
@@ -122,13 +172,19 @@ class _$_Album implements _Album {
   @override
   final String albumId;
   @override
-  final String title;
+  final String name;
   @override
-  final String description;
+  final int pictureCount;
+  @override
+  final int deletedPictureCount;
+  @override
+  final DateTime createdAt;
+  @override
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Album(albumId: $albumId, title: $title, description: $description)';
+    return 'Album(albumId: $albumId, name: $name, pictureCount: $pictureCount, deletedPictureCount: $deletedPictureCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -137,14 +193,21 @@ class _$_Album implements _Album {
         (other.runtimeType == runtimeType &&
             other is _$_Album &&
             (identical(other.albumId, albumId) || other.albumId == albumId) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.pictureCount, pictureCount) ||
+                other.pictureCount == pictureCount) &&
+            (identical(other.deletedPictureCount, deletedPictureCount) ||
+                other.deletedPictureCount == deletedPictureCount) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, albumId, title, description);
+  int get hashCode => Object.hash(runtimeType, albumId, name, pictureCount,
+      deletedPictureCount, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -163,17 +226,26 @@ class _$_Album implements _Album {
 abstract class _Album implements Album {
   factory _Album(
       {required final String albumId,
-      required final String title,
-      required final String description}) = _$_Album;
+      required final String name,
+      required final int pictureCount,
+      required final int deletedPictureCount,
+      required final DateTime createdAt,
+      required final DateTime updatedAt}) = _$_Album;
 
   factory _Album.fromJson(Map<String, dynamic> json) = _$_Album.fromJson;
 
   @override
   String get albumId;
   @override
-  String get title;
+  String get name;
   @override
-  String get description;
+  int get pictureCount;
+  @override
+  int get deletedPictureCount;
+  @override
+  DateTime get createdAt;
+  @override
+  DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_AlbumCopyWith<_$_Album> get copyWith =>
