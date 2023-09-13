@@ -25,8 +25,15 @@ class FirebaseUserController extends StateNotifier {
   }
 
   Future<String> createFirebaseUser(
-      {required FirebaseUser firebaseUser}) async {
+      {required String userId, required String email}) async {
     try {
+      final FirebaseUser firebaseUser = FirebaseUser(
+        userId: userId,
+        name: "",
+        icon: "https://placehold.jp/150x150.png",
+        accountId: "",
+        email: email,
+      );
       final docRef = await _ref
           .watch(firebaseUserRepository)
           .createFirebaseUser(firebaseUser: firebaseUser);
