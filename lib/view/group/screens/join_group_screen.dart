@@ -132,11 +132,7 @@ class JoinGroupScreen extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GroupProfileScreen(
-                        groupName: groupNameList[index],
-                        groupImage: groupImageList[index],
-                        groupDescription: groupDescriptionList[index],
-                      ),
+                      builder: (context) => GroupProfileScreen(),
                     ),
                   );
                 },
@@ -146,7 +142,10 @@ class JoinGroupScreen extends ConsumerWidget {
                   height: 50,
                 ),
                 title: Text(groupNameList[index]),
-                subtitle: Text("ID: ${groupIdList[index]}", style: const TextStyle(color: Colors.grey),),
+                subtitle: Text(
+                  "ID: ${groupIdList[index]}",
+                  style: const TextStyle(color: Colors.grey),
+                ),
               ),
             );
           }),
@@ -166,11 +165,7 @@ class JoinGroupScreen extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => GroupProfileScreen(
-                      groupName: groupNameList[index],
-                      groupImage: groupImageList[index],
-                      groupDescription: groupDescriptionList[index],
-                    ),
+                    builder: (context) => GroupProfileScreen(),
                   ),
                 );
               },

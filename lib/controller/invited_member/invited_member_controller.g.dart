@@ -7,7 +7,7 @@ part of 'invited_member_controller.dart';
 // **************************************************************************
 
 String _$invitedMemberControllerHash() =>
-    r'92adcc2e190e088193a208de3df854c8fdfbb3b5';
+    r'2411500a33f97a4dc98101eefe3523f3fd9744a7';
 
 /// Copied from Dart SDK
 class _SystemHash {

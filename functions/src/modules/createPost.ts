@@ -1,7 +1,7 @@
 import { HttpHandler } from "../types";
 import { firestore } from "../lib/firebase";
-import { FieldValue } from "firebase-admin/firestore";
 import { Post } from "../model/groups/posts";
+import { getNowDate } from "../lib/utils";
 
 type RequestData = {
   groupId: string;
@@ -36,8 +36,8 @@ export const createPost: HttpHandler<RequestData, ResponseData> = async (
         memberId: memberId,
         description: description,
         imageUrlList: imageUrlList,
-        createdAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp(),
+        createdAt: getNowDate(),
+        updatedAt: getNowDate(),
       };
     })();
     batch.set(groupPostRef, postBody);

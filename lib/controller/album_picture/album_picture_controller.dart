@@ -44,31 +44,37 @@ class AlbumPictureController extends _$AlbumPictureController {
     });
   }
 
-  Future<String> createAlbumPicture(
-      {required AlbumPicture albumPicture}) async {
+  Future<bool> createAlbumPicture({
+    required String albumId,
+    required String groupId,
+    required String memberId,
+    required List<String> pictureUrls,
+  }) async {
     try {
-      final docRef = await ref.read(albumPictureRepository).createAlbumPicture(
-          albumPicture: albumPicture, groupId: groupId, albumId: albumId);
-
-      return docRef;
+      return await ref.read(albumPictureRepository).createAlbumPicture(
+            albumId: albumId,
+            groupId: groupId,
+            memberId: memberId,
+            pictureUrls: pictureUrls,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
   }
 
-  Future<void> updateAlbumPicture({required AlbumPicture albumPicture}) async {
+  Future<bool> deleteAlbumPicture({
+    required String albumPictureId,
+    required String albumId,
+    required String groupId,
+    required String memberId,
+  }) async {
     try {
-      await ref.read(albumPictureRepository).updateAlbumPicture(
-          albumPicture: albumPicture, groupId: groupId, albumId: albumId);
-    } on FirebaseException catch (e) {
-      throw Exception(e.message);
-    }
-  }
-
-  Future<void> deleteAlbumPicture({required String albumPictureId}) async {
-    try {
-      await ref.read(albumPictureRepository).deleteAlbumPicture(
-          albumPictureId: albumPictureId, groupId: groupId, albumId: albumId);
+      return await ref.read(albumPictureRepository).deleteAlbumPicture(
+            albumPictureId: albumPictureId,
+            albumId: albumId,
+            groupId: groupId,
+            memberId: memberId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }

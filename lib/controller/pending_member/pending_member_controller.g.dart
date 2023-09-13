@@ -7,7 +7,7 @@ part of 'pending_member_controller.dart';
 // **************************************************************************
 
 String _$pendingMemberControllerHash() =>
-    r'0c54633e3c099bf1fef719562871fb14d59fbdf8';
+    r'bf53a5ec423add38798d3429dba00caf2a157a2d';
 
 /// Copied from Dart SDK
 class _SystemHash {

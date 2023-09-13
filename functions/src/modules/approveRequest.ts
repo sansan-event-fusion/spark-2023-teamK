@@ -6,6 +6,7 @@ import { logger } from "firebase-functions";
 import { Member } from "../model/groups/members";
 import { User } from "../model/users";
 import { UserGroup } from "../model/users/groups";
+import { getNowDate } from "../lib/utils";
 
 type RequestData = {
   userId: string;
@@ -33,7 +34,7 @@ export const approveRequest: HttpHandler<RequestData, ResponseData> = async (
   _
 ) => {
   try {
-    // ユーザー、承認待ちユーザー、グループの存在確認
+    // ユーザー、承認待ちユーザー、グループ、メンバーの存在確認
     const userDocRef = db.collection("users").doc(data.userId);
     const pendingMemberDocRef = db
       .collection("groups")
@@ -41,10 +42,12 @@ export const approveRequest: HttpHandler<RequestData, ResponseData> = async (
       .collection("pending_members")
       .doc(data.userId);
     const groupDocRef = db.collection("groups").doc(data.groupId);
-    const [userDoc, pendingMemberDoc, groupDoc] = await Promise.all([
+    const memberDocRef = groupDocRef.collection("members").doc(data.userId);
+    const [userDoc, pendingMemberDoc, groupDoc, memberDoc] = await Promise.all([
       userDocRef.get(),
       pendingMemberDocRef.get(),
       groupDocRef.get(),
+      memberDocRef.get(),
     ]);
 
     if (!userDoc.exists) {
@@ -56,16 +59,13 @@ export const approveRequest: HttpHandler<RequestData, ResponseData> = async (
     if (!pendingMemberDoc.exists) {
       throw new Error("pending member not found");
     }
+    if (memberDoc.exists) {
+      throw new Error("member already exists");
+    }
 
     const batch = db.batch();
 
     // [POST]: メンバー追加 (groups/members)
-    const memberDocRef = db
-      .collection("groups")
-      .doc(data.groupId)
-      .collection("members")
-      .doc(data.userId);
-
     const memberBody: Member = (() => {
       const userData = userDoc.data() as User;
       return {
@@ -74,8 +74,8 @@ export const approveRequest: HttpHandler<RequestData, ResponseData> = async (
         role: "member",
         icon: userData.icon,
         description: "",
-        createdAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp(),
+        createdAt: getNowDate(),
+        updatedAt: getNowDate(),
       };
     })();
     batch.set(memberDocRef, memberBody);
@@ -88,7 +88,7 @@ export const approveRequest: HttpHandler<RequestData, ResponseData> = async (
       .doc(data.groupId);
     const userGroupBody: UserGroup = {
       groupId: data.groupId,
-      createdAt: FieldValue.serverTimestamp(),
+      createdAt: getNowDate(),
     };
     batch.set(userGroupDocRef, userGroupBody);
 

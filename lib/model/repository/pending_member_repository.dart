@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:emo_project/model/pending_member/pending_member.dart';
 import 'package:emo_project/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,8 +9,8 @@ abstract class BasePendingMemberRepository {
     required PendingMember pendingMember,
     required String groupId,
   });
-  Future<void> updatePendingMember({
-    required PendingMember pendingMember,
+  Future<void> approvePendingMember({
+    required String pendingMemberId,
     required String groupId,
   });
   Future<void> deletePendingMember({
@@ -93,8 +94,10 @@ class PendingMemberRepository implements BasePendingMemberRepository {
   }
 
   @override
-  Future<String> createPendingMember(
-      {required PendingMember pendingMember, required String groupId}) async {
+  Future<String> createPendingMember({
+    required PendingMember pendingMember,
+    required String groupId,
+  }) async {
     try {
       final docRef = _ref
           .read(firebaseFirestoreProvider)
@@ -112,16 +115,19 @@ class PendingMemberRepository implements BasePendingMemberRepository {
   }
 
   @override
-  Future<void> updatePendingMember(
-      {required PendingMember pendingMember, required String groupId}) async {
+  Future<void> approvePendingMember({
+    required String pendingMemberId,
+    required String groupId,
+  }) async {
     try {
-      await _ref
-          .read(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("pending_members")
-          .doc(pendingMember.pendingMemberId)
-          .update(pendingMember.toJson());
+      final result =
+          await FirebaseFunctions.instance.httpsCallable('approveRequest').call(
+        {
+          "userId": pendingMemberId,
+          "groupId": groupId,
+        },
+      );
+      print(result.data);
     } on FirebaseException catch (e) {
       throw Exception(e);
     }

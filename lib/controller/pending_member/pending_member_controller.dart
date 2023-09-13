@@ -44,9 +44,11 @@ class PendingMemberController extends _$PendingMemberController {
   Future<String> createPendingMember(
       {required PendingMember pendingMember}) async {
     try {
-      final docRef = await ref
-          .read(pendingMemberRepository)
-          .createPendingMember(pendingMember: pendingMember, groupId: groupId);
+      final docRef =
+          await ref.read(pendingMemberRepository).createPendingMember(
+                pendingMember: pendingMember,
+                groupId: groupId,
+              );
 
       return docRef;
     } on FirebaseException catch (e) {
@@ -54,22 +56,23 @@ class PendingMemberController extends _$PendingMemberController {
     }
   }
 
-  Future<void> updatePendingMember(
-      {required PendingMember pendingMember}) async {
+  Future<void> approvePendingMember({required String pendingMemberId}) async {
     try {
-      await ref
-          .read(pendingMemberRepository)
-          .updatePendingMember(pendingMember: pendingMember, groupId: groupId);
+      await ref.read(pendingMemberRepository).approvePendingMember(
+            pendingMemberId: pendingMemberId,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
   }
 
-  Future<void> deletePendingMember(
-      {required String pendingMemberId}) async {
+  Future<void> deletePendingMember({required String pendingMemberId}) async {
     try {
       await ref.read(pendingMemberRepository).deletePendingMember(
-          pendingMemberId: pendingMemberId, groupId: groupId);
+            pendingMemberId: pendingMemberId,
+            groupId: groupId,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }

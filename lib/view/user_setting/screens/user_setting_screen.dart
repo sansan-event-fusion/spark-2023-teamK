@@ -1,3 +1,4 @@
+import 'package:emo_project/controller/firebase_user/firebase_user_controller.dart';
 import 'package:emo_project/controller/user_setting/validator/user_setting_validator.dart';
 import 'package:emo_project/model/repository/auth_repository.dart';
 import 'package:emo_project/view/common/components/custom_textfield.dart';
@@ -15,6 +16,7 @@ class UserSettingScreen extends HookConsumerWidget {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final nameController = useTextEditingController();
     final idController = useTextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -33,6 +35,12 @@ class UserSettingScreen extends HookConsumerWidget {
                   height: deviceHeight * 0.05,
                 ),
                 // CustomImagePicker(),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: CustomImagePicker(),
+                    )),
                 SizedBox(
                   width: deviceWidth * 0.9,
                   child: CustomTextField(
@@ -68,13 +76,25 @@ class UserSettingScreen extends HookConsumerWidget {
                             ref.watch(authRepositoryProvider).getCurrentUser();
                         if (currentUser != null) {
                           // firebase user update
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const InitialScreen(),
-                            ),
-                          );
+                          ref
+                              .read(firebaseUserControllerProvider.notifier)
+                              .updateFirebaseUser(
+                                accountId: idController.text,
+                                icon: 'https://placehold.jp/200x200.png',
+                                name: nameController.text,
+                              )
+                              .then((value) => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const InitialScreen(),
+                                  )));
                         }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("入力内容に誤りがあります"),
+                          ),
+                        );
                       }
                     },
                     child: const Text("設定完了"),

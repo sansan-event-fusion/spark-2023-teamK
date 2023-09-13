@@ -11,24 +11,20 @@ class FirebaseUserController extends StateNotifier {
   final Ref _ref;
   FirebaseUserController(this._ref) : super(null);
 
-  Future<List<FirebaseUser>> retrieveFirebaseUsers() async {
+  Future<String> createFirebaseUser({
+    required String userId,
+    required String email,
+  }) async {
     try {
-      final firebaseUserList =
-          await _ref.watch(firebaseUserRepository).retrieveFirebaseUsers();
-      if (mounted) {
-        state = AsyncValue.data(firebaseUserList);
-      }
-      return firebaseUserList;
-    } on FirebaseException catch (e) {
-      throw Exception(e.message);
-    }
-  }
-
-  Future<String> createFirebaseUser(
-      {required FirebaseUser firebaseUser}) async {
-    try {
+      final FirebaseUser firebaseUser = FirebaseUser(
+        userId: userId,
+        name: "",
+        icon: "https://placehold.jp/150x150.png",
+        accountId: "",
+        email: email,
+      );
       final docRef = await _ref
-          .watch(firebaseUserRepository)
+          .read(firebaseUserRepository)
           .createFirebaseUser(firebaseUser: firebaseUser);
       if (mounted) {
         state = AsyncValue.data(docRef);
@@ -39,11 +35,17 @@ class FirebaseUserController extends StateNotifier {
     }
   }
 
-  Future<void> updateFirebaseUser({required FirebaseUser firebaseUser}) async {
+  Future<void> updateFirebaseUser({
+    required String accountId,
+    required String name,
+    required String icon,
+  }) async {
     try {
-      await _ref
-          .watch(firebaseUserRepository)
-          .updateFirebaseUser(firebaseUser: firebaseUser);
+      await _ref.read(firebaseUserRepository).updateFirebaseUser(
+            accountId: accountId,
+            name: name,
+            icon: icon,
+          );
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
@@ -52,7 +54,7 @@ class FirebaseUserController extends StateNotifier {
   Future<void> deleteFirebaseUser({required String userId}) async {
     try {
       await _ref
-          .watch(firebaseUserRepository)
+          .read(firebaseUserRepository)
           .deleteFirebaseUser(userId: userId);
     } on FirebaseException catch (e) {
       throw Exception(e.message);

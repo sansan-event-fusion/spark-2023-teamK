@@ -7,7 +7,7 @@ part of 'album_picture_controller.dart';
 // **************************************************************************
 
 String _$albumPictureControllerHash() =>
-    r'70291d1e1fd78d1adfd8adce712c4469a1724616';
+    r'33516c625c87ec06073018049fed19183d62f5f5';
 
 /// Copied from Dart SDK
 class _SystemHash {

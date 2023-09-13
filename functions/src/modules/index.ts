@@ -1,4 +1,4 @@
-export { createGroup } from "./createGroup";
+export { addMember } from "./addMember";
 
 export { createPost } from "./createPost";
 
