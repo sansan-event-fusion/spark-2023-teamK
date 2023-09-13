@@ -1,16 +1,8 @@
-import * as admin from "firebase-admin";
 import { HttpHandler } from "../types";
 import { firestore } from "../lib/firebase";
-import {
-  getStorage,
-  ref,
-  uploadString,
-  getDownloadURL,
-} from "firebase/storage";
 
 type RequestData = {
   groupId: string;
-  memberId: string;
   description: string;
   imageUrlList: Record<string, string>;
   postId: string;
@@ -18,45 +10,43 @@ type RequestData = {
 
 type ResponseData = {
   success: boolean;
-  id: string;
+  message?: string;
 };
 
 export const createPost: HttpHandler<RequestData, ResponseData> = async (
   data,
   _
 ) => {
-  const { groupId, memberId, description, imageUrlList, postId } = data;
-  const storage = getStorage();
+  const { groupId, description, imageUrlList, postId } = data;
   const db = firestore();
+
   const createdAt = new Date().toISOString();
 
   try {
-    const uploadedImages = await Promise.all(
-      Object.keys(imageUrlList).map(async (key) => {
-        const image = imageUrlList[key];
-        const imageRef = ref(storage, `groups/posts/pictures/${postId}/${key}`);
-        await uploadString(imageRef, image, "data_url");
-        return getDownloadURL(imageRef);
-
-        //画像はどのタイミングで保存する？URLとBlobの区別をつける必要がある。
-      })
-    );
     const postData = {
+      postId,
       description,
       imageUrlList,
-      postId,
-      imageUrlList: uploadedImages,
       createdAt,
     };
-    const groupRef = db.collection("groups").doc(groupId);
-    const memberRef = groupRef.collection("members").doc(memberId);
+    const batch = db.batch();
 
-    await groupRef.collection("posts").add(postData);
-    await memberRef.collection("posts").add(postData);
-    await memberRef.collection("mentions").add(postData);
+    const groupPostRef = firestore()
+      .collection("groups")
+      .doc(groupId)
+      .collection("posts")
+      .doc(postId);
+    batch.set(groupPostRef, postData);
 
-    return { success: true, id: groupRef.id };
+    batch.commit();
+    return { success: true, id: groupId, error: "" };
   } catch (error) {
-    return { success: false, id: "aa" };
+    if (error instanceof Error) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+    return { success: false, message: "unknown error" };
   }
 };
