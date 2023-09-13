@@ -1,3 +1,6 @@
+import { createPost as createPostFn } from "./modules";
+import { deletePost as deletePostFn } from "./modules";
+
 import {
   createGroup as createGroupFn,
   deleteMember as deleteMemberFn,
@@ -5,6 +8,7 @@ import {
   approveRequest as approveRequestFn,
   addAlbumPictures as addAlbumPicturesFn,
 } from "./modules";
+
 import { createPost as createPostFn } from "./modules";
 import { deleteUser as deleteUserFn } from "./modules";
 
@@ -13,6 +17,14 @@ import { functions } from "./lib/firebase";
 export const createGroup = functions
   .region("us-central1")
   .https.onCall(createGroupFn);
+
+export const createPost = functions
+  .region("us-central1")
+  .https.onCall(createPostFn);
+
+export const deletePost = functions
+  .region("us-central1")
+  .https.onCall(deletePostFn);
 
 export const deleteMember = functions
   .region("us-central1")
