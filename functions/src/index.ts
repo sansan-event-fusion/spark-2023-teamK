@@ -8,6 +8,7 @@ import {
   acceptInvitation as acceptInvitationFn,
   approveRequest as approveRequestFn,
   addAlbumPictures as addAlbumPicturesFn,
+  removeAlbumPicture as removeAlbumPictureFn,
 } from "./modules";
 
 import { functions } from "./lib/firebase";
@@ -47,3 +48,7 @@ export const approveRequest = functions
 export const addAlbumPictures = functions
   .region("us-central1")
   .https.onCall(addAlbumPicturesFn);
+
+export const removeAlbumPicture = functions
+  .region("us-central1")
+  .https.onCall(removeAlbumPictureFn);
