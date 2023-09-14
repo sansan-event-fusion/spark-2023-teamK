@@ -59,6 +59,7 @@ class AlbumCard extends ConsumerWidget {
                   builder: (context) => AlbumDetailsScreen(
                     album: album,
                     albumPictures: data,
+                    groupId: groupId,
                   ),
                 ),
               );
