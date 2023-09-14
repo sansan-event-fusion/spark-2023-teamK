@@ -19,6 +19,7 @@ class LoginScreen extends HookConsumerWidget {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
