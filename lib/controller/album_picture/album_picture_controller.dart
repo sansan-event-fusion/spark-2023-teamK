@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'album_picture_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AlbumPictureController extends _$AlbumPictureController {
   @override
   Future<List<AlbumPicture>> build({
@@ -16,7 +16,10 @@ class AlbumPictureController extends _$AlbumPictureController {
   }) async {
     final repository = ref.read(albumPictureRepository);
     final albumPictures = await repository.getAllAlbumPictureList(
-        groupId: groupId, albumId: albumId);
+      groupId: groupId,
+      albumId: albumId,
+    );
+    print("albumId: $albumId \n albumPictures: $albumPictures");
 
     Future(() async {
       await Future.delayed(const Duration(milliseconds: 100));
@@ -36,11 +39,9 @@ class AlbumPictureController extends _$AlbumPictureController {
         List<AlbumPicture> latestAlbumPictureList = await ref
             .read(albumPictureRepository)
             .getLocalAlbumPictureList(groupId: groupId, albumId: albumId);
+        print("latestAlbumPictureList: $latestAlbumPictureList");
         state = AsyncData(latestAlbumPictureList);
       });
-
-      /// Snapshot キャンセル
-      ref.onDispose(() => streamSub.cancel());
     });
   }
 

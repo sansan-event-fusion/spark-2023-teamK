@@ -4,7 +4,7 @@ class Keys {
           {required String groupId, required String postId}) =>
       "groups/$groupId/posts/$postId";
   String getMemberIconStoragePath() => "";
-  String getUserIconStroragePath() => "";
   String getGroupIconStoragePath() => "";
   String getUserIconStoragePath() => "";
+  String getAlbumPictureStoragePath() => "";
 }

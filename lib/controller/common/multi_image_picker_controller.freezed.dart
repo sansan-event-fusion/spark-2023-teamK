@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MultiImagePickerState {
-  List<File>? get imageFileList => throw _privateConstructorUsedError;
+  List<File> get imageFileList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MultiImagePickerStateCopyWith<MultiImagePickerState> get copyWith =>
@@ -29,7 +29,7 @@ abstract class $MultiImagePickerStateCopyWith<$Res> {
           $Res Function(MultiImagePickerState) then) =
       _$MultiImagePickerStateCopyWithImpl<$Res, MultiImagePickerState>;
   @useResult
-  $Res call({List<File>? imageFileList});
+  $Res call({List<File> imageFileList});
 }
 
 /// @nodoc
@@ -46,13 +46,13 @@ class _$MultiImagePickerStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? imageFileList = freezed,
+    Object? imageFileList = null,
   }) {
     return _then(_value.copyWith(
-      imageFileList: freezed == imageFileList
+      imageFileList: null == imageFileList
           ? _value.imageFileList
           : imageFileList // ignore: cast_nullable_to_non_nullable
-              as List<File>?,
+              as List<File>,
     ) as $Val);
   }
 }
@@ -65,7 +65,7 @@ abstract class _$$_MultiImagePickerStateCopyWith<$Res>
       __$$_MultiImagePickerStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<File>? imageFileList});
+  $Res call({List<File> imageFileList});
 }
 
 /// @nodoc
@@ -79,13 +79,13 @@ class __$$_MultiImagePickerStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? imageFileList = freezed,
+    Object? imageFileList = null,
   }) {
     return _then(_$_MultiImagePickerState(
-      imageFileList: freezed == imageFileList
+      imageFileList: null == imageFileList
           ? _value._imageFileList
           : imageFileList // ignore: cast_nullable_to_non_nullable
-              as List<File>?,
+              as List<File>,
     ));
   }
 }
@@ -93,17 +93,16 @@ class __$$_MultiImagePickerStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_MultiImagePickerState implements _MultiImagePickerState {
-  const _$_MultiImagePickerState({final List<File>? imageFileList})
+  const _$_MultiImagePickerState({final List<File> imageFileList = const []})
       : _imageFileList = imageFileList;
 
-  final List<File>? _imageFileList;
+  final List<File> _imageFileList;
   @override
-  List<File>? get imageFileList {
-    final value = _imageFileList;
-    if (value == null) return null;
+  @JsonKey()
+  List<File> get imageFileList {
     if (_imageFileList is EqualUnmodifiableListView) return _imageFileList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_imageFileList);
   }
 
   @override
@@ -133,11 +132,11 @@ class _$_MultiImagePickerState implements _MultiImagePickerState {
 }
 
 abstract class _MultiImagePickerState implements MultiImagePickerState {
-  const factory _MultiImagePickerState({final List<File>? imageFileList}) =
+  const factory _MultiImagePickerState({final List<File> imageFileList}) =
       _$_MultiImagePickerState;
 
   @override
-  List<File>? get imageFileList;
+  List<File> get imageFileList;
   @override
   @JsonKey(ignore: true)
   _$$_MultiImagePickerStateCopyWith<_$_MultiImagePickerState> get copyWith =>

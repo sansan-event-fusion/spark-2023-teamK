@@ -58,14 +58,16 @@ class AlbumPictureRepository implements BaseAlbumPictureRepository {
     required String albumId,
   }) async {
     final snap = await _ref
-        .watch(firebaseFirestoreProvider)
+        .read(firebaseFirestoreProvider)
         .collection("groups")
         .doc(groupId)
         .collection("albums")
         .doc(albumId)
         .collection("album_pictures")
         .get(const GetOptions(source: Source.cache));
-    return snap.docs.map((doc) => AlbumPicture.fromDocument(doc)).toList();
+    final results =
+        snap.docs.map((doc) => AlbumPicture.fromDocument(doc)).toList();
+    return results;
   }
 
   Future<Query<AlbumPicture>> getQuery({
@@ -74,7 +76,7 @@ class AlbumPictureRepository implements BaseAlbumPictureRepository {
   }) async {
     DocumentSnapshot? lastDocRef;
     await _ref
-        .watch(firebaseFirestoreProvider)
+        .read(firebaseFirestoreProvider)
         .collection("groups")
         .doc(groupId)
         .collection("albums")
@@ -86,7 +88,7 @@ class AlbumPictureRepository implements BaseAlbumPictureRepository {
     });
 
     Query<AlbumPicture> ref = _ref
-        .watch(firebaseFirestoreProvider)
+        .read(firebaseFirestoreProvider)
         .collection("groups")
         .doc(groupId)
         .collection("albums")
@@ -98,6 +100,7 @@ class AlbumPictureRepository implements BaseAlbumPictureRepository {
           toFirestore: (data, _) => data.toJson(),
         );
     if (lastDocRef != null) {
+      print(lastDocRef);
       ref = ref.orderBy("createdAt").startAtDocument(lastDocRef!);
     }
 

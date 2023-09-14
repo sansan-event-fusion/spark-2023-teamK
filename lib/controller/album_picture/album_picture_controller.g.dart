@@ -7,7 +7,7 @@ part of 'album_picture_controller.dart';
 // **************************************************************************
 
 String _$albumPictureControllerHash() =>
-    r'33516c625c87ec06073018049fed19183d62f5f5';
+    r'0dc591730264ae1dae6ae7856c91b58385470cd6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,7 +31,7 @@ class _SystemHash {
 }
 
 abstract class _$AlbumPictureController
-    extends BuildlessAutoDisposeAsyncNotifier<List<AlbumPicture>> {
+    extends BuildlessAsyncNotifier<List<AlbumPicture>> {
   late final String groupId;
   late final String albumId;
 
@@ -88,9 +88,8 @@ class AlbumPictureControllerFamily
 }
 
 /// See also [AlbumPictureController].
-class AlbumPictureControllerProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<AlbumPictureController,
-        List<AlbumPicture>> {
+class AlbumPictureControllerProvider extends AsyncNotifierProviderImpl<
+    AlbumPictureController, List<AlbumPicture>> {
   /// See also [AlbumPictureController].
   AlbumPictureControllerProvider({
     required String groupId,
@@ -156,8 +155,8 @@ class AlbumPictureControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<AlbumPictureController,
-      List<AlbumPicture>> createElement() {
+  AsyncNotifierProviderElement<AlbumPictureController, List<AlbumPicture>>
+      createElement() {
     return _AlbumPictureControllerProviderElement(this);
   }
 
@@ -179,7 +178,7 @@ class AlbumPictureControllerProvider
 }
 
 mixin AlbumPictureControllerRef
-    on AutoDisposeAsyncNotifierProviderRef<List<AlbumPicture>> {
+    on AsyncNotifierProviderRef<List<AlbumPicture>> {
   /// The parameter `groupId` of this provider.
   String get groupId;
 
@@ -188,7 +187,7 @@ mixin AlbumPictureControllerRef
 }
 
 class _AlbumPictureControllerProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<AlbumPictureController,
+    extends AsyncNotifierProviderElement<AlbumPictureController,
         List<AlbumPicture>> with AlbumPictureControllerRef {
   _AlbumPictureControllerProviderElement(super.provider);
 

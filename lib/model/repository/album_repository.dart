@@ -75,7 +75,7 @@ class AlbumRepository implements BaseAlbumRepository {
           toFirestore: (data, _) => data.toJson(),
         );
     if (lastDocRef != null) {
-      ref = ref.orderBy("updatedAt").startAtDocument(lastDocRef!);
+      ref = ref.orderBy("createdAt").startAtDocument(lastDocRef!);
     }
 
     return ref;
