@@ -37,6 +37,7 @@ class ImagePickerController extends StateNotifier<ImagePickerState> {
     final storageReference =
         FirebaseStorage.instance.ref().child('$storagePath/${uuid.v4()}.png');
     await storageReference.putFile(state.imageFile!);
+    state = state.copyWith(imageFile: null);
     return storageReference.getDownloadURL();
   }
 }

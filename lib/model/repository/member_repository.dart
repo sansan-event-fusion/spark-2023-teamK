@@ -91,18 +91,52 @@ class MemberRepository implements BaseMemberRepository {
     required String groupId,
   }) async {
     try {
-      final result =
-          await FirebaseFunctions.instance.httpsCallable('addMember').call(
+      // TODO: addMemberが呼び出せない　AUTH
+      // final result =
+      //     await FirebaseFunctions.instance.httpsCallable('addMember').call(
+      //   {
+      //     "groupId": groupId,
+      //     "memberId": member.memberId,
+      //     "name": member.name,
+      //     "description": member.description,
+      //     "icon": member.icon,
+      //     "role": "admin",
+      //   },
+      // );
+      // print(result.data);
+      final groupDocRef = _ref
+          .read(firebaseFirestoreProvider)
+          .collection("groups")
+          .doc(groupId);
+      final userDocRef = _ref
+          .read(firebaseFirestoreProvider)
+          .collection("users")
+          .doc(member.memberId);
+      final memberDocRef = _ref
+          .read(firebaseFirestoreProvider)
+          .collection("groups")
+          .doc(groupId)
+          .collection("members")
+          .doc(member.memberId);
+      final batch = _ref.read(firebaseFirestoreProvider).batch();
+      batch.set(
+          groupDocRef,
+          {
+            "memberCount": FieldValue.increment(1),
+          },
+          SetOptions(merge: true));
+      batch.set(
+        userDocRef,
         {
           "groupId": groupId,
-          "memberId": member.memberId,
-          "name": member.name,
-          "description": member.description,
-          "icon": member.icon,
-          "role": "admin",
+          "createdAt": DateTime.now(),
         },
       );
-      print(result.data);
+      batch.set(
+        memberDocRef,
+        member.toJson(),
+      );
+      await batch.commit();
     } on FirebaseException catch (e) {
       throw Exception(e);
     }
