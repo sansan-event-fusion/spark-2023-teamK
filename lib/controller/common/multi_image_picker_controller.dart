@@ -11,7 +11,7 @@ part 'multi_image_picker_controller.freezed.dart';
 @freezed
 class MultiImagePickerState with _$MultiImagePickerState {
   const factory MultiImagePickerState({
-    List<File>? imageFileList,
+    @Default([]) List<File> imageFileList,
   }) = _MultiImagePickerState;
 }
 
@@ -37,16 +37,16 @@ class MultiImagePickerController extends StateNotifier<MultiImagePickerState> {
     state = state.copyWith(imageFileList: selectedImages);
   }
 
-  Future<List<String?>?> uploadImage({required String storagePath}) async {
-    if (state.imageFileList == null) return null;
+  Future<List<String>> uploadImage({required String storagePath}) async {
+    if (state.imageFileList.isEmpty) return [];
     final List<String> imageUrlList = [];
-    for (int i = 0; i < state.imageFileList!.length; i++) {
+    for (int i = 0; i < state.imageFileList.length; i++) {
       const uuid = Uuid();
       //  storage path groups/groupId/posts/postId
       final storageReference =
           FirebaseStorage.instance.ref().child('$storagePath/${uuid.v4()}.png');
-      await storageReference.putFile(state.imageFileList![i]);
-      imageUrlList.add(storageReference.getDownloadURL() as String);
+      await storageReference.putFile(state.imageFileList[i]);
+      imageUrlList.add(await storageReference.getDownloadURL());
     }
     return imageUrlList;
   }

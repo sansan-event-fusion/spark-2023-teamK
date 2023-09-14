@@ -31,7 +31,10 @@ class AlbumsScreen extends ConsumerWidget {
         return ListView.separated(
           padding: const EdgeInsets.all(16).copyWith(bottom: 80),
           itemCount: data.length,
-          itemBuilder: (context, index) => AlbumCard(album: data[index]),
+          itemBuilder: (context, index) => AlbumCard(
+            album: data[index],
+            groupId: groupId,
+          ),
           separatorBuilder: (context, index) => const SizedBox(height: 16),
         );
       }),

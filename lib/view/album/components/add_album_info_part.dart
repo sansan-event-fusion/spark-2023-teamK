@@ -2,7 +2,12 @@ import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
 class AddAlbumInfoPart extends StatelessWidget {
-  const AddAlbumInfoPart({super.key});
+  const AddAlbumInfoPart({
+    super.key,
+    required this.nameController,
+  });
+
+  final TextEditingController nameController;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +17,8 @@ class AddAlbumInfoPart extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomTextField(
+            CustomTextField(
+              controller: nameController,
               title: "2022/01/01",
               helperText: "アルバム名",
             ),

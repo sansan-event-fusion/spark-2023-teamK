@@ -9,14 +9,16 @@ class AlbumCard extends ConsumerWidget {
   const AlbumCard({
     super.key,
     required this.album,
+    required this.groupId,
   });
 
   final Album album;
+  final String groupId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(albumPictureControllerProvider(
-        albumId: album.albumId, groupId: "test"));
+        albumId: album.albumId, groupId: groupId));
 
     return state.when(loading: () {
       return const Center(
@@ -33,7 +35,7 @@ class AlbumCard extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  album.name * 8,
+                  album.name,
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
