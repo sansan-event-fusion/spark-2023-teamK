@@ -14,11 +14,24 @@ part 'group_controller.g.dart';
 @riverpod
 class GroupController extends _$GroupController {
   @override
-  Future<List<Group>> build({required String userId}) async {
+  Future<Group?> build({required String userId}) async {
     final repository = ref.read(groupRepository);
     final groups = await repository.retrieveGroups(userId: userId);
 
-    return groups;
+    return groups.isEmpty ? null : groups.first;
+  }
+
+  void streamGroup() {
+    ref.read(groupRepository).streamGroupList().then((value) {
+      StreamSubscription<QuerySnapshot> streamSub = value.listen((event) async {
+        List<Group> latestGroupList =
+            await ref.read(groupRepository).retrieveGroups(userId: userId);
+        state = AsyncData(latestGroupList.first);
+      });
+
+      /// Snapshot キャンセル
+      ref.onDispose(() => streamSub.cancel());
+    });
   }
 
   Future<List<Group>> retriveGroups() async {
