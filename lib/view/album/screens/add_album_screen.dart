@@ -84,7 +84,7 @@ class AddAlbumsScreen extends HookConsumerWidget {
               )
               .then((value) async {
             final imageUrls = await multiImageController.uploadImage(
-                storagePath: Keys().getUserIconStoragePath());
+                storagePath: Keys().getAlbumPictureStoragePath());
             print(imageUrls);
             ref
                 .read(albumPictureControllerProvider(
