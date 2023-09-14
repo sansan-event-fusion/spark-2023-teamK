@@ -14,7 +14,8 @@ class AlbumsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(albumControllerProvider(groupId: "test"));
+    final state = ref.watch(albumControllerProvider(groupId: groupId));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("アルバム一覧"),
@@ -39,7 +40,7 @@ class AlbumsScreen extends ConsumerWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AddAlbumsScreen(),
+              builder: (context) => AddAlbumsScreen(groupId: groupId),
             ),
           );
         },
