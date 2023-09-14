@@ -84,13 +84,12 @@ class UserSettingScreen extends HookConsumerWidget {
                             ref.watch(authRepositoryProvider).getCurrentUser();
                         // TODO: currentUser が null の時の処理
                         if (currentUser == null) return;
-                        final storagePath = Keys().getPostStoragePath(
-                            groupId: "test", postId: "postId");
+                        final storagePath = Keys().getUserIconStoragePath();
                         // TODO: imageUrl == null のときの処理
                         final String? imageUrl = await imageController
                             .uploadImage(storagePath: storagePath);
                         // firebase user update
-                        ref
+                        await ref
                             .read(firebaseUserControllerProvider.notifier)
                             .updateFirebaseUser(
                               accountId: idController.text,

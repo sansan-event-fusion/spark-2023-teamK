@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AlbumsScreen extends ConsumerWidget {
-  const AlbumsScreen({super.key});
+  const AlbumsScreen({
+    super.key,
+    required this.groupId,
+  });
+
+  final String groupId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

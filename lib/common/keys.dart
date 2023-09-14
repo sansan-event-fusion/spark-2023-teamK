@@ -6,4 +6,5 @@ class Keys {
   String getMemberIconStoragePath() => "";
   String getUserIconStroragePath() => "";
   String getGroupIconStoragePath() => "";
+  String getUserIconStoragePath() => "";
 }

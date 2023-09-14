@@ -1,3 +1,4 @@
+import 'package:emo_project/model/group/group.dart';
 import 'package:emo_project/view/group/screens/group_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -132,7 +133,9 @@ class JoinGroupScreen extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GroupProfileScreen(),
+                      builder: (context) => GroupProfileScreen(
+                        group: Group.mock(),
+                      ),
                     ),
                   );
                 },
@@ -165,7 +168,9 @@ class JoinGroupScreen extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => GroupProfileScreen(),
+                    builder: (context) => GroupProfileScreen(
+                      group: Group.mock(),
+                    ),
                   ),
                 );
               },
