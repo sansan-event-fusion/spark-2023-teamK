@@ -6,15 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MembersScreen extends ConsumerWidget {
-  const MembersScreen(
-      {super.key});
-  
+  const MembersScreen({
+    super.key,
+    required this.groupId,
+  });
+
+  final String groupId;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final memberState = ref.watch(memberControllerProvider(groupId: "test"));
-    final invitedMemberState = ref.watch(invitedMemberControllerProvider(groupId: "test"));
-    final pendingMemberState = ref.watch(pendingMemberControllerProvider(groupId: "test"));
-    
+    final memberState = ref.watch(memberControllerProvider(groupId: groupId));
+    final invitedMemberState =
+        ref.watch(invitedMemberControllerProvider(groupId: groupId));
+    final pendingMemberState =
+        ref.watch(pendingMemberControllerProvider(groupId: groupId));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("メンバー一覧"),
