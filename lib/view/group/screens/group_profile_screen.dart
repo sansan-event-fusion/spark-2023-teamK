@@ -66,12 +66,9 @@ class GroupProfileScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(group.description),
                 ),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text("投稿一覧"),
-                  ),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text("投稿一覧"),
                 ),
                 state.when(
                   loading: () {
