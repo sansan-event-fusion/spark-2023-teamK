@@ -3,7 +3,6 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:emo_project/model/group/group.dart';
 import 'package:emo_project/model/member/member.dart';
 import 'package:emo_project/providers.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseGroupRepository {
@@ -17,6 +16,7 @@ abstract class BaseGroupRepository {
     required String groupId,
     required String userId,
   });
+  Future<Stream<dynamic>> streamGroupList();
 }
 
 final groupRepository =
@@ -26,6 +26,17 @@ class GroupRepository implements BaseGroupRepository {
   final Ref _ref;
 
   const GroupRepository(this._ref);
+
+  @override
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamGroupList() async {
+    return _ref
+        .watch(firebaseFirestoreProvider)
+        .collection("users")
+        .doc(_ref.read(firebaseAuthProvider).currentUser!.uid)
+        .collection("groups")
+        .snapshots()
+        .map((event) => event);
+  }
 
   @override
   Future<List<Group>> retrieveGroups({required String userId}) async {
