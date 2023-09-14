@@ -1,5 +1,6 @@
 import 'package:emo_project/controller/post/post_controller.dart';
 import 'package:emo_project/model/group/group.dart';
+import 'package:emo_project/providers.dart';
 import 'package:emo_project/view/member/screens/members_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,15 +22,22 @@ class GroupProfileScreen extends ConsumerWidget {
         title: const Text("グループ"),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MembersScreen(groupId: group.groupId),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.people))
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MembersScreen(groupId: group.groupId),
+                ),
+              );
+            },
+            icon: const Icon(Icons.people),
+          ),
+          IconButton(
+            onPressed: () {
+              ref.read(firebaseAuthProvider).signOut();
+            },
+            icon: const Icon(Icons.logout),
+          ),
         ],
       ),
       body: CustomScrollView(
