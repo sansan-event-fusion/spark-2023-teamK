@@ -31,12 +31,12 @@ type ResponseData = {
 // [POST]: メンバー追加(groups/members)
 // [PATCH]: メンバーカウント更新(groups)
 
+const db = firestore();
+
 export const addMember: HttpHandler<RequestData, ResponseData> = async (
   data,
   _
 ) => {
-  const db = firestore();
-
   try {
     // グループ、ユーザー、メンバーの存在確認
     const groupDocRef = db.collection("groups").doc(data.groupId);
@@ -61,7 +61,7 @@ export const addMember: HttpHandler<RequestData, ResponseData> = async (
     const batch = db.batch();
 
     // [POST]: グループ追加(users/groups)
-    const userGroupRef = firestore()
+    const userGroupRef = db
       .collection("users")
       .doc(data.memberId)
       .collection("groups")
@@ -79,7 +79,7 @@ export const addMember: HttpHandler<RequestData, ResponseData> = async (
       return userDoc.data() as User;
     })();
 
-    const groupMemberRef = firestore()
+    const groupMemberRef = db
       .collection("groups")
       .doc(data.groupId)
       .collection("members")
