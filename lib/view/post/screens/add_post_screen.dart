@@ -32,9 +32,7 @@ class AddPostScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text("投稿の追加"),
       ),
-      body: Center(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
           SizedBox(
             height: deviceHeight * 0.02,
@@ -155,7 +153,7 @@ class AddPostScreen extends HookConsumerWidget {
             ),
           ),
         ],
-      )),
+      ),
     );
   }
 }

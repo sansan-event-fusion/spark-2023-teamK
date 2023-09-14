@@ -1,6 +1,7 @@
 import 'package:emo_project/controller/post/post_controller.dart';
 import 'package:emo_project/model/group/group.dart';
 import 'package:emo_project/providers.dart';
+import 'package:emo_project/view/auth/screens/login_screen.dart';
 import 'package:emo_project/view/member/screens/members_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +35,11 @@ class GroupProfileScreen extends ConsumerWidget {
           ),
           IconButton(
             onPressed: () {
-              ref.read(firebaseAuthProvider).signOut();
+              ref.read(firebaseAuthProvider).signOut().then((value) =>
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen())));
             },
             icon: const Icon(Icons.logout),
           ),
