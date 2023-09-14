@@ -35,12 +35,16 @@ class UserSettingScreen extends HookConsumerWidget {
                   height: deviceHeight * 0.05,
                 ),
                 // CustomImagePicker(),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: CustomImagePicker(),
-                    )),
+                // Align(
+                //   alignment: Alignment.centerLeft,
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(16.0),
+                //     child: CustomImagePicker(
+                //       imagePickerController: null,
+                //       file: null,
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   width: deviceWidth * 0.9,
                   child: CustomTextField(

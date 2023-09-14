@@ -7,11 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:emo_project/controller/group/group_controller.dart';
 import 'package:emo_project/model/firebase_user/firebase_user.dart';
 import 'package:emo_project/model/member/member.dart';
-import 'package:emo_project/view/common/components/custom_image_picker.dart';
-import 'package:emo_project/view/home/screens/home_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AddGroupScreen extends HookConsumerWidget {
   const AddGroupScreen({super.key});
@@ -111,23 +107,30 @@ class AddGroupScreen extends HookConsumerWidget {
                     focusedBorder: UnderlineInputBorder()),
               ),
             ),
-            Center(
-              child: SizedBox(
-                width: deviceWidth * 0.9,
-                child: ElevatedButton(
-                  onPressed: () {
-                    final storagePath = Keys()
-                        .getPostStoragePath(groupId: "test", postId: "postId");
-                    imageController.uploadImage(storagePath: storagePath).then((value) => print(value));
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
-                      ),
-                    );
-                  },
-                  child: const Text("グループ作成"),
-                ),
+          ),
+          SizedBox(
+            height: deviceHeight * 0.04,
+          ),
+          Center(
+            child: SizedBox(
+              width: deviceWidth * 0.9,
+              child: ElevatedButton(
+                onPressed: () {
+                  final storagePath = Keys()
+                      .getPostStoragePath(groupId: "test", postId: "postId");
+                  imageController
+                      .uploadImage(storagePath: storagePath)
+                      .then((value) => print(value));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreen(),
+                    ),
+                  );
+                },
+                child: const Text("グループ作成"),
+              ),
+            ),
           ),
           SizedBox(
             height: deviceHeight * 0.06,

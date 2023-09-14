@@ -1,9 +1,15 @@
+import 'package:emo_project/controller/common/image_picker_controller.dart';
 import 'package:emo_project/controller/member/member_controller.dart';
+import 'package:emo_project/controller/post/post_controller.dart';
+import 'package:emo_project/model/post/post.dart';
+import 'package:emo_project/model/repository/auth_repository.dart';
+import 'package:emo_project/view/common/components/custom_image_picker.dart';
 import 'package:emo_project/view/member/components/member_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AddPostScreen extends ConsumerWidget {
+class AddPostScreen extends HookConsumerWidget {
   const AddPostScreen({super.key});
 
   @override
@@ -11,6 +17,9 @@ class AddPostScreen extends ConsumerWidget {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
     final state = ref.watch(memberControllerProvider(groupId: "test"));
+    final imageState = ref.watch(imagePickerProvider);
+    final imageController = ref.read(imagePickerProvider.notifier);
+    final descriptionController = useTextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -28,10 +37,9 @@ class AddPostScreen extends ConsumerWidget {
             child: Text("写真を追加"),
           ),
           // TODO: CustomImagePicker がマージされた後にここを変更して、画像を選択を可能にする
-          SizedBox(
-            width: deviceWidth * 0.9,
-            height: deviceWidth * 0.9,
-            child: Image.asset("assets/images/no_image.png"),
+          CustomRectangleImagePicker(
+            imagePickerController: imageController,
+            file: imageState.imageFile,
           ),
           SizedBox(
             height: deviceHeight * 0.02,
@@ -106,7 +114,23 @@ class AddPostScreen extends ConsumerWidget {
           SizedBox(
             width: deviceWidth * 0.9,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                final currentUser =
+                    ref.read(authRepositoryProvider).getCurrentUser();
+                ref
+                    .watch(postControllerProvider(groupId: "test").notifier)
+                    .createPost(
+                      post: Post(
+                        postId: "postId",
+                        memberId: currentUser!.uid,
+                        mentionedMemberList: ["mentionedMemberList"],
+                        description: descriptionController.text,
+                        imageUrlList: ["imageUrlList"],
+                        likeCount: 0,
+                        createdAt: DateTime.now(),
+                      ),
+                    );
+              },
               child: const Text("投稿する"),
             ),
           ),
