@@ -65,6 +65,7 @@ class GroupController extends _$GroupController {
           group: group,
         )
         .then((value) async {
+      print("group created");
       // グループ作成に成功したら、グループにメンバーを追加
       if (value) {
         await ref.read(memberRepository).createMember(
