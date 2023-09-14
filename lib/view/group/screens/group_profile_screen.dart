@@ -18,7 +18,7 @@ class GroupProfileScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(group.name),
+        title: const Text("グループ"),
         actions: [
           IconButton(
               onPressed: () {
