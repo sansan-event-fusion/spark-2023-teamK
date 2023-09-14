@@ -1,4 +1,5 @@
 import 'package:emo_project/common/keys.dart';
+import 'package:emo_project/common/show_dialog.dart';
 import 'package:emo_project/controller/common/image_picker_controller.dart';
 import 'package:emo_project/controller/firebase_user/firebase_user_controller.dart';
 import 'package:emo_project/controller/user_setting/validator/user_setting_validator.dart';
@@ -73,6 +74,7 @@ class UserSettingScreen extends HookConsumerWidget {
                   width: deviceWidth * 0.9,
                   child: ElevatedButton(
                     onPressed: () async {
+                      SD.circular(context);
                       final bool isAllValid = ref
                           .read(userSettingValidatorProvider.notifier)
                           .isAllValid(
@@ -97,11 +99,14 @@ class UserSettingScreen extends HookConsumerWidget {
                                   'https://placehold.jp/200x200.png',
                               name: nameController.text,
                             )
-                            .then((value) => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const InitialScreen(),
-                                )));
+                            .then((value) {
+                          Navigator.pop(context); // circular分
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const InitialScreen(),
+                              ));
+                        });
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

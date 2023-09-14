@@ -2,6 +2,7 @@ import 'package:emo_project/controller/auth/auth_controller.dart';
 import 'package:emo_project/controller/auth/validator/signup_validator.dart';
 import 'package:emo_project/controller/firebase_user/firebase_user_controller.dart';
 import 'package:emo_project/model/repository/auth_repository.dart';
+import 'package:emo_project/providers.dart';
 import 'package:emo_project/view/auth/components/apple_signin_button.dart';
 import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:emo_project/view/auth/components/google_signin_button.dart';
@@ -136,6 +137,12 @@ class SignupScreen extends HookConsumerWidget {
                       ),
                     ),
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    ref.read(firebaseAuthProvider).signOut();
+                  },
+                  child: Text("test"),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:emo_project/common/keys.dart';
+import 'package:emo_project/common/show_dialog.dart';
 import 'package:emo_project/controller/common/image_picker_controller.dart';
 import 'package:emo_project/controller/member/member_controller.dart';
 import 'package:emo_project/controller/post/post_controller.dart';
@@ -121,6 +122,7 @@ class AddPostScreen extends HookConsumerWidget {
             width: deviceWidth * 0.9,
             child: ElevatedButton(
               onPressed: () async {
+                SD.circular(context);
                 // TODO: createPost のテスト
                 // TODO: 複数枚アップロードに変更
                 // TODO: 画像アップロード失敗時の処理
@@ -146,6 +148,7 @@ class AddPostScreen extends HookConsumerWidget {
                       ),
                     )
                     .then((value) {
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 });
               },

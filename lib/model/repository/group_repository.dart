@@ -41,11 +41,12 @@ class GroupRepository implements BaseGroupRepository {
   @override
   Future<List<Group>> retrieveGroups({required String userId}) async {
     try {
+      print("retrieveGroups");
       // users/{userId}/groups から groupIdList を取得
       final List<String> groupIdList = await _ref
           .watch(firebaseFirestoreProvider)
           .collection("users")
-          .doc(userId)
+          .doc(_ref.read(firebaseAuthProvider).currentUser!.uid)
           .collection("groups")
           .get()
           .then((value) {
@@ -53,6 +54,7 @@ class GroupRepository implements BaseGroupRepository {
         for (var element in value.docs) {
           groupIdList.add(element.data()["groupId"]);
         }
+        print(groupIdList);
         return groupIdList;
       });
 

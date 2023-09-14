@@ -26,6 +26,7 @@ class GroupController extends _$GroupController {
       StreamSubscription<QuerySnapshot> streamSub = value.listen((event) async {
         List<Group> latestGroupList =
             await ref.read(groupRepository).retrieveGroups(userId: userId);
+        print("latestGroupList" + latestGroupList.toString());
         state = AsyncData(latestGroupList.first);
       });
 

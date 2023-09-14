@@ -1,7 +1,9 @@
 import 'package:emo_project/common/keys.dart';
+import 'package:emo_project/common/show_dialog.dart';
 import 'package:emo_project/controller/common/image_picker_controller.dart';
 import 'package:emo_project/view/common/components/custom_image_picker.dart';
 import 'package:emo_project/view/home/screens/home_screen.dart';
+import 'package:emo_project/view/initial/screens/initial_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:emo_project/controller/group/group_controller.dart';
@@ -115,6 +117,7 @@ class AddGroupScreen extends HookConsumerWidget {
               width: deviceWidth * 0.9,
               child: ElevatedButton(
                 onPressed: () async {
+                  SD.circular(context);
                   // TODO: 画像アップロード失敗時の処理
                   final storagePath = Keys().getGroupIconStoragePath();
                   final String? imageUrl = await imageController.uploadImage(

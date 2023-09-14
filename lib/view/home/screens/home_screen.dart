@@ -24,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = ref.watch(selectedIndexProvider);
     final selectedIndexNotifier = ref.watch(selectedIndexProvider.notifier);
-    final currentUserId = ref.read(firebaseAuthProvider).currentUser!.uid;
+    final currentUserId = ref.watch(firebaseAuthProvider).currentUser!.uid;
     final groupState =
         ref.watch(groupControllerProvider(userId: currentUserId));
 
@@ -40,6 +40,7 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
       data: (Group? data) {
+        print("groupData:" + data.toString());
         if (data == null) return const InitialScreen();
         final screens = [
           PostsScreen(groupId: data.groupId),
