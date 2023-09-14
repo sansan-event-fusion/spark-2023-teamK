@@ -25,7 +25,7 @@ class GroupProfileScreen extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MembersScreen(),
+                    builder: (context) => MembersScreen(groupId: group.groupId),
                   ),
                 );
               },
