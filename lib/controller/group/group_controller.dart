@@ -53,10 +53,10 @@ class GroupController extends _$GroupController {
 
     final Member member = Member(
       memberId: firebaseUser.userId,
-      name: name,
+      name: firebaseUser.name,
       role: "admin",
-      icon: icon,
-      description: description,
+      icon: firebaseUser.icon,
+      description: "",
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );

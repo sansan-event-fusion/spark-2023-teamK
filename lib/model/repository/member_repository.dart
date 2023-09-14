@@ -90,58 +90,19 @@ class MemberRepository implements BaseMemberRepository {
     required Member member,
     required String groupId,
   }) async {
-    try {
-      // TODO: addMemberが呼び出せない　AUTH
-      // final result =
-      //     await FirebaseFunctions.instance.httpsCallable('addMember').call(
-      //   {
-      //     "groupId": groupId,
-      //     "memberId": member.memberId,
-      //     "name": member.name,
-      //     "description": member.description,
-      //     "icon": member.icon,
-      //     "role": "admin",
-      //   },
-      // );
-      // print(result.data);
-      final groupDocRef = _ref
-          .read(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId);
-      final userDocRef = _ref
-          .read(firebaseFirestoreProvider)
-          .collection("users")
-          .doc(member.memberId)
-          .collection("groups")
-          .doc(groupId);
-      final memberDocRef = _ref
-          .read(firebaseFirestoreProvider)
-          .collection("groups")
-          .doc(groupId)
-          .collection("members")
-          .doc(member.memberId);
-      final batch = _ref.read(firebaseFirestoreProvider).batch();
-      batch.set(
-          groupDocRef,
-          {
-            "memberCount": FieldValue.increment(1),
-          },
-          SetOptions(merge: true));
-      batch.set(
-        userDocRef,
-        {
-          "groupId": groupId,
-          "createdAt": DateTime.now(),
-        },
-      );
-      batch.set(
-        memberDocRef,
-        member.toJson(),
-      );
-      await batch.commit();
-    } on FirebaseException catch (e) {
-      throw Exception(e);
-    }
+    // users -> groups 作成
+    // groups -> members 作成
+    final result =
+        await FirebaseFunctions.instance.httpsCallable('addMember').call(
+      {
+        "groupId": groupId,
+        "memberId": member.memberId,
+        "name": member.name,
+        "icon": member.icon,
+        "role": "admin",
+      },
+    );
+    print(result.data);
   }
 
   @override
