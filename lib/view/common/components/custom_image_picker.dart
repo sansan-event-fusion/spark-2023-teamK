@@ -27,8 +27,9 @@ class CustomImagePicker extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: file != null
-                    ? Image.file(file!, fit: BoxFit.cover).image
+                    ? Image.file(file!).image
                     : const AssetImage('assets/images/no_image.png'),
+                fit: BoxFit.cover,
               ),
             ),
           ),

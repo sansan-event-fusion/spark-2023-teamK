@@ -1,59 +1,44 @@
-import 'package:emo_project/view/post/screens/post_detail_screen.dart';
+import 'package:emo_project/model/post/post.dart';
 import 'package:flutter/material.dart';
 
-class PostView extends StatelessWidget {
-  const PostView(
-      {super.key,
-      required this.imageUrl,
-      required this.mentionUserList,
-      required this.description});
+class PostCard extends StatelessWidget {
+  const PostCard({
+    super.key,
+    required this.post,
+  });
 
-  final String imageUrl;
-  final String description;
-  final List<String> mentionUserList;
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PostDetailScreen(
-              imageUrl: imageUrl,
-              description: description,
-              mentionUserList: mentionUserList,
-            ),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 40.0),
-        child: Column(children: [
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 40.0),
+      child: Column(
+        children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
+            width: deviceWidth,
+            height: deviceWidth * 0.8,
             child: Image.network(
-              imageUrl,
+              post.imageUrlList.first,
               fit: BoxFit.cover,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Align(
-                alignment: Alignment.centerLeft, child: Text(description)),
+                alignment: Alignment.centerLeft, child: Text(post.description)),
           ),
           Row(
             children: [
-              for (int i = 0; i < mentionUserList.length; i++) ...{
+              for (var mentionedMember in post.mentionedMemberList)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text("@ ${mentionUserList[i]}"),
+                  child: Text("@$mentionedMember"),
                 )
-              }
             ],
           )
-        ]),
+        ],
       ),
     );
   }

@@ -3,21 +3,30 @@ import 'package:emo_project/controller/common/image_picker_controller.dart';
 import 'package:emo_project/controller/member/member_controller.dart';
 import 'package:emo_project/controller/post/post_controller.dart';
 import 'package:emo_project/model/post/post.dart';
+import 'package:emo_project/providers.dart';
 import 'package:emo_project/view/common/components/custom_image_picker.dart';
 import 'package:emo_project/view/member/components/member_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
-class AddPostScreen extends ConsumerWidget {
-  const AddPostScreen({super.key});
+class AddPostScreen extends HookConsumerWidget {
+  const AddPostScreen({
+    super.key,
+    required this.groupId,
+  });
+
+  final String groupId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
-    final state = ref.watch(memberControllerProvider(groupId: "test"));
+    final state = ref.watch(memberControllerProvider(groupId: groupId));
     final imageState = ref.watch(imagePickerProvider);
     final imageController = ref.read(imagePickerProvider.notifier);
+    final descriptionController = useTextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -35,6 +44,7 @@ class AddPostScreen extends ConsumerWidget {
             child: Text("写真を追加"),
           ),
           CustomImagePicker(
+            isSquare: true,
             imagePickerController: imageController,
             file: imageState.imageFile,
           ),
@@ -48,10 +58,11 @@ class AddPostScreen extends ConsumerWidget {
           //TODO: CustomTextField がマージされた後にここを変更して、簡略化する
           SizedBox(
             width: deviceWidth * 0.9,
-            child: const TextField(
+            child: TextField(
+              controller: descriptionController,
               keyboardType: TextInputType.multiline,
               maxLines: null,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 30, horizontal: 8),
                 hintText: "詳細",
@@ -116,19 +127,21 @@ class AddPostScreen extends ConsumerWidget {
                 // TODO: 複数枚アップロードに変更
                 // TODO: 画像アップロード失敗時の処理
                 // TODO: groupId, postId を変数か
-                final storagePath = Keys()
-                    .getPostStoragePath(groupId: 'test', postId: 'postId');
+                final postId = Uuid().v4();
+                final storagePath =
+                    Keys().getPostStoragePath(groupId: groupId, postId: postId);
                 final String? imageUrl =
                     await imageController.uploadImage(storagePath: storagePath);
                 if (imageUrl == null) return;
                 await ref
-                    .read(postControllerProvider(groupId: "test").notifier)
+                    .read(postControllerProvider(groupId: groupId).notifier)
                     .createPost(
                       post: Post(
-                        postId: "postId",
-                        memberId: "memberId",
+                        postId: postId,
+                        memberId:
+                            ref.read(firebaseAuthProvider).currentUser!.uid,
                         mentionedMemberList: [],
-                        description: "description",
+                        description: descriptionController.text,
                         imageUrlList: [imageUrl],
                         likeCount: 0,
                         createdAt: DateTime.now(),

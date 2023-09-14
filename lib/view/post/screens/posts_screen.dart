@@ -1,33 +1,48 @@
+import 'package:emo_project/controller/post/post_controller.dart';
 import 'package:emo_project/view/post/components/post_card.dart';
 import 'package:emo_project/view/post/screens/add_post_screen.dart';
+import 'package:emo_project/view/post/screens/post_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PostsScreen extends StatelessWidget {
-  const PostsScreen({super.key});
+class PostsScreen extends ConsumerWidget {
+  const PostsScreen({
+    super.key,
+    required this.groupId,
+  });
+
+  final String groupId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(postControllerProvider(groupId: groupId));
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text("個人投稿"),
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            PostView(
-                imageUrl:
-                    "https://images.unsplash.com/photo-1631276893368-554b60393efb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-                mentionUserList: ["Yuki", "Koichi"], description: '北海道旅行の記録です',),
-            PostView(
-                imageUrl:
-                    "https://images.unsplash.com/photo-1605050825077-289f85b6cf43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-                mentionUserList: ["Taro"], description: '沖縄旅行の記録をまとめました！',),
-            PostView(
-                imageUrl:
-                    "https://images.unsplash.com/photo-1600403477955-2b8c2cfab221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-                mentionUserList: ["Jiro", "Saburou", "Ryo"], description: '京都旅行の写真をまとめました！',)
-          ],
+      body: state.when(
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        error: (error, stackTrace) => Text(error.toString()),
+        data: (data) => ListView.separated(
+          itemCount: data.length,
+          itemBuilder: (context, index) => GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostDetailScreen(
+                    post: data[index],
+                  ),
+                ),
+              );
+            },
+            child: PostCard(post: data[index]),
+          ),
+          separatorBuilder: (context, index) => const SizedBox(height: 16),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -35,7 +50,7 @@ class PostsScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AddPostScreen(),
+              builder: (context) => AddPostScreen(groupId: groupId),
             ),
           );
         },

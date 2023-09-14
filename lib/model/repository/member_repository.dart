@@ -111,7 +111,9 @@ class MemberRepository implements BaseMemberRepository {
       final userDocRef = _ref
           .read(firebaseFirestoreProvider)
           .collection("users")
-          .doc(member.memberId);
+          .doc(member.memberId)
+          .collection("groups")
+          .doc(groupId);
       final memberDocRef = _ref
           .read(firebaseFirestoreProvider)
           .collection("groups")

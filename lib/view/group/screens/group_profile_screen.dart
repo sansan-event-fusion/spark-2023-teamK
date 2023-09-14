@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GroupProfileScreen extends ConsumerWidget {
-  const GroupProfileScreen({super.key});
+  const GroupProfileScreen({
+    super.key,
+    required this.group,
+  });
+
+  final Group group;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
