@@ -1,27 +1,30 @@
 import 'dart:io';
 
+import 'package:emo_project/controller/common/multi_image_picker_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-// sample
-class MultipleImageSelector extends StatefulWidget {
-  const MultipleImageSelector({super.key});
+class CustomMultiImagePicker extends StatefulWidget {
+  final MultiImagePickerController multiImagePickerController;
+  final List<File>? fileList;
+
+  const CustomMultiImagePicker(
+      {super.key, required this.multiImagePickerController, required this.fileList});
 
   @override
-  State<MultipleImageSelector> createState() => _MultipleImageSelectorState();
+  State<CustomMultiImagePicker> createState() => _CustomMultiImagePickerState();
 }
 
-class _MultipleImageSelectorState extends State<MultipleImageSelector> {
+class _CustomMultiImagePickerState extends State<CustomMultiImagePicker> {
   List<File> selectedImages = [];
   final picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Multiple Images Select'),
-        backgroundColor: Colors.green,
-        actions: const [],
+        title: const Text('画像追加'),
       ),
       body: Center(
         child: Column(
@@ -31,20 +34,10 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
               height: 20,
             ),
             ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.green)),
-              child: const Text('Select Image from Gallery and Camera'),
+              child: const Text('カメラロールから選択'),
               onPressed: () {
                 getImages();
               },
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 18.0),
-              child: Text(
-                "GFG",
-                textScaleFactor: 3,
-                style: TextStyle(color: Colors.green),
-              ),
             ),
             Expanded(
               child: SizedBox(
