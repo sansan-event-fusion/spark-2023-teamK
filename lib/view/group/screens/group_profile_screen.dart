@@ -14,8 +14,8 @@ class GroupProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final group = Group.mock();
-    final state = ref.watch(postControllerProvider(groupId: "test"));
+    final state = ref.watch(postControllerProvider(groupId: group.groupId));
+
     return Scaffold(
       appBar: AppBar(
         title: Text(group.name),
@@ -80,17 +80,15 @@ class GroupProfileScreen extends ConsumerWidget {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
+                          crossAxisSpacing: 1,
+                          mainAxisSpacing: 1,
                         ),
                         itemCount: data.length,
                         itemBuilder: (context, index) {
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.32,
-                            height: MediaQuery.of(context).size.width * 0.32,
-                            child: Image.network(
-                              // 投稿の一番最初の画像のURLをサムネとして表示
-                              data[index].imageUrlList.first,
-                              fit: BoxFit.cover,
-                            ),
+                          return Image.network(
+                            // 投稿の一番最初の画像のURLをサムネとして表示
+                            data[index].imageUrlList.first,
+                            fit: BoxFit.cover,
                           );
                         },
                         shrinkWrap: true,
