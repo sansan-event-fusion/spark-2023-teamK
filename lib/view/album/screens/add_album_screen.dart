@@ -3,7 +3,12 @@ import 'package:emo_project/view/album/components/add_album_info_part.dart';
 import 'package:flutter/material.dart';
 
 class AddAlbumsScreen extends StatelessWidget {
-  const AddAlbumsScreen({super.key});
+  const AddAlbumsScreen({
+    super.key,
+    required this.groupId,
+  });
+
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {

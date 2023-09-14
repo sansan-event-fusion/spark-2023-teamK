@@ -6,7 +6,7 @@ part of 'group_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$groupControllerHash() => r'a9af5b78e33dc85183f7660c533250ad4de5481c';
+String _$groupControllerHash() => r'4564ff405320eb837ebcc7937c3685ecf5ee3df0';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$GroupController
-    extends BuildlessAutoDisposeAsyncNotifier<List<Group>> {
+    extends BuildlessAutoDisposeAsyncNotifier<Group?> {
   late final String userId;
 
-  Future<List<Group>> build({
+  Future<Group?> build({
     required String userId,
   });
 }
@@ -43,7 +43,7 @@ abstract class _$GroupController
 const groupControllerProvider = GroupControllerFamily();
 
 /// See also [GroupController].
-class GroupControllerFamily extends Family<AsyncValue<List<Group>>> {
+class GroupControllerFamily extends Family<AsyncValue<Group?>> {
   /// See also [GroupController].
   const GroupControllerFamily();
 
@@ -82,7 +82,7 @@ class GroupControllerFamily extends Family<AsyncValue<List<Group>>> {
 
 /// See also [GroupController].
 class GroupControllerProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<GroupController, List<Group>> {
+    extends AutoDisposeAsyncNotifierProviderImpl<GroupController, Group?> {
   /// See also [GroupController].
   GroupControllerProvider({
     required String userId,
@@ -113,7 +113,7 @@ class GroupControllerProvider
   final String userId;
 
   @override
-  Future<List<Group>> runNotifierBuild(
+  Future<Group?> runNotifierBuild(
     covariant GroupController notifier,
   ) {
     return notifier.build(
@@ -138,7 +138,7 @@ class GroupControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<GroupController, List<Group>>
+  AutoDisposeAsyncNotifierProviderElement<GroupController, Group?>
       createElement() {
     return _GroupControllerProviderElement(this);
   }
@@ -157,14 +157,14 @@ class GroupControllerProvider
   }
 }
 
-mixin GroupControllerRef on AutoDisposeAsyncNotifierProviderRef<List<Group>> {
+mixin GroupControllerRef on AutoDisposeAsyncNotifierProviderRef<Group?> {
   /// The parameter `userId` of this provider.
   String get userId;
 }
 
 class _GroupControllerProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<GroupController,
-        List<Group>> with GroupControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<GroupController, Group?>
+    with GroupControllerRef {
   _GroupControllerProviderElement(super.provider);
 
   @override

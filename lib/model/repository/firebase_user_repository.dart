@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emo_project/model/firebase_user/firebase_user.dart';
 import 'package:emo_project/model/repository/auth_repository.dart';
 import 'package:emo_project/providers.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseFirebaseUserRepository {
+  Future<FirebaseUser> readCurrentFirebaseUser();
   Future<String> createFirebaseUser({required FirebaseUser firebaseUser});
   Future<void> updateFirebaseUser({
     required String accountId,
@@ -22,6 +22,20 @@ class FirebaseUserRepository implements BaseFirebaseUserRepository {
   final Ref _ref;
 
   const FirebaseUserRepository(this._ref);
+
+  @override
+  Future<FirebaseUser> readCurrentFirebaseUser() async {
+    try {
+      return await _ref
+          .watch(firebaseFirestoreProvider)
+          .collection("users")
+          .doc(_ref.read(authRepositoryProvider).getCurrentUser()!.uid)
+          .get(const GetOptions(source: Source.cache))
+          .then((value) => FirebaseUser.fromJson(value.data()!));
+    } on FirebaseException catch (e) {
+      throw Exception(e);
+    }
+  }
 
   @override
   Future<String> createFirebaseUser(
@@ -54,7 +68,7 @@ class FirebaseUserRepository implements BaseFirebaseUserRepository {
         "accountId": accountId,
         "name": name,
         "icon": icon,
-          });
+      });
     } on FirebaseException catch (e) {
       throw Exception(e);
     }

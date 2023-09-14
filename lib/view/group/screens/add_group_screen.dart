@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:emo_project/controller/group/group_controller.dart';
 import 'package:emo_project/model/firebase_user/firebase_user.dart';
-import 'package:emo_project/model/member/member.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class AddGroupScreen extends HookConsumerWidget {
@@ -19,7 +18,6 @@ class AddGroupScreen extends HookConsumerWidget {
     final imageState = ref.watch(imagePickerProvider);
     final imageController = ref.read(imagePickerProvider.notifier);
     final mockUser = FirebaseUser.mock();
-    final mockMember = Member.mock();
     final idController = useTextEditingController();
     final nameController = useTextEditingController();
     final descriptionController = useTextEditingController();
@@ -100,35 +98,12 @@ class AddGroupScreen extends HookConsumerWidget {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 decoration: const InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 30, horizontal: 8),
-                    hintText: "グループプロフィール",
-                    filled: true,
-                    focusedBorder: UnderlineInputBorder()),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: deviceHeight * 0.04,
-          ),
-          Center(
-            child: SizedBox(
-              width: deviceWidth * 0.9,
-              child: ElevatedButton(
-                onPressed: () {
-                  final storagePath = Keys()
-                      .getPostStoragePath(groupId: "test", postId: "postId");
-                  imageController
-                      .uploadImage(storagePath: storagePath)
-                      .then((value) => print(value));
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomeScreen(),
-                    ),
-                  );
-                },
-                child: const Text("グループ作成"),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 30, horizontal: 8),
+                  hintText: "グループプロフィール",
+                  filled: true,
+                  focusedBorder: UnderlineInputBorder(),
+                ),
               ),
             ),
           ),
@@ -139,17 +114,19 @@ class AddGroupScreen extends HookConsumerWidget {
             child: SizedBox(
               width: deviceWidth * 0.9,
               child: ElevatedButton(
-                onPressed: () {
-                  // TODO: グループ作成処理
+                onPressed: () async {
+                  // TODO: 画像アップロード失敗時の処理
+                  final storagePath = Keys().getGroupIconStoragePath();
+                  final String? imageUrl = await imageController.uploadImage(
+                      storagePath: storagePath);
                   ref
                       .read(groupControllerProvider(userId: mockUser.userId)
                           .notifier)
                       .createGroup(
                         groupId: idController.text,
-                        icon: "https://picsum.photos/200/300",
+                        icon: imageUrl ?? "https://placehold.jp/150x150.png",
                         name: nameController.text,
                         description: descriptionController.text,
-                        member: mockMember,
                       )
                       .then((value) {
                     if (value) {

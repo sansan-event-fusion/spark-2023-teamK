@@ -1,6 +1,9 @@
+import 'package:emo_project/common/keys.dart';
+import 'package:emo_project/controller/common/image_picker_controller.dart';
 import 'package:emo_project/controller/firebase_user/firebase_user_controller.dart';
 import 'package:emo_project/controller/user_setting/validator/user_setting_validator.dart';
 import 'package:emo_project/model/repository/auth_repository.dart';
+import 'package:emo_project/view/common/components/custom_image_picker.dart';
 import 'package:emo_project/view/common/components/custom_textfield.dart';
 import 'package:emo_project/view/initial/screens/initial_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,8 @@ class UserSettingScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final double deviceHeight = MediaQuery.of(context).size.height;
     final double deviceWidth = MediaQuery.of(context).size.width;
+    final imageController = ref.read(imagePickerProvider.notifier);
+    final imageState = ref.watch(imagePickerProvider);
     final nameController = useTextEditingController();
     final idController = useTextEditingController();
 
@@ -35,16 +40,15 @@ class UserSettingScreen extends HookConsumerWidget {
                   height: deviceHeight * 0.05,
                 ),
                 // CustomImagePicker(),
-                // Align(
-                //   alignment: Alignment.centerLeft,
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(16.0),
-                //     child: CustomImagePicker(
-                //       imagePickerController: null,
-                //       file: null,
-                //     ),
-                //   ),
-                // ),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: CustomImagePicker(
+                        imagePickerController: imageController,
+                        file: imageState.imageFile,
+                      ),
+                    )),
                 SizedBox(
                   width: deviceWidth * 0.9,
                   child: CustomTextField(
@@ -69,7 +73,7 @@ class UserSettingScreen extends HookConsumerWidget {
                   width: deviceWidth * 0.9,
                   child: ElevatedButton(
                     onPressed: () async {
-                      final isAllValid = ref
+                      final bool isAllValid = ref
                           .read(userSettingValidatorProvider.notifier)
                           .isAllValid(
                             name: nameController.text,
@@ -78,21 +82,26 @@ class UserSettingScreen extends HookConsumerWidget {
                       if (isAllValid) {
                         final currentUser =
                             ref.watch(authRepositoryProvider).getCurrentUser();
-                        if (currentUser != null) {
-                          // firebase user update
-                          ref
-                              .read(firebaseUserControllerProvider.notifier)
-                              .updateFirebaseUser(
-                                accountId: idController.text,
-                                icon: 'https://placehold.jp/200x200.png',
-                                name: nameController.text,
-                              )
-                              .then((value) => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const InitialScreen(),
-                                  )));
-                        }
+                        // TODO: currentUser が null の時の処理
+                        if (currentUser == null) return;
+                        final storagePath = Keys().getUserIconStoragePath();
+                        // TODO: imageUrl == null のときの処理
+                        final String? imageUrl = await imageController
+                            .uploadImage(storagePath: storagePath);
+                        // firebase user update
+                        await ref
+                            .read(firebaseUserControllerProvider.notifier)
+                            .updateFirebaseUser(
+                              accountId: idController.text,
+                              icon: imageUrl ??
+                                  'https://placehold.jp/200x200.png',
+                              name: nameController.text,
+                            )
+                            .then((value) => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const InitialScreen(),
+                                )));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

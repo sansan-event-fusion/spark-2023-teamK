@@ -5,7 +5,7 @@ import 'package:emo_project/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseMemberRepository {
-  Future<String> createMember({
+  Future<void> createMember({
     required Member member,
     required String groupId,
   });
@@ -85,17 +85,24 @@ class MemberRepository implements BaseMemberRepository {
     return ref.snapshots();
   }
 
-  // TODO: BE で member 作成
   @override
-  Future<String> createMember({
+  Future<void> createMember({
     required Member member,
     required String groupId,
   }) async {
-    try {
-      return "";
-    } on FirebaseException catch (e) {
-      throw Exception(e);
-    }
+    // users -> groups 作成
+    // groups -> members 作成
+    final result =
+        await FirebaseFunctions.instance.httpsCallable('addMember').call(
+      {
+        "groupId": groupId,
+        "memberId": member.memberId,
+        "name": member.name,
+        "icon": member.icon,
+        "role": "admin",
+      },
+    );
+    print(result.data);
   }
 
   @override
